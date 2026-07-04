@@ -1,0 +1,185 @@
+/* Interfaz deliberadamente simple: legible, sin adornos. Lo importante es la lógica. */
+* { box-sizing: border-box; }
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  margin: 0;
+  color: #1a1a1a;
+  background: #f6f6f6;
+}
+header, footer {
+  background: #2c3e50;
+  color: #fff;
+  padding: 12px 20px;
+}
+header h1 { margin: 0 0 2px; font-size: 1.25rem; }
+header .sub { margin: 0; font-size: .8rem; opacity: .85; }
+footer { font-size: .78rem; margin-top: 40px; }
+footer p { margin: 0; }
+main {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 16px 40px;
+}
+
+/* Bloques generales */
+h2 { font-size: 1.15rem; border-bottom: 2px solid #ddd; padding-bottom: 6px; }
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 12px 0;
+}
+.muted { color: #666; font-size: .85rem; }
+
+/* Botones */
+button {
+  font: inherit;
+  padding: 8px 14px;
+  border: 1px solid #2c3e50;
+  background: #2c3e50;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 4px 4px 4px 0;
+}
+button.sec { background: #fff; color: #2c3e50; }
+button.small { padding: 4px 10px; font-size: .85rem; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button:hover:not(:disabled) { filter: brightness(1.1); }
+
+/* Menú de temas */
+.tema-item {
+  display: flex; justify-content: space-between; align-items: center;
+  border: 1px solid #ddd; background: #fff; border-radius: 6px;
+  padding: 12px 16px; margin: 8px 0;
+}
+.tema-item .info { flex: 1; }
+.tema-item .info b { display: block; }
+.badge {
+  background: #eef; border: 1px solid #cce; color: #335;
+  border-radius: 10px; padding: 1px 8px; font-size: .75rem; margin-left: 6px;
+}
+
+/* Preguntas */
+.pregunta-num { font-size: .8rem; color: #666; }
+.enunciado { font-size: 1.02rem; margin: 8px 0 12px; }
+.tipo-tag {
+  display: inline-block; font-size: .7rem; text-transform: uppercase;
+  letter-spacing: .5px; background: #34495e; color: #fff;
+  padding: 1px 7px; border-radius: 3px; vertical-align: middle;
+}
+.recurso {
+  border: 1px solid #ccc; border-radius: 5px; margin: 10px 0; overflow: auto;
+}
+.recurso .cap { font-size: .75rem; color: #555; padding: 4px 8px; background: #eee; border-bottom: 1px solid #ddd; }
+pre.codigo, pre.comando {
+  margin: 0; padding: 10px 12px; font-family: "Courier New", monospace;
+  font-size: .85rem; white-space: pre; overflow-x: auto;
+}
+pre.comando { background: #1e1e1e; color: #e0e0e0; }
+pre.codigo { background: #fbfbf5; color: #222; }
+.recurso img { max-width: 100%; display: block; }
+.recurso table { border-collapse: collapse; width: 100%; font-size: .82rem; }
+.recurso table th, .recurso table td { border: 1px solid #ccc; padding: 4px 8px; text-align: left; }
+.recurso table th { background: #eef; }
+.gantt { display: flex; font-size: .8rem; margin: 4px; }
+.gantt .blk { border: 1px solid #333; padding: 6px 2px; text-align: center; }
+
+/* Opciones */
+.opciones label {
+  display: block; border: 1px solid #ccc; border-radius: 5px;
+  padding: 9px 12px; margin: 6px 0; cursor: pointer; background: #fff;
+}
+.opciones label:hover { background: #f0f4f8; }
+.opciones input { margin-right: 8px; }
+/* La respuesta NO se resalta. Solo se marca en gris neutro la opción elegida. */
+.opciones label.marcada { outline: 2px solid #34495e; }
+.ref-ops { margin: 4px 0 0; padding-left: 22px; color: #444; font-size: .9rem; }
+.ref-ops li { margin: 2px 0; }
+.nav-q.hecha { font-weight: bold; background: #e8eef5; }
+
+textarea {
+  width: 100%; min-height: 120px; font: inherit; padding: 8px;
+  border: 1px solid #ccc; border-radius: 5px; resize: vertical;
+}
+
+/* Retroalimentación */
+.feedback { border-left: 4px solid #34495e; background: #f0f4f8; padding: 10px 14px; margin: 12px 0; border-radius: 0 5px 5px 0; }
+.feedback.ok { border-color: #4caf50; background: #eef8ee; }
+.feedback.mal { border-color: #e57373; background: #fbeeee; }
+.feedback h4 { margin: 0 0 6px; }
+.modelo { background: #fffdf0; border: 1px dashed #d8c96a; border-radius: 5px; padding: 10px 14px; margin: 10px 0; }
+.claves { margin: 6px 0 0; padding-left: 20px; }
+.enfoque-tag { font-size: .72rem; background: #6c5ce7; color: #fff; padding: 1px 7px; border-radius: 3px; }
+.fuente { font-size: .75rem; color: #777; margin-top: 8px; }
+
+/* Barra superior de la sesión */
+.barra {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 8px; margin-bottom: 10px;
+}
+.progreso { font-size: .85rem; color: #444; }
+.reloj { font-variant-numeric: tabular-nums; font-weight: bold; }
+.reloj.alerta { color: #c0392b; }
+
+/* Resultado final */
+.score { font-size: 2rem; font-weight: bold; }
+.resumen-item { border-bottom: 1px solid #eee; padding: 8px 0; font-size: .9rem; }
+.pill { border-radius: 10px; padding: 1px 8px; font-size: .75rem; }
+.pill.ok { background: #e5f6e5; color: #256d25; }
+.pill.mal { background: #fdeaea; color: #a12; }
+.pill.pend { background: #fff3d6; color: #8a6d1a; }
+
+/* Config examen */
+.config-row { margin: 10px 0; }
+.config-row label { font-weight: 600; }
+
+/* ================= MATERIAL DE ESTUDIO ================= */
+.material {
+  background: #fff; border: 1px solid #ddd; border-radius: 6px;
+  padding: 20px 24px; margin: 12px 0;
+}
+.material h2 { font-size: 1.3rem; margin: 4px 0 10px; color: #1f2d3d; }
+.material h3 {
+  font-size: 1.08rem; margin: 26px 0 8px; padding-top: 12px;
+  border-top: 1px solid #eee; color: #26374a;
+}
+.material h4 { font-size: .98rem; margin: 16px 0 4px; color: #2c3e50; }
+.material p { margin: 8px 0; }
+.material ul, .material ol { margin: 6px 0 6px 4px; padding-left: 22px; }
+.material li { margin: 3px 0; }
+.material code { background: #f0f0f0; padding: 1px 5px; border-radius: 3px; font-family: "Courier New", monospace; font-size: .88em; }
+.material table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .9rem; }
+.material th, .material td { border: 1px solid #ccc; padding: 6px 9px; text-align: left; vertical-align: top; }
+.material th { background: #eef2f7; }
+.material pre {
+  background: #fbfbf5; border: 1px solid #ddd; border-radius: 5px;
+  padding: 10px 12px; overflow-x: auto; font-family: "Courier New", monospace; font-size: .85rem;
+}
+.material .intro { font-size: 1.02rem; color: #333; }
+
+/* Cajas de nota / trampa / what-if */
+.callout { border-left: 4px solid #34495e; background: #f4f6f9; padding: 10px 14px; margin: 12px 0; border-radius: 0 5px 5px 0; }
+.callout b.tag { display: inline-block; margin-right: 6px; }
+.callout.trampa { border-color: #b9770e; background: #fbf4e6; }
+.callout.whatif { border-color: #6c5ce7; background: #f2f0fd; }
+.callout.def { border-color: #2c7a4b; background: #eef8f1; }
+.callout.ejemplo { border-color: #1565c0; background: #eaf2fb; }
+.callout.ejemplo h4 { margin: 0 0 6px; color: #0d47a1; }
+.anim-tag {
+  display: inline-block; font-size: .72rem; background: #1565c0; color: #fff;
+  padding: 1px 8px; border-radius: 10px; margin-bottom: 4px;
+}
+
+/* Diagramas SVG */
+.diagrama { margin: 16px 0; text-align: center; }
+.diagrama svg { max-width: 100%; height: auto; }
+.diagrama .cap-fig {
+  font-size: .82rem; color: #555; margin-top: 6px; font-style: italic;
+}
+.leyenda { font-size: .8rem; color: #555; margin: 4px 0 0; }
+.leyenda span { display: inline-block; margin: 0 10px; }
+.linea-normal { display:inline-block; width:22px; border-top:2px solid #2c3e50; vertical-align:middle; }
+.linea-excep { display:inline-block; width:22px; border-top:2px dashed #c0392b; vertical-align:middle; }

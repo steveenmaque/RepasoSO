@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Examen — Sistemas Operativos | UNMSM</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <header>
+    <h1>Simulador de Examen — Sistemas Operativos</h1>
+    <p class="sub">UNMSM · Ciclo 5 · Prof. Díaz Muñante Jorge Raúl · Estilo de examen: preguntas de interpretación y justificación técnica</p>
+  </header>
+
+  <main id="app"><!-- render dinámico --></main>
+
+  <footer>
+    <p>Reglas del profesor: responde <b>concreto + justificación técnica</b> (sin ella, la nota es nula) · calidad &gt; cantidad · declara tus <b>supuestos</b> de forma explícita.</p>
+  </footer>
+
+  <!-- Motor de datos: primero define el banco, luego lo llenan los archivos por tema -->
+  <script src="data/temas.js"></script>
+  <script src="data/tema1_introduccion.js"></script>
+  <script src="data/tema2_procesos.js"></script>
+  <script src="data/tema3_estados.js"></script>
+  <script src="data/tema4_sincronizacion.js"></script>
+  <script src="data/tema5_deadlock.js"></script>
+  <script src="data/tema6_planificacion.js"></script>
+  <script src="data/tema7_memoria.js"></script>
+  <script src="data/tema8_foros.js"></script>
+  <!-- Material de estudio por tema (teoría + diagramas) -->
+  <script src="data/material1_introduccion.js"></script>
+  <script src="data/material2_procesos.js"></script>
+  <script src="data/material3_estados.js"></script>
+  <script src="data/material4_sincronizacion.js"></script>
+  <script src="data/material5_deadlock.js"></script>
+  <script src="data/material6_planificacion.js"></script>
+  <script src="data/material7_memoria.js"></script>
+  <script src="data/material8_foros.js"></script>
+  <!-- Lógica de la aplicación (al final, cuando el banco ya está cargado) -->
+  <script src="app.js"></script>
+</body>
+</html>
