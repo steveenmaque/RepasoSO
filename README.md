@@ -1,7 +1,7 @@
 # Simulador de Examen — Sistemas Operativos (UNMSM)
 
 Herramienta de estudio para el examen parcial del curso de **Sistemas Operativos**, Prof. **Díaz Muñante Jorge Raúl**.
-Generada a partir de los PDFs C1–C7, los 3 foros, las respuestas transcritas del profesor y sus exámenes reales (2013, 2022, 2024, 2025-2).
+Generada a partir de los PDFs C1–C7, los 3 foros, las respuestas transcritas del profesor, las **transcripciones de clase (Semanas 5-13)**, el **Repaso Técnico (PDF de Material adicional)** y sus exámenes reales (2013, 2022, 2024, 2025-2).
 
 ## Cómo abrirlo
 
@@ -21,7 +21,7 @@ Sin pistas hasta el final. Al terminar se **califica la Parte I** y se muestran 
 
 ## Contenido
 
-- **179 preguntas** en **8 temas**, todos con 20 o más: Introducción · Procesos · Estados (5 y 7/UNIX) · Sincronización · Deadlock · Planificación del CPU · Memoria · Foros (IoT / Linux / vCPU-HT).
+- **212 preguntas** en **8 temas**: Introducción · Procesos · Estados (5 y 7/UNIX) · Sincronización · Deadlock · Planificación del CPU · Memoria · Foros (IoT / Linux / vCPU-HT). Incluye **33 preguntas de repaso** destiladas de las transcripciones de clase (`data/repaso_transcripciones.js`), enfocadas al PDF de repaso y a las "trampas" que el profesor corrige en vivo.
 - **28+ diagramas** propios (SVG), incluidas **animaciones** de los conceptos con "flujo": ciclo de vida de 5 estados (un proceso recorriendo los estados), swapping RAM↔disco, traducción de la MMU, cambio de contexto, exclusión mutua (sección crítica), Round Robin y espera circular del deadlock. También estáticos: Von Neumann, roles del SO, modo usuario/kernel, Coffman, grafo de recursos, jerarquía de memoria, fragmentación, hyperthreading, etc.
 - Un **ejemplo resuelto** en cada uno de los 8 temas.
 - **Imágenes** en preguntas y material: figuras reales del examen 2025-2, salidas de comandos (`free -h`, `ps`, `pidstat`), pseudocódigo y diagramas.

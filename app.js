@@ -16,6 +16,16 @@
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
+  // Quita TODO resaltado (negritas / color) de un HTML de contenido.
+  // Se usa en la práctica por tema: alternativas, pista y respuesta de apoyo
+  // no deben tener nada resaltado (ninguna alternativa marcada, todo del mismo tamaño).
+  function sinResaltado(html) {
+    if (html == null) return "";
+    return String(html)
+      .replace(/<\/?(?:b|strong)\b[^>]*>/gi, "")        // elimina <b>/<strong>
+      .replace(/font-weight\s*:\s*[^;"']*;?/gi, "")      // elimina font-weight inline
+      .replace(/(?:^|;)\s*color\s*:\s*[^;"']*;?/gi, ";"); // elimina color de texto inline
+  }
   function shuffle(a) {
     a = a.slice();
     for (var i = a.length - 1; i > 0; i--) {
@@ -76,7 +86,7 @@
   /* ---------- estado por pregunta (usado en examen) ---------- */
   function estadoDe(q) {
     if (!session.estado[q.id]) {
-      var e = { seleccion: null, sel: [], contestada: false, correcta: null, texto: "", modeloVisto: false };
+      var e = { seleccion: null, sel: [], contestada: false, correcta: null, texto: "", modeloVisto: false, altVisto: false, pistaVisto: false };
       if (q.opciones) e.ops = q.opciones.slice(); // sin barajar el orden de opciones (más limpio)
       session.estado[q.id] = e;
     }
@@ -157,10 +167,30 @@
     renderPractica();
   }
 
+  // Pista de ayuda: orienta SIN entregar la respuesta. Combina una guía por tipo
+  // de pregunta con los "puntos clave" que el profesor espera (si existen).
+  function pistaDe(q) {
+    var guia = {
+      opcion: "Solo una alternativa es correcta: descarta las que tengan un error conceptual.",
+      multiple: "Puede haber más de una alternativa correcta; evalúa cada una por separado.",
+      vf: "Si cualquier parte de la afirmación falla, la respuesta es Falsa.",
+      abierta: "Estructura tu respuesta: concreto + justificación técnica + declara tus supuestos."
+    };
+    var out = "<p style='margin:0 0 6px'>" + esc(guia[q.tipo] || "Piensa en el concepto central del tema.") + "</p>";
+    if (q.claves && q.claves.length) {
+      out += "<p class='muted' style='margin:6px 0 2px'>Enfócate en:</p><ul class='claves'>";
+      q.claves.forEach(function (c) { out += "<li>" + sinResaltado(c) + "</li>"; });
+      out += "</ul>";
+    }
+    out += "<p class='muted' style='margin:6px 0 0'>Repasa el material de: " + esc(BANCO.nombreTema(q.tema)) + ".</p>";
+    return out;
+  }
+
   function renderPractica() {
     var q = session.preguntas[session.idx];
     var e = estadoDe(q);
     var total = session.preguntas.length;
+    var hayAlt = !!(q.opciones && q.opciones.length);
 
     var html = '<div class="barra">' +
       '<button class="sec small" onclick="App.estudiar(\'' + session.temaId + '\')">Volver al material</button>' +
@@ -170,20 +200,35 @@
     html += '<div class="card">';
     html += '<div class="pregunta-num">Pregunta de práctica · ' + tipoTexto(q.tipo) + "</div>";
     html += '<div class="enunciado">' + q.enunciado + "</div>";
-    // si la pregunta traía opciones, se muestran solo como referencia (no se marcan)
-    if (q.opciones) {
-      html += '<div class="muted" style="margin:4px 0">Alternativas de referencia:</div><ul class="ref-ops">';
-      q.opciones.forEach(function (o) { html += "<li>" + o.t + "</li>"; });
-      html += "</ul>";
-    }
     html += renderRecurso(q.recurso);
     html += '<p class="muted" style="margin-top:10px">Escribe tu respuesta (concreta, con justificación técnica y declarando supuestos):</p>';
     html += '<textarea id="respPractica" oninput="App.guardarTexto(this.value)" placeholder="Tu respuesta...">' + esc(e.texto || "") + "</textarea>";
 
-    if (!e.modeloVisto) {
-      html += '<div style="margin-top:8px"><button onclick="App.verModelo()">Mostrar respuesta modelo</button></div>';
-    } else {
-      html += '<div class="modelo"><h4>Respuesta modelo</h4>' + respuestaModelo(q) + "</div>";
+    // --- Botones de apoyo: nada se ve hasta pulsarlos ---
+    html += '<div class="apoyo-btns">';
+    if (hayAlt) {
+      html += '<button class="sec small" onclick="App.verAlternativas()">' +
+        (e.altVisto ? "Ocultar alternativas" : "Ver alternativas") + "</button>";
+    }
+    html += '<button class="sec small" onclick="App.verPista()">' +
+      (e.pistaVisto ? "Ocultar ayuda" : "Pedir ayuda") + "</button>";
+    html += '<button onclick="App.verModelo()">' +
+      (e.modeloVisto ? "Ocultar respuesta" : "Ver respuesta de apoyo") + "</button>";
+    html += "</div>";
+
+    // Alternativas: solo de referencia, ninguna resaltada, todas del mismo tamaño.
+    if (hayAlt && e.altVisto) {
+      html += '<ul class="alt-lista">';
+      q.opciones.forEach(function (o) { html += "<li>" + sinResaltado(o.t) + "</li>"; });
+      html += "</ul>";
+    }
+    // Ayuda (pista): orienta sin dar la respuesta.
+    if (e.pistaVisto) {
+      html += '<div class="pista"><h4>Ayuda</h4>' + pistaDe(q) + "</div>";
+    }
+    // Respuesta de apoyo: la respuesta modelo, sin resaltado.
+    if (e.modeloVisto) {
+      html += '<div class="modelo"><h4>Respuesta de apoyo</h4>' + sinResaltado(respuestaModelo(q)) + "</div>";
       if (q.fuente) html += '<div class="fuente">Fuente: ' + esc(q.fuente) + "</div>";
     }
     html += "</div>";
@@ -196,7 +241,14 @@
   }
 
   function guardarTexto(v) { estadoDe(session.preguntas[session.idx]).texto = v; }
-  function verModelo() { estadoDe(session.preguntas[session.idx]).modeloVisto = true; (session.modo === "practica" ? renderPractica : renderSesion)(); }
+  // Toggles de apoyo en la práctica (y respuesta modelo también en el examen).
+  function verModelo() {
+    var e = estadoDe(session.preguntas[session.idx]);
+    e.modeloVisto = session.modo === "practica" ? !e.modeloVisto : true;
+    (session.modo === "practica" ? renderPractica : renderSesion)();
+  }
+  function verAlternativas() { var e = estadoDe(session.preguntas[session.idx]); e.altVisto = !e.altVisto; renderPractica(); }
+  function verPista() { var e = estadoDe(session.preguntas[session.idx]); e.pistaVisto = !e.pistaVisto; renderPractica(); }
 
   /* =====================================================================
      CONFIGURACIÓN DEL EXAMEN GENERAL (único modo de prueba)
@@ -453,6 +505,7 @@
     home: renderHome, menuTemas: menuTemas, estudiar: estudiar, practicarTema: practicarTema,
     configExamen: configExamen, iniciarExamen: iniciarExamen,
     selOp: selOp, selMulti: selMulti, selVF: selVF, guardarTexto: guardarTexto, verModelo: verModelo,
+    verAlternativas: verAlternativas, verPista: verPista,
     nav: nav, ir: ir, confirmarSalir: confirmarSalir, finExamen: finExamen,
     revisar: revisar, revisarEn: revisarEn
   };

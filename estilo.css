@@ -100,6 +100,20 @@ pre.codigo { background: #fbfbf5; color: #222; }
 .ref-ops li { margin: 2px 0; }
 .nav-q.hecha { font-weight: bold; background: #e8eef5; }
 
+/* Práctica por tema: botones de apoyo (foquito / ayuda / respuesta) */
+.apoyo-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+/* Alternativas de referencia: TODAS iguales, ninguna resaltada. */
+.alt-lista { list-style: none; margin: 12px 0 0; padding: 0; }
+.alt-lista li {
+  display: block; border: 1px solid #ccc; border-radius: 5px; background: #fff;
+  padding: 9px 12px; margin: 6px 0; font-size: .95rem; font-weight: 400; color: #1a1a1a;
+}
+/* Refuerzo: aunque llegara algún <b>, no se resalta ninguna alternativa. */
+.alt-lista li b, .alt-lista li strong, .modelo b, .modelo strong { font-weight: 400; }
+/* Caja de ayuda (pista) */
+.pista { border-left: 4px solid #1565c0; background: #eaf2fb; padding: 10px 14px; margin: 12px 0; border-radius: 0 5px 5px 0; }
+.pista h4 { margin: 0 0 6px; color: #0d47a1; font-size: .95rem; }
+
 textarea {
   width: 100%; min-height: 120px; font: inherit; padding: 8px;
   border: 1px solid #ccc; border-radius: 5px; resize: vertical;
