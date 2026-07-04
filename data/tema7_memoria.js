@@ -4,10 +4,10 @@ BANCO.add("t7", [
     id: "t7-01", tipo: "opcion", dificultad: "media",
     enunciado: `¿Por qué un proceso <b>debe estar en la memoria real (RAM)</b> para ejecutarse?`,
     opciones: [
-      { t: "Porque el CPU solo ejecuta instrucciones que están en la memoria principal; el disco es respaldo, no ejecución.", ok: true },
-      { t: "Porque la RAM cifra automáticamente el código del proceso.", ok: false },
-      { t: "Porque el disco no puede almacenar programas.", ok: false },
-      { t: "Porque la RAM es más barata que el disco.", ok: false }
+      { t: "Porque el CPU solo ejecuta instrucciones que están en la memoria principal ya.", ok: true },
+      { t: "Porque la memoria RAM cifra de forma automática el código de todo proceso ya.", ok: false },
+      { t: "Porque el disco duro no es capaz de almacenar los programas del usuario final.", ok: false },
+      { t: "Porque la memoria RAM resulta bastante más barata que el disco duro del equipo.", ok: false }
     ],
     explica: `La CPU accede a instrucciones/datos en la <b>memoria principal</b>. Si hay más procesos que RAM, el SO gestiona quién está cargado (swapping). La memoria es un <b>recurso escaso</b>.`,
     fuente: "C7 · Por qué importa la memoria"
@@ -23,10 +23,10 @@ Mem:           7.7Gi   7.3Gi   120Mi        60Mi       300Mi        140Mi
 Swap:          2.0Gi   1.9Gi   100Mi`
     },
     opciones: [
-      { t: "Fuerte <b>presión de memoria</b>: RAM casi llena y <b>swap casi lleno</b> → el sistema usa disco como memoria y se ralentiza.", ok: true },
-      { t: "El sistema tiene memoria de sobra y no hay problema.", ok: false },
-      { t: "El disco está fallando físicamente.", ok: false },
-      { t: "Hay un deadlock entre procesos.", ok: false }
+      { t: "Fuerte presión de memoria: la RAM y el swap casi llenos arrastran al sistema.", ok: true },
+      { t: "El sistema tiene memoria de sobra y por eso no hay ningún problema de rendimiento.", ok: false },
+      { t: "El disco duro del servidor está fallando físicamente y por eso todo va muy lento.", ok: false },
+      { t: "Hay un deadlock entre varios procesos que se quedaron esperando en forma circular.", ok: false }
     ],
     explica: `RAM disponible = 140Mi (muy poca) y <b>swap</b> usado 1.9/2.0Gi → el SO está haciendo <b>swapping</b> intenso. Como el disco es ~100 000× más lento que la RAM, todo se arrastra. <code>free -h</code> (o <code>cat /proc/meminfo</code>, <code>vmstat</code>) es el comando para <b>verificar la disponibilidad de RAM</b> (¡cayó como teórica!).`,
     fuente: "Foro 2 · C7 (verificar RAM)"
@@ -57,10 +57,10 @@ Swap:          2.0Gi   1.9Gi   100Mi`
     id: "t7-04", tipo: "opcion", dificultad: "alta",
     enunciado: `La <b>caché</b> solo mejora el rendimiento si se cumple cierto principio. ¿Cuál?`,
     opciones: [
-      { t: "El principio de <b>localidad de referencia</b> (que existan casos/datos de acceso frecuente).", ok: true },
-      { t: "Que el disco sea SSD y no HDD.", ok: false },
-      { t: "Que el proceso tenga prioridad alta.", ok: false },
-      { t: "Que se deshabilite el swapping.", ok: false }
+      { t: "El principio de localidad de referencia: existen datos de acceso muy frecuente.", ok: true },
+      { t: "Que el disco de respaldo del equipo sea un SSD moderno y no un HDD ya viejo ya.", ok: false },
+      { t: "Que el proceso que la usa tenga fijada una prioridad alta dentro del sistema ya.", ok: false },
+      { t: "Que se deshabilite por completo el swapping entre la memoria RAM y el disco ya.", ok: false }
     ],
     explica: `La caché copia datos <b>frecuentes</b> para acelerarlos («hacer que los casos frecuentes sean rápidos»). Sin <b>localidad</b> (acceso aleatorio total), habría muchos <b>miss</b> y el overhead podría empeorar el rendimiento.`,
     fuente: "C7 · Memoria caché"
@@ -76,10 +76,10 @@ Swap:          2.0Gi   1.9Gi   100Mi`
     id: "t7-06", tipo: "opcion", dificultad: "media",
     enunciado: `El concepto de <b>grado de multiprogramación</b> se relaciona con…`,
     opciones: [
-      { t: "Tener <b>varios procesos almacenados en la memoria real</b> simultáneamente.", ok: true },
-      { t: "La velocidad del reloj del procesador.", ok: false },
-      { t: "El número de núcleos físicos del CPU.", ok: false },
-      { t: "La cantidad de archivos abiertos.", ok: false }
+      { t: "Tener varios procesos almacenados a la vez dentro de la memoria real del equipo.", ok: true },
+      { t: "La velocidad del reloj del procesador medida en los ciclos que hace por segundo.", ok: false },
+      { t: "El número de núcleos físicos que trae el procesador del equipo para trabajar ya.", ok: false },
+      { t: "La cantidad de archivos que el proceso mantiene abiertos mientras se ejecuta ya.", ok: false }
     ],
     explica: `Grado de multiprogramación = cuántos procesos caben y están activos <b>en RAM</b> a la vez. Más grado = mejor uso del CPU… hasta que la RAM se satura y aparece el <b>thrashing</b>.`,
     fuente: "Examen 2013 P.I-3 · C7"
@@ -88,10 +88,10 @@ Swap:          2.0Gi   1.9Gi   100Mi`
     id: "t7-07", tipo: "opcion", dificultad: "alta",
     enunciado: `Un estacionamiento tiene 5 espacios libres <b>en total</b>, pero ninguno junto, y no entra un bus que necesita 3 seguidos. ¿Qué concepto de memoria ilustra?`,
     opciones: [
-      { t: "<b>Fragmentación externa</b>: hay espacio libre total pero disperso; no cabe un bloque grande contiguo.", ok: true },
-      { t: "Fragmentación interna.", ok: false },
-      { t: "Thrashing.", ok: false },
-      { t: "Deadlock.", ok: false }
+      { t: "Fragmentación externa: hay espacio libre total pero disperso en huecos separados.", ok: true },
+      { t: "Fragmentación interna: se dio de más al bloque y sobra espacio dentro de él ya.", ok: false },
+      { t: "Un caso claro de thrashing por mover demasiadas páginas entre la RAM y el disco.", ok: false },
+      { t: "Un deadlock entre procesos que esperan de forma circular los mismos espacios ya.", ok: false }
     ],
     explica: `<b>Fragmentación externa</b>: memoria libre <b>dispersa</b> en huecos no contiguos, ninguno suficiente para un proceso grande (típica de asignación <b>continua</b>). Solución: asignación <b>no continua</b> (dividir el bus en autos) o <b>compactación</b>.`,
     fuente: "C7 · Fragmentación"
@@ -100,10 +100,10 @@ Swap:          2.0Gi   1.9Gi   100Mi`
     id: "t7-08", tipo: "opcion", dificultad: "alta",
     enunciado: `Se asigna a un proceso <b>más memoria</b> de la que necesita, y el sobrante <b>dentro</b> del bloque queda desperdiciado. ¿Qué tipo de fragmentación es?`,
     opciones: [
-      { t: "<b>Fragmentación interna</b>.", ok: true },
-      { t: "Fragmentación externa.", ok: false },
-      { t: "Thrashing.", ok: false },
-      { t: "Localidad de referencia.", ok: false }
+      { t: "Es una fragmentación interna, pues el sobrante queda dentro del bloque asignado.", ok: true },
+      { t: "Es una fragmentación externa, pues el sobrante queda entre los bloques ya usados.", ok: false },
+      { t: "Es un claro caso de thrashing por el swapping intenso entre la RAM y el disco ya.", ok: false },
+      { t: "Es la localidad de referencia, que hace que la caché acelere los datos frecuentes.", ok: false }
     ],
     explica: `<b>Interna</b>: el desperdicio ocurre <b>dentro</b> del bloque asignado (se dio de más). La <b>externa</b> es el desperdicio <b>entre</b> bloques (huecos dispersos).`,
     fuente: "C7 · Fragmentación"
@@ -126,10 +126,10 @@ COLOCACION -> ¿ ??? ?
 REEMPLAZO  -> ¿ ??? ?`
     },
     opciones: [
-      { t: "Obtención = ¿<b>cuándo</b> traer?; Colocación = ¿<b>dónde</b> ubicar?; Reemplazo = ¿<b>cuál</b> sacar?", ok: true },
-      { t: "Obtención = ¿dónde?; Colocación = ¿cuándo?; Reemplazo = ¿quién?", ok: false },
-      { t: "Las tres responden a «¿cuánto cuesta?».", ok: false },
-      { t: "Obtención = ¿cuál?; Colocación = ¿cuánto?; Reemplazo = ¿dónde?", ok: false }
+      { t: "Obtención es cuándo traer, colocación es dónde ubicar y reemplazo es cuál sacar.", ok: true },
+      { t: "Obtención es dónde ubicar, colocación es cuándo traer y reemplazo es a quién sacar.", ok: false },
+      { t: "Las tres estrategias responden siempre a la misma pregunta de cuánto cuesta cada una.", ok: false },
+      { t: "Obtención es cuál sacar, colocación es cuánto traer y reemplazo es dónde ubicar ya.", ok: false }
     ],
     explica: `<b>C-D-C</b>: <b>Cuándo</b> traer (obtención: por demanda / anticipada), <b>Dónde</b> ubicar (colocación: primer/mejor/peor ajuste), <b>Cuál</b> sacar cuando no hay espacio (reemplazo: LRU, FIFO, óptimo).`,
     fuente: "C7 · Estrategias"
@@ -138,10 +138,10 @@ REEMPLAZO  -> ¿ ??? ?`
     id: "t7-11", tipo: "opcion", dificultad: "media",
     enunciado: `En la estrategia de <b>obtención (fetch)</b>, la opción «anticipada o previa» consiste en…`,
     opciones: [
-      { t: "Traer datos a memoria <b>antes</b> de que se necesiten (se adelanta a la necesidad).", ok: true },
-      { t: "Traer los datos solo cuando el proceso los pide (por demanda).", ok: false },
-      { t: "Elegir qué página sacar de memoria.", ok: false },
-      { t: "Decidir en qué hueco colocar el proceso.", ok: false }
+      { t: "Traer los datos a la memoria antes de que el proceso llegue a necesitarlos ya.", ok: true },
+      { t: "Traer los datos a la memoria solo cuando el proceso los pide, es decir por demanda.", ok: false },
+      { t: "Elegir cuál de las páginas del proceso se saca de la memoria cuando ya no cabe.", ok: false },
+      { t: "Decidir en cuál de los huecos libres se coloca el proceso al cargarlo a memoria.", ok: false }
     ],
     explica: `<b>Anticipada</b> = adelantarse (ej. traer los 700k de golpe). <b>Por demanda</b> = traer lo que se va necesitando (200k, luego +400k…). Anticipar acierta si se predice bien el acceso.`,
     fuente: "C7 · Obtención"
@@ -150,10 +150,10 @@ REEMPLAZO  -> ¿ ??? ?`
     id: "t7-12", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Qué hace la <b>MMU (Memory Management Unit)</b>?`,
     opciones: [
-      { t: "Traduce direcciones <b>lógicas/virtuales</b> a <b>físicas/reales</b> y da aislamiento de memoria entre procesos.", ok: true },
-      { t: "Gestiona la cola de listos del planificador.", ok: false },
-      { t: "Controla la velocidad del ventilador del CPU.", ok: false },
-      { t: "Cifra el disco duro.", ok: false }
+      { t: "Traduce direcciones lógicas a físicas y aísla la memoria entre los procesos.", ok: true },
+      { t: "Gestiona la cola de listos del planificador y decide a quién le toca el CPU ya.", ok: false },
+      { t: "Controla la velocidad del ventilador del CPU según la temperatura que mida ya.", ok: false },
+      { t: "Cifra el contenido del disco duro para proteger los datos del usuario del equipo.", ok: false }
     ],
     explica: `La <b>MMU</b> (hardware) recibe una dirección virtual, verifica si es legal y la traduce a física; si no es legal → <i>fault handler</i> (al kernel). Su ausencia en microcontroladores IoT <b>dificulta el aislamiento</b> (Foro 1).`,
     fuente: "C7 · MMU / traducción de direcciones"
@@ -162,10 +162,10 @@ REEMPLAZO  -> ¿ ??? ?`
     id: "t7-13", tipo: "opcion", dificultad: "alta",
     enunciado: `Al compartir la RAM entre procesos, «controlar el <b>traslape</b>» significa…`,
     opciones: [
-      { t: "Garantizar que dos procesos <b>no coincidan</b> en la misma porción de memoria física.", ok: true },
-      { t: "Permitir que dos procesos usen la misma dirección física para ahorrar RAM.", ok: false },
-      { t: "Traducir direcciones virtuales a físicas.", ok: false },
-      { t: "Comprimir la memoria de los procesos inactivos.", ok: false }
+      { t: "Garantizar que dos procesos no coincidan en la misma porción de memoria física.", ok: true },
+      { t: "Permitir que dos procesos usen la misma dirección física para así ahorrar RAM ya.", ok: false },
+      { t: "Traducir cada dirección virtual del proceso a su dirección física correspondiente.", ok: false },
+      { t: "Comprimir la memoria de los procesos inactivos para ganar un poco de espacio ya.", ok: false }
     ],
     explica: `Controlar el traslape = evitar que dos procesos ocupen el <b>mismo pedazo físico</b> (aislamiento). Es distinto de la <b>traducción</b> (MMU) y de la <b>protección</b> (no leer memoria ajena).`,
     fuente: "C7 · Aspectos del uso de memoria"
@@ -190,10 +190,10 @@ REEMPLAZO  -> ¿ ??? ?`
     id: "t7-16", tipo: "opcion", dificultad: "alta",
     enunciado: `Un navegador con 50 pestañas hace que la laptop «se arrastre», aunque el CPU no está al 100%. ¿Qué está ocurriendo?`,
     opciones: [
-      { t: "<b>Thrashing</b>: la RAM se agotó, hay swapping intenso y el SO pasa más tiempo moviendo páginas RAM↔disco que ejecutando.", ok: true },
-      { t: "Deadlock entre las pestañas.", ok: false },
-      { t: "Inanición del navegador.", ok: false },
-      { t: "Fragmentación interna del CPU.", ok: false }
+      { t: "Thrashing: la RAM se agotó y el SO mueve páginas RAM y disco más que ejecutar.", ok: true },
+      { t: "Un deadlock entre las pestañas, que esperan de forma circular los mismos recursos.", ok: false },
+      { t: "Una inanición del navegador, que nunca llega a recibir el uso del procesador ya.", ok: false },
+      { t: "Una fragmentación interna del CPU por dar de más memoria a cada una de las pestañas.", ok: false }
     ],
     explica: `Cada pestaña necesita RAM. Al agotarse, el SO hace <b>swapping</b>; con demasiados procesos activos, entra en <b>thrashing</b> (mucho movimiento de páginas, poco trabajo útil). Como el CPU espera al disco, no está al 100%. Solución: cerrar pestañas (bajar el grado de multiprogramación) o más RAM.`,
     fuente: "C7 · Caso (thrashing)"
@@ -202,10 +202,10 @@ REEMPLAZO  -> ¿ ??? ?`
     id: "t7-17", tipo: "opcion", dificultad: "media",
     enunciado: `Cuando la RAM se agota por completo y no hay swap suficiente, en Linux puede actuar el…`,
     opciones: [
-      { t: "<b>OOM Killer</b> (Out Of Memory Killer): mata procesos para liberar memoria (puede matar el equivocado).", ok: true },
-      { t: "El despachador de corto plazo.", ok: false },
-      { t: "El Algoritmo del Banquero.", ok: false },
-      { t: "La MMU, cifrando la RAM.", ok: false }
+      { t: "El OOM Killer, que mata procesos para liberar memoria y puede matar el equivocado.", ok: true },
+      { t: "El despachador de corto plazo, que asigna el procesador al proceso que esté listo.", ok: false },
+      { t: "El algoritmo del banquero, que concede recursos solo si el estado sigue siendo seguro.", ok: false },
+      { t: "La MMU, que cifra el contenido de la RAM para proteger los datos del usuario ya.", ok: false }
     ],
     explica: `El <b>OOM Killer</b> es el mecanismo de Linux que, al agotarse la memoria, <b>termina procesos</b> para evitar el colapso. Se detecta con <code>dmesg | grep -i oom</code>.`,
     fuente: "C7 · What-if / Foro 2"
@@ -214,10 +214,10 @@ REEMPLAZO  -> ¿ ??? ?`
     id: "t7-18", tipo: "opcion", dificultad: "media",
     enunciado: `Un proceso intenta leer/escribir en la memoria de <b>otro</b> proceso. ¿Qué ocurre normalmente?`,
     opciones: [
-      { t: "El SO detecta la violación → <b>segmentation fault</b> → el proceso es terminado.", ok: true },
-      { t: "El otro proceso comparte su memoria automáticamente.", ok: false },
-      { t: "El SO copia los datos sin restricciones.", ok: false },
-      { t: "Se reinicia el sistema.", ok: false }
+      { t: "El SO detecta la violación, lanza un segmentation fault y termina ese proceso.", ok: true },
+      { t: "El otro proceso comparte de forma automática su memoria con el que la solicita.", ok: false },
+      { t: "El SO copia los datos de un proceso a otro sin ninguna clase de restricción ya.", ok: false },
+      { t: "El sistema operativo entero se reinicia y se pierde el trabajo de todos los procesos.", ok: false }
     ],
     explica: `La <b>protección</b> de memoria (MMU + kernel) impide el acceso a memoria ajena. Un acceso ilegal genera un <b>segmentation fault</b> y el SO termina el proceso infractor (rol de referí).`,
     fuente: "C7 · Protección / What-if"
@@ -233,10 +233,10 @@ REEMPLAZO  -> ¿ ??? ?`
     id: "t7-20", tipo: "opcion", dificultad: "media",
     enunciado: `Diferencia entre asignación <b>continua</b> y <b>no continua</b> de memoria.`,
     opciones: [
-      { t: "Continua: el proceso ocupa un único bloque contiguo (simple, pero sufre fragmentación externa). No continua: se reparte en bloques/segmentos en huecos separados (más compleja, necesita tablas).", ok: true },
-      { t: "Continua: usa disco; no continua: usa RAM.", ok: false },
-      { t: "Continua: para hilos; no continua: para procesos.", ok: false },
-      { t: "No hay diferencia real entre ambas.", ok: false }
+      { t: "Continua ocupa un bloque contiguo y es simple; no continua reparte en huecos separados.", ok: true },
+      { t: "Continua ocupa el disco duro del equipo; no continua ocupa la memoria RAM del equipo.", ok: false },
+      { t: "Continua sirve solo para los hilos de un proceso; no continua sirve para los procesos.", ok: false },
+      { t: "No existe ninguna diferencia real entre las dos formas de asignar memoria al proceso.", ok: false }
     ],
     explica: `<b>Continua</b>: un bloque seguido → traducción simple pero <b>fragmentación externa</b>. <b>No continua</b>: bloques dispersos (paginación/segmentación) → aprovecha huecos pero requiere <b>tablas de páginas/segmentos</b> y traducción de direcciones.`,
     fuente: "C7 · Organización"
@@ -252,10 +252,10 @@ REEMPLAZO  -> ¿ ??? ?`
     id: "t7-22", tipo: "opcion", dificultad: "alta",
     enunciado: `En un sistema <b>multicore</b>, un core lee un dato de caché que ya fue modificado por otro core y no se actualizó. ¿Qué problema es?`,
     opciones: [
-      { t: "<b>Coherencia de caché</b>: el core lee datos obsoletos (stale) → resultados incorrectos.", ok: true },
-      { t: "Fragmentación externa.", ok: false },
-      { t: "Efecto convoy.", ok: false },
-      { t: "Inanición.", ok: false }
+      { t: "Coherencia de caché: el core lee un dato obsoleto y produce resultados incorrectos.", ok: true },
+      { t: "Una fragmentación externa por dejar huecos libres dispersos en la memoria caché ya.", ok: false },
+      { t: "Un efecto convoy porque los cores cortos esperan detrás del core largo que va primero.", ok: false },
+      { t: "Una inanición del core, que nunca llega a leer el dato actualizado por el otro core.", ok: false }
     ],
     explica: `Es un problema de <b>coherencia de caché</b>: cada core tiene su caché y, sin protocolos de coherencia, uno puede leer un valor <b>viejo</b> tras la modificación de otro → datos incorrectos.`,
     fuente: "C7 · What-if (coherencia)"

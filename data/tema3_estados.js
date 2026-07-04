@@ -22,10 +22,10 @@ BANCO.add("t3", [
     id: "t3-02", tipo: "opcion", dificultad: "trampa",
     enunciado: `Cuando un proceso <b>bloqueado</b> es «finalizado» por el usuario, ¿a qué estado transita inmediatamente según el ciclo de vida?`,
     opciones: [
-      { t: "A la cola de <b>Listos</b>, pero con el <b>PC modificado</b> a su última instrucción.", ok: true },
-      { t: "Directamente a <b>Terminado</b>, saltándose el resto del ciclo.", ok: false },
-      { t: "Directamente a <b>Ejecución</b>, para matarlo de inmediato.", ok: false },
-      { t: "Permanece en <b>Bloqueado</b> hasta que llegue su evento de E/S.", ok: false }
+      { t: "A la cola de listos, pero con el PC apuntando ya a su última instrucción.", ok: true },
+      { t: "Directo a terminado, saltándose por completo el resto del ciclo de vida.", ok: false },
+      { t: "Directo a ejecución, para que el procesador lo mate de inmediato al toque.", ok: false },
+      { t: "Se queda en bloqueado hasta que por fin llegue el evento de su lenta E/S.", ok: false }
     ],
     explica: `Respeta el ciclo de vida: va a <b>Listos</b> con el <b>Contador de Programa</b> apuntando a la rutina de salida. No salta a Terminado ni a Ejecución directamente.`,
     fuente: "Respuesta clave del profesor · C3"
@@ -34,10 +34,10 @@ BANCO.add("t3", [
     id: "t3-03", tipo: "opcion", dificultad: "media",
     enunciado: `En el diagrama de <b>5 estados</b>, cuando un proceso en <b>Espera (Bloqueado)</b> recibe el fin de su E/S, ¿a qué estado pasa?`,
     opciones: [
-      { t: "A <b>Listo</b> (debe volver a la cola y esperar al despachador).", ok: true },
-      { t: "Directamente a <b>Ejecución</b>.", ok: false },
-      { t: "A <b>Nuevo</b>.", ok: false },
-      { t: "A <b>Terminado</b>.", ok: false }
+      { t: "A listo: vuelve a la cola y espera a que el despachador lo elija después.", ok: true },
+      { t: "A ejecución: toma el procesador de inmediato saltándose la cola de listos.", ok: false },
+      { t: "A nuevo: reinicia su ciclo de vida como si acabara de crearse otra vez ya.", ok: false },
+      { t: "A terminado: el sistema lo cierra apenas termina su operación de E/S ya.", ok: false }
     ],
     explica: `Espera → <b>Listo</b> (nunca directo a Ejecución). Para volver a usar el CPU siempre hay que pasar por <b>Listo</b> y ser elegido por el despachador.`,
     fuente: "C3 · Transiciones 5 estados"
@@ -61,10 +61,10 @@ BANCO.add("t3", [
 </svg>`
     },
     opciones: [
-      { t: "Ejecución → <b>Listo</b> (interrupción por fin de quantum).", ok: true },
-      { t: "Ejecución → Espera (bloqueado).", ok: false },
-      { t: "Ejecución → Terminado.", ok: false },
-      { t: "Listo → Ejecución.", ok: false }
+      { t: "Ejecución a listo, porque el fin de quantum le retira el uso del procesador.", ok: true },
+      { t: "Ejecución a espera, porque el proceso pide una E/S y queda bloqueado a esperar.", ok: false },
+      { t: "Ejecución a terminado, porque la instrucción exit lo saca del ciclo de vida.", ok: false },
+      { t: "Listo a ejecución, porque el despachador acaba de entregarle el procesador.", ok: false }
     ],
     explica: `Fin de quantum = <b>interrupción</b>: el SO le quita el CPU y lo devuelve a <b>Listo</b>. (Ejecución → Espera es cuando pide E/S; Ejecución → Terminado es cuando hace <code>exit()</code>.)`,
     fuente: "C3 · Transiciones 5 estados"
@@ -73,10 +73,10 @@ BANCO.add("t3", [
     id: "t3-05", tipo: "opcion", dificultad: "alta",
     enunciado: `En el diagrama de <b>7 estados (UNIX)</b>, ¿qué transición implica que el SO le <b>quita memoria real (RAM)</b> al proceso?`,
     opciones: [
-      { t: "<b>Listo → Listo-suspendido</b> (el proceso se va a disco; deja la RAM).", ok: true },
-      { t: "Listo → Ejecución.", ok: false },
-      { t: "Bloqueado → Listo.", ok: false },
-      { t: "Nuevo → Listo.", ok: false }
+      { t: "Listo a listo-suspendido: el proceso baja al disco y así deja libre la RAM.", ok: true },
+      { t: "Listo a ejecución: el proceso recibe el procesador y sigue ocupando la RAM.", ok: false },
+      { t: "Bloqueado a listo: el proceso ya tiene su evento y sigue ocupando la RAM.", ok: false },
+      { t: "Nuevo a listo: el proceso recién se admite y pasa a ocupar sitio en la RAM.", ok: false }
     ],
     explica: `Las transiciones hacia estados <b>suspendidos</b> (a disco) son las que <b>liberan RAM</b>. «Suspendido» = en disco, fuera de la memoria real.`,
     fuente: "Examen 2013 P.I-5 · C3"
@@ -109,10 +109,10 @@ BANCO.add("t3", [
     id: "t3-09", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Cuál de las siguientes transiciones del ciclo de vida es, en general, <b>ilegal</b>?`,
     opciones: [
-      { t: "<b>Nuevo → Terminado</b> (un proceso nuevo aún no se admitió ni ejecutó).", ok: true },
-      { t: "Nuevo → Listo-suspendido.", ok: false },
-      { t: "Bloqueado → Listo.", ok: false },
-      { t: "Ejecución → Listo.", ok: false }
+      { t: "Nuevo a terminado, pues un proceso nuevo aún no se admitió ni se ejecutó.", ok: true },
+      { t: "Nuevo a listo-suspendido, pues se admite pero va al disco por falta de RAM.", ok: false },
+      { t: "Bloqueado a listo, pues su evento de E/S terminó y vuelve a la cola de listos.", ok: false },
+      { t: "Ejecución a listo, pues el fin del quantum le retira el uso del procesador ya.", ok: false }
     ],
     explica: `<b>Nuevo → Terminado</b> es ilegal en el ciclo normal: un proceso nuevo debe pasar por Listo. (Nuevo → Listo-suspendido sí es legal: se admite pero se coloca en disco por falta de RAM.)`,
     fuente: "Examen 2013 P.II-2 · C3"
@@ -121,10 +121,10 @@ BANCO.add("t3", [
     id: "t3-10", tipo: "opcion", dificultad: "media",
     enunciado: `¿Qué caracteriza a un <b>proceso zombi</b>?`,
     opciones: [
-      { t: "Ha <b>terminado su ejecución</b>, pero su entrada <b>aún permanece en la tabla de procesos</b>.", ok: true },
-      { t: "Consume CPU de forma excesiva sin realizar tareas útiles.", ok: false },
-      { t: "Está bloqueado esperando un recurso del sistema.", ok: false },
-      { t: "Se ejecuta en segundo plano con prioridad baja.", ok: false }
+      { t: "Ha terminado su ejecución, pero su entrada sigue aún en la tabla de procesos.", ok: true },
+      { t: "Consume el CPU de forma excesiva sin llegar a realizar ninguna tarea útil ya.", ok: false },
+      { t: "Está bloqueado a la espera de que se libere algún recurso del sistema en uso.", ok: false },
+      { t: "Se ejecuta en segundo plano con una prioridad baja fijada por el usuario ya.", ok: false }
     ],
     explica: `Zombie = terminó pero su <b>entrada sigue en la tabla</b> (esperando que el padre lea su código de salida con <code>wait()</code>). No consume CPU.`,
     fuente: "Examen 2025 P.I-5 · C3"
@@ -142,10 +142,10 @@ BANCO.add("t3", [
     id: "t3-12", tipo: "opcion", dificultad: "media",
     enunciado: `En el diagrama de 7 estados, «estar <b>suspendido</b>» significa que el proceso…`,
     opciones: [
-      { t: "Fue movido de la RAM al <b>disco</b> (swap out); está fuera de la memoria real.", ok: true },
-      { t: "Está ejecutándose con máxima prioridad.", ok: false },
-      { t: "Terminó y espera que el padre lo recoja.", ok: false },
-      { t: "Está en la cola de listos, dentro de la RAM.", ok: false }
+      { t: "Fue movido de la RAM al disco con un swap out y quedó fuera de la memoria real.", ok: true },
+      { t: "Está ejecutándose con la máxima prioridad y por eso ocupa la memoria real ya.", ok: false },
+      { t: "Terminó su ejecución y solo espera que su proceso padre lo recoja de la tabla.", ok: false },
+      { t: "Está esperando su turno en la cola de listos, todavía dentro de la memoria RAM.", ok: false }
     ],
     explica: `Suspendido = <b>en disco</b> (swap out). Para volver a ejecutarse necesita un <b>swap in</b> (regresar a RAM).`,
     fuente: "C3 · 7 estados"
@@ -161,10 +161,10 @@ BANCO.add("t3", [
     id: "t3-14", tipo: "opcion", dificultad: "alta",
     enunciado: `Un dispositivo de E/S queda «colgado» y <b>nunca</b> envía el fin de la operación. ¿Qué le ocurre al proceso que la esperaba?`,
     opciones: [
-      { t: "Queda <b>permanentemente en Espera (Bloqueado)</b>; se resuelve con timeouts de E/S, señales o matándolo.", ok: true },
-      { t: "Pasa automáticamente a Listo tras un segundo.", ok: false },
-      { t: "Se convierte en zombie de inmediato.", ok: false },
-      { t: "El SO lo mueve a Ejecución para desbloquearlo.", ok: false }
+      { t: "Queda para siempre en espera; se sale con timeouts de E/S, señales o matándolo.", ok: true },
+      { t: "Pasa de forma automática a la cola de listos después de esperar un solo segundo.", ok: false },
+      { t: "Se convierte de inmediato en un proceso zombie que ocupa la tabla de procesos.", ok: false },
+      { t: "El sistema operativo lo mueve directo a ejecución para poder desbloquearlo ya.", ok: false }
     ],
     explica: `Sin el evento de fin de E/S, el proceso queda <b>colgado en Bloqueado</b>. Mecanismos como <b>timeouts</b> (SIGALRM) o matar el proceso lo resuelven.`,
     fuente: "C3 · What-if"
@@ -173,10 +173,10 @@ BANCO.add("t3", [
     id: "t3-15", tipo: "opcion", dificultad: "media",
     enunciado: `¿Quién realiza la transición <b>Listo → Ejecución</b>?`,
     opciones: [
-      { t: "El <b>despachador (dispatcher)</b>, que asigna el CPU al proceso elegido.", ok: true },
-      { t: "El propio proceso, cuando lo decide.", ok: false },
-      { t: "El dispositivo de E/S.", ok: false },
-      { t: "El compilador.", ok: false }
+      { t: "El despachador, que asigna el uso del procesador al proceso que fue elegido.", ok: true },
+      { t: "El propio proceso, que toma el procesador por su cuenta cuando así lo decide.", ok: false },
+      { t: "El dispositivo de E/S, que le entrega el procesador al terminar su operación.", ok: false },
+      { t: "El compilador, que asigna el procesador tras traducir el código del proceso.", ok: false }
     ],
     explica: `El <b>planificador</b> elige y el <b>despachador</b> ejecuta el cambio Listo→Ejecución (le da el CPU).`,
     fuente: "C3/C6 · Despachador"
@@ -192,10 +192,10 @@ BANCO.add("t3", [
     id: "t3-17", tipo: "opcion", dificultad: "alta",
     enunciado: `Si el <b>despachador falla</b> por completo, ¿cuál es la consecuencia?`,
     opciones: [
-      { t: "Nadie pasa de <b>Listo → Ejecución</b>: el sistema se <b>congela</b>.", ok: true },
-      { t: "Todos los procesos terminan correctamente.", ok: false },
-      { t: "Se acelera el sistema al eliminar overhead.", ok: false },
-      { t: "Los procesos bloqueados se desbloquean solos.", ok: false }
+      { t: "Nadie pasa de listo a ejecución y por eso el sistema entero se congela ya.", ok: true },
+      { t: "Todos los procesos listos terminan de forma correcta sin necesitar el CPU.", ok: false },
+      { t: "El sistema se acelera bastante al quitar el overhead del cambio de contexto.", ok: false },
+      { t: "Los procesos bloqueados se desbloquean solos y toman el procesador por sí ya.", ok: false }
     ],
     explica: `Sin despachador, ningún proceso listo recibe el CPU → el sistema deja de avanzar (se congela).`,
     fuente: "C3 · What-if"
@@ -220,10 +220,10 @@ BANCO.add("t3", [
     id: "t3-20", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Qué diferencia hay entre <b>Listo-suspendido</b> y <b>Bloqueado-suspendido</b>?`,
     opciones: [
-      { t: "Ambos están en disco, pero el <b>Listo-suspendido</b> ya podría ejecutar (solo le falta RAM), mientras el <b>Bloqueado-suspendido</b> además espera un evento de E/S.", ok: true },
-      { t: "El Listo-suspendido está en RAM y el Bloqueado-suspendido en disco.", ok: false },
-      { t: "Son exactamente lo mismo con distinto nombre.", ok: false },
-      { t: "El Bloqueado-suspendido consume CPU y el Listo-suspendido no.", ok: false }
+      { t: "Los dos están en disco: el listo-suspendido solo espera RAM y el bloqueado además un evento.", ok: true },
+      { t: "Los dos están en disco: el listo-suspendido espera un evento y el bloqueado solo la RAM.", ok: false },
+      { t: "Los dos están en disco: consumen CPU por igual mientras aguardan volver a la RAM real.", ok: false },
+      { t: "Los dos son el mismo estado con distinto nombre y no se diferencian en nada real ya.", ok: false }
     ],
     explica: `Los dos están <b>suspendidos (en disco)</b>. El <b>Listo-suspendido</b> solo necesita volver a RAM (swap in) para poder correr; el <b>Bloqueado-suspendido</b> además debe esperar su evento. Por eso Bloqueado-suspendido → Listo-suspendido ocurre cuando termina la E/S estando en disco.`,
     fuente: "C3 · 7 estados"
@@ -239,10 +239,10 @@ BANCO.add("t3", [
     id: "t3-22", tipo: "opcion", dificultad: "media",
     enunciado: `¿Quién provoca la transición <b>Ejecución → Espera (Bloqueado)</b>?`,
     opciones: [
-      { t: "El propio proceso, al solicitar una operación de <b>E/S</b> o esperar un evento.", ok: true },
-      { t: "El fin del quantum.", ok: false },
-      { t: "El despachador, para darle prioridad a otro.", ok: false },
-      { t: "La instrucción <code>exit()</code>.", ok: false }
+      { t: "El propio proceso, al pedir una operación de E/S o al ponerse a esperar un evento.", ok: true },
+      { t: "El fin del quantum, que retira el procesador y manda el proceso a la cola de listos.", ok: false },
+      { t: "El despachador, que retira el procesador para cedérselo a otro proceso con prioridad.", ok: false },
+      { t: "La instrucción exit, que saca el proceso del ciclo y lo lleva directo a terminado.", ok: false }
     ],
     explica: `El proceso se bloquea <b>a sí mismo</b> al pedir E/S o esperar un evento. El fin de quantum lleva a Listo; <code>exit()</code> lleva a Terminado.`,
     fuente: "C3 · Transiciones"

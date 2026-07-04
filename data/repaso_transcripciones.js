@@ -14,10 +14,10 @@ BANCO.add("t3", [
     id: "tr3-01", tipo: "opcion", dificultad: "trampa",
     enunciado: `Cuando un proceso pasa a <b>bloqueado</b> por una operación de E/S, entra a una cola de bloqueados. ¿Cómo se organiza esa cola y por qué?`,
     opciones: [
-      { t: "Por tipo de dispositivo (una cola por impresora, USB, disco…), atendida por orden de llegada, porque los dispositivos de E/S son independientes entre sí.", ok: true },
-      { t: "En una única cola global ordenada por prioridad del proceso.", ok: false },
-      { t: "En una única cola FIFO común a todos los dispositivos.", ok: false },
-      { t: "Por tamaño del proceso, del más pequeño al más grande.", ok: false }
+      { t: "Una cola por cada dispositivo, atendida por orden de llegada, pues los dispositivos de E/S son independientes.", ok: true },
+      { t: "Una única cola global para todos los dispositivos, atendida por el orden de prioridad del proceso que espera.", ok: false },
+      { t: "Una única cola FIFO común a todos los dispositivos, atendida por estricto orden de llegada de cada proceso ya.", ok: false },
+      { t: "Una cola por el tamaño del proceso, atendida del más pequeño al más grande sin mirar el dispositivo usado.", ok: false }
     ],
     explica: `El profesor exige la <b>justificación técnica</b>: cada dispositivo tiene su propia cola porque las operaciones de E/S son <b>independientes</b> (trabajar con la impresora 1 no depende de la impresora 2) y son <b>difíciles de predecir</b>. Un dispositivo puede terminar antes que otro; por eso la atención dentro de cada cola es por orden de llegada.`,
     fuente: "Transcripción Semana 5 · Repaso PDF Tema 3"
@@ -26,10 +26,10 @@ BANCO.add("t3", [
     id: "tr3-02", tipo: "opcion", dificultad: "trampa",
     enunciado: `Abres el Administrador de tareas, eliges un proceso X y le das «Finalizar tarea». ¿En qué estado estaba ese proceso justo antes de matarlo?`,
     opciones: [
-      { t: "Puede estar en cualquier estado (listo, bloqueado o en ejecución): el administrador solo muestra un inventario de lo que hay en la RAM.", ok: true },
-      { t: "Siempre en ejecución, porque para cerrarlo primero debe estar corriendo.", ok: false },
-      { t: "Siempre en terminado, porque ya lo estás cerrando.", ok: false },
-      { t: "Siempre en listo, esperando su turno de CPU.", ok: false }
+      { t: "Puede estar en cualquier estado, listo, bloqueado o en ejecución, pues el administrador es un inventario de la RAM.", ok: true },
+      { t: "Siempre está en ejecución, pues para poder cerrarlo el proceso antes tiene que estar de todos modos corriendo.", ok: false },
+      { t: "Siempre está en terminado, pues al darle finalizar tarea el proceso ya se cerró por completo antes de elegirlo.", ok: false },
+      { t: "Siempre está en listo, pues se encuentra esperando su turno en la cola para tomar el procesador cuando le toque.", ok: false }
     ],
     explica: `Trampa típica: la mayoría responde «ejecución». Pero el Administrador de tareas es un <b>inventario de la memoria RAM</b>, donde conviven procesos listos, bloqueados y en ejecución. La respuesta correcta es <b>depende</b>: el proceso elegido puede estar en cualquiera de esos estados.`,
     fuente: "Transcripción Semana 5 · Repaso PDF Tema 3"
@@ -45,10 +45,10 @@ BANCO.add("t3", [
     id: "tr3-04", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Es posible una transición directa de <b>Bloqueado → Ejecución</b> (saltándose la cola de listos)?`,
     opciones: [
-      { t: "Es técnicamente posible solo si el procesador está libre, pero es altamente no recomendable: el 95-99% de las veces el procesador está ocupado y preguntarlo desperdicia recursos del SO.", ok: true },
-      { t: "Sí, es la ruta normal y recomendada para acelerar el proceso.", ok: false },
-      { t: "No, es físicamente imposible bajo cualquier circunstancia.", ok: false },
-      { t: "Sí, siempre que el proceso tenga prioridad alta.", ok: false }
+      { t: "Es posible solo si el procesador está libre, pero se desaconseja: casi siempre está ocupado y consultarlo gasta recursos.", ok: true },
+      { t: "Sí, es la ruta normal y hasta recomendada, pues saltarse la cola de listos acelera bastante la ejecución del proceso.", ok: false },
+      { t: "No, es del todo imposible en cualquier circunstancia, pues jamás existe esa transición dentro del ciclo de vida ya.", ok: false },
+      { t: "Sí, siempre que el proceso en cuestión tenga fijada una prioridad alta que le permita saltarse la cola de listos ya.", ok: false }
     ],
     explica: `La única forma sería que el procesador esté libre en ese instante. De ser así, sí es posible, pero <b>altamente desaconsejable</b>: casi siempre el procesador está ocupado, y gastar ciclos del SO consultándolo es inútil. Lo natural es que el proceso pase por la cola de <b>listos</b>.`,
     fuente: "Transcripción Semana 5 · Repaso PDF Tema 3"
@@ -75,10 +75,10 @@ BANCO.add("t3", [
     id: "tr3-07", tipo: "opcion", dificultad: "alta",
     enunciado: `Unix, con su rutina <b>fork</b>, habilita una transición directa de <b>Nuevo → Listo Suspendido</b> cuando no hay memoria. En la analogía del profesor (Banco de Brasil = modelo clásico; Banco Itaú = Unix), ¿qué representa Unix?`,
     opciones: [
-      { t: "El Banco Itaú: no rechaza al cliente, lo pone en una cola afuera (disco) y lo atiende cuando haya aforo. No pierde trabajos, a costa de gestionar swapping.", ok: true },
-      { t: "El Banco de Brasil: rechaza al cliente («intente más tarde») para mantener la simplicidad interna.", ok: false },
-      { t: "Ninguno: Unix rechaza los procesos igual que el modelo clásico.", ok: false },
-      { t: "Ambos por igual, porque no hay diferencia de diseño entre ellos.", ok: false }
+      { t: "El Banco Itaú: no rechaza, encola al proceso en disco y lo admite cuando hay RAM; su costo es gestionar el swapping.", ok: true },
+      { t: "El Banco de Brasil: rechaza al proceso y le pide volver más tarde para así mantener simple su diseño interno ya.", ok: false },
+      { t: "Ninguno de los dos: Unix en realidad rechaza los procesos igual que el modelo clásico cuando ya no le queda memoria.", ok: false },
+      { t: "Los dos por igual, porque en el fondo no existe ninguna diferencia real de diseño entre el modelo clásico y Unix.", ok: false }
     ],
     explica: `Unix = Banco Itaú: <b>no rechaza</b>, encola al proceso en el disco (Listo Suspendido) y lo admite cuando haya memoria. Su fortaleza es no perder trabajos; su costo es gestionar el <b>swapping</b>, más complejo que la simplicidad del modelo clásico (Banco de Brasil), que sí rechaza para mantenerse simple.`,
     fuente: "Transcripción Semana 7 · Repaso PDF Tema 3"
@@ -96,10 +96,10 @@ BANCO.add("t3", [
     id: "tr3-09", tipo: "opcion", dificultad: "alta",
     enunciado: `Unix tiene <b>dos estados de ejecución</b> (uno de usuario y uno de kernel), mientras Windows mantiene uno solo. ¿Cuál es la ventaja de separarlos en Unix?`,
     opciones: [
-      { t: "Mayor seguridad, aislamiento y gestión de privilegios: el código de usuario no toca el hardware directamente, debe pasar por el kernel.", ok: true },
-      { t: "Mayor velocidad bruta, porque elimina el cambio de contexto.", ok: false },
-      { t: "Menor consumo de memoria, porque usa una sola tabla.", ok: false },
-      { t: "Ninguna: es solo una diferencia estética.", ok: false }
+      { t: "Mayor seguridad, aislamiento y control de privilegios: el código de usuario no toca el hardware, pasa por el kernel.", ok: true },
+      { t: "Mayor velocidad bruta de ejecución, porque separar los dos estados elimina por completo el costo del cambio de contexto.", ok: false },
+      { t: "Menor consumo de memoria del sistema, porque usar un solo modo permite trabajar con una única tabla de estados ya.", ok: false },
+      { t: "Ninguna ventaja real, porque separar la ejecución de usuario y la de kernel es solo una diferencia estética del diseño.", ok: false }
     ],
     explica: `Separar ejecución de usuario y de kernel mejora <b>seguridad, estabilidad, aislamiento y control de privilegios</b>. El costo es el <b>cambio de contexto</b> (un pequeño esfuerzo por las validaciones), que se compensa con la protección obtenida. Windows mantiene un solo estado por una mirada más de negocio que técnica.`,
     fuente: "Transcripción Semana 7 · Repaso PDF Tema 3"
@@ -108,10 +108,10 @@ BANCO.add("t3", [
     id: "tr3-10", tipo: "opcion", dificultad: "alta",
     enunciado: `Unix <b>eliminó</b> la transición de <b>Bloqueado Suspendido → Bloqueado</b> (no vuelve directo a la RAM). ¿Por qué es una ventaja?`,
     opciones: [
-      { t: "Evita subir a la RAM un proceso que de todas formas no puede ejecutarse aún; optimiza la memoria principal para quien sí la necesita y evita tráfico innecesario con el disco.", ok: true },
-      { t: "Acelera la ejecución de ese proceso concreto.", ok: false },
-      { t: "Elimina por completo el uso del disco duro.", ok: false },
-      { t: "Permite que dos procesos usen la misma dirección de memoria.", ok: false }
+      { t: "Evita subir a la RAM un proceso que igual no podría ejecutarse; así optimiza la memoria para quien sí la necesita.", ok: true },
+      { t: "Acelera de forma directa la ejecución de ese proceso concreto, porque al no bajar al disco se ahorra todo el swapping.", ok: false },
+      { t: "Elimina por completo el uso del disco duro del sistema, porque ya ningún proceso necesita ir a memoria secundaria.", ok: false },
+      { t: "Permite que dos procesos usen a la vez la misma dirección de memoria real para así aprovechar mejor la RAM libre ya.", ok: false }
     ],
     explica: `Analogía del profesor: es como alguien que llena un formulario afuera del banco; no tiene sentido hacerlo entrar a la agencia solo para seguir llenándolo (sigue bloqueado). El SO gana <b>optimizando la RAM</b> y evitando <b>tráfico innecesario</b> con el disco.`,
     fuente: "Transcripción Semana 7 · Repaso PDF Tema 3"
@@ -131,10 +131,10 @@ BANCO.add("t4", [
     id: "tr4-01", tipo: "opcion", dificultad: "media",
     enunciado: `El profesor usa el caso de dos hermanos que, sin avisarse, compran leche por separado. ¿Cuál de los <b>tres factores</b> de la sincronización falló?`,
     opciones: [
-      { t: "La comunicación (coincidieron en el tiempo y en el recurso común, pero no se avisaron).", ok: true },
-      { t: "El tiempo.", ok: false },
-      { t: "El recurso en común.", ok: false },
-      { t: "La prioridad de cada hermano.", ok: false }
+      { t: "La comunicación: sí coincidieron en el tiempo y en el recurso, pero no se avisaron nada entre ellos.", ok: true },
+      { t: "El tiempo: los dos hermanos en realidad nunca llegaron a coincidir el mismo día para comprar.", ok: false },
+      { t: "El recurso: cada hermano compró en el fondo una leche distinta y no un recurso común compartido.", ok: false },
+      { t: "La prioridad: un hermano tenía más prioridad que el otro y por eso terminó comprando primero él.", ok: false }
     ],
     explica: `Los tres factores de la sincronización son <b>tiempo, recurso en común y comunicación</b>. En el caso de los hermanos coincidieron el tiempo (mismo día) y el recurso (la leche), pero faltó <b>comunicación</b>: un mensaje en la refrigeradora habría evitado la compra doble.`,
     fuente: "Transcripción Semanas 7-8 · Repaso PDF Tema 4"
@@ -152,11 +152,11 @@ BANCO.add("t4", [
     id: "tr4-03", tipo: "multiple", dificultad: "alta",
     enunciado: `Selecciona las <b>condiciones obligatorias</b> que debe cumplir una buena solución al problema de la sección crítica (según el profesor).`,
     opciones: [
-      { t: "Garantizar la exclusión mutua (solo un proceso en su sección crítica a la vez).", ok: true },
-      { t: "Ningún proceso fuera de su sección crítica puede bloquear a otros (no reservar el recurso «por si acaso»).", ok: true },
-      { t: "Ningún proceso puede esperar un tiempo arbitrariamente grande (no acaparar el recurso para siempre).", ok: true },
-      { t: "La solución no puede asumir la velocidad ni el número de procesadores.", ok: true },
-      { t: "Todos los procesos deben tener la misma prioridad.", ok: false }
+      { t: "Garantizar la exclusión mutua: solo un proceso dentro de su sección crítica a la vez, nunca dos juntos.", ok: true },
+      { t: "Ningún proceso que esté fuera de su sección crítica puede llegar a bloquear a los demás procesos del sistema.", ok: true },
+      { t: "Ningún proceso puede llegar a esperar un tiempo arbitrariamente grande para poder entrar a su sección crítica.", ok: true },
+      { t: "La solución no puede asumir la velocidad relativa ni el número de procesadores que tenga la máquina real ya.", ok: true },
+      { t: "Todos los procesos del sistema deben tener siempre exactamente la misma prioridad fija asignada por igual ya.", ok: false }
     ],
     explica: `Las cuatro condiciones son: <b>(1)</b> exclusión mutua garantizada; <b>(2)</b> nadie fuera de su sección crítica bloquea a otros; <b>(3)</b> nadie espera un tiempo arbitrariamente grande; <b>(4)</b> no asumir la velocidad/rapidez de los procesos. La igualdad de prioridades no es una condición.`,
     fuente: "Transcripción Semana 7 · Repaso PDF Tema 4"
@@ -165,10 +165,10 @@ BANCO.add("t4", [
     id: "tr4-04", tipo: "opcion", dificultad: "alta",
     enunciado: `En los <b>semáforos de Dijkstra</b> (S = variable entera no negativa), ¿qué hace la operación <b>P (wait)</b> sobre S?`,
     opciones: [
-      { t: "Si S > 0, resta 1 (S = S - 1) y el proceso continúa; si no, manda el proceso a la cola de bloqueados.", ok: true },
-      { t: "Siempre suma 1 a S y despierta un proceso.", ok: false },
-      { t: "Reinicia S a su valor inicial.", ok: false },
-      { t: "Bloquea siempre al proceso, sin importar el valor de S.", ok: false }
+      { t: "Si S es mayor que cero resta uno y el proceso continúa; si no, lo manda a la cola de bloqueados del semáforo.", ok: true },
+      { t: "Siempre suma uno al valor de S y de paso despierta a un proceso que estaba aguardando en la cola del semáforo.", ok: false },
+      { t: "Reinicia el valor de S a su valor inicial y de una vez deja pasar a todos los procesos que estaban esperando ya.", ok: false },
+      { t: "Bloquea siempre al proceso que la ejecuta, sin importar para nada cuál sea el valor actual de S en ese momento.", ok: false }
     ],
     explica: `<b>P (wait):</b> pregunta si S > 0. Si es cierto, decrementa (<b>S = S - 1</b>) y el proceso entra a su sección crítica. Si S = 0, el proceso se <b>bloquea</b> y va a la cola de espera del semáforo.`,
     fuente: "Transcripción Semanas 8-9 · Repaso PDF Tema 4"
@@ -177,10 +177,10 @@ BANCO.add("t4", [
     id: "tr4-05", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Qué hace la operación <b>V (signal)</b> sobre un semáforo S?`,
     opciones: [
-      { t: "Si hay un proceso esperando en la cola del semáforo, lo despierta (lo pasa a Listos); si la cola está vacía, incrementa S en 1.", ok: true },
-      { t: "Siempre decrementa S en 1.", ok: false },
-      { t: "Bloquea al proceso que la ejecuta.", ok: false },
-      { t: "Vacía la cola de bloqueados de golpe.", ok: false }
+      { t: "Si hay un proceso esperando en la cola, lo despierta y lo pasa a listos; si la cola está vacía, suma uno a S.", ok: true },
+      { t: "Siempre resta uno al valor de S, sin importar para nada si hay o no procesos esperando dentro de la cola ya.", ok: false },
+      { t: "Bloquea al proceso que la ejecuta y de una vez lo manda a la cola de espera del propio semáforo a aguardar.", ok: false },
+      { t: "Vacía de golpe toda la cola de bloqueados del semáforo y de paso reinicia su valor a cero otra vez desde el inicio.", ok: false }
     ],
     explica: `<b>V (signal):</b> revisa la cola del semáforo. Si hay un proceso esperando, lo <b>despierta</b> y lo pasa a Listos (le cede el recurso). Si la cola está vacía, incrementa el semáforo (<b>S = S + 1</b>).`,
     fuente: "Transcripción Semana 9 · Repaso PDF Tema 4"
@@ -189,10 +189,10 @@ BANCO.add("t4", [
     id: "tr4-06", tipo: "opcion", dificultad: "media",
     enunciado: `Hay 3 cintas idénticas, así que S = 3. Llegan y ejecutan P los procesos 3, 1 y 4 (toman una cinta cada uno). Llega el proceso 2 y ejecuta P. ¿Qué ocurre?`,
     opciones: [
-      { t: "El proceso 2 se bloquea y va a la cola de espera, porque S ya es 0 (no hay cintas libres).", ok: true },
-      { t: "El proceso 2 toma una cuarta cinta virtual.", ok: false },
-      { t: "S se vuelve negativo (S = -1) pero el proceso continúa.", ok: false },
-      { t: "El proceso 2 expulsa al proceso 3 de su cinta.", ok: false }
+      { t: "El proceso 2 se bloquea y va a la cola de espera, porque S ya vale cero y no queda ninguna cinta libre.", ok: true },
+      { t: "El proceso 2 toma una cuarta cinta virtual que el propio semáforo crea para él en ese preciso momento.", ok: false },
+      { t: "El valor de S se vuelve negativo hasta llegar a menos uno, pero el proceso 2 igual continúa su ejecución.", ok: false },
+      { t: "El proceso 2 expulsa de su cinta al proceso 3 para poder tomar él esa misma cinta de inmediato al toque.", ok: false }
     ],
     explica: `Tras 3 operaciones P, S = 0. Cuando el proceso 2 ejecuta P y S no es mayor que 0, el sistema lo <b>bloquea</b>. Si luego el proceso 1 termina y ejecuta V, el SO despierta al proceso 2 y le cede la cinta liberada.`,
     fuente: "Transcripción Semana 9 · Repaso PDF Tema 4"
@@ -205,10 +205,10 @@ BANCO.add("t5", [
     id: "tr5-01", tipo: "opcion", dificultad: "media",
     enunciado: `Según la definición que valida el profesor, ¿qué es un <b>abrazo mortal (deadlock)</b>?`,
     opciones: [
-      { t: "Un estado en que dos o más procesos esperan un evento que nunca ocurrirá, porque se retienen mutuamente los recursos y ninguno avanza.", ok: true },
-      { t: "Un proceso que consume el 100% del CPU en un bucle infinito.", ok: false },
-      { t: "Un proceso de baja prioridad que nunca llega a ejecutarse (inanición).", ok: false },
-      { t: "Un proceso que fue movido al disco por falta de memoria.", ok: false }
+      { t: "Un estado donde dos o más procesos esperan un evento que jamás ocurrirá porque se retienen los recursos entre ellos.", ok: true },
+      { t: "Un proceso que consume el cien por ciento del CPU porque quedó atrapado dentro de un bucle infinito de cálculo.", ok: false },
+      { t: "Un proceso de baja prioridad que por culpa del planificador nunca llega a ejecutarse, es decir una inanición pura.", ok: false },
+      { t: "Un proceso que el sistema movió al disco por falta de memoria y quedó suspendido esperando volver a la RAM ya.", ok: false }
     ],
     explica: `El <b>deadlock</b> es una espera circular de un evento que <b>nunca va a ocurrir</b>: cada proceso retiene un recurso que el otro necesita. Analogía del profesor: una intersección atascada donde cada chofer espera que el otro retroceda y nadie cede. No confundir con inanición (un proceso relegado sí podría avanzar si le suben la prioridad).`,
     fuente: "Transcripción Semanas 9-10 · Repaso PDF Tema 5"
@@ -217,11 +217,11 @@ BANCO.add("t5", [
     id: "tr5-02", tipo: "multiple", dificultad: "alta",
     enunciado: `Selecciona las <b>políticas/enfoques</b> para tratar el abrazo mortal mencionados en clase.`,
     opciones: [
-      { t: "Prevenir (negar alguna de las condiciones de Coffman).", ok: true },
-      { t: "Evitar (analizar el estado de los recursos en tiempo real, p. ej. algoritmo del banquero).", ok: true },
-      { t: "Detectar y recuperarse.", ok: true },
-      { t: "Ignorarlo (algoritmo del avestruz).", ok: true },
-      { t: "Aumentar el quantum de todos los procesos.", ok: false }
+      { t: "Prevenir, negando de antemano una de las cuatro condiciones que plantea Coffman para el bloqueo.", ok: true },
+      { t: "Evitar, analizando en vivo el estado de los recursos, tal como lo hace el algoritmo del banquero.", ok: true },
+      { t: "Detectar el ciclo con un grafo y luego recuperarse matando o expropiando alguno de los procesos.", ok: true },
+      { t: "Ignorarlo por su baja probabilidad de ocurrir, lo que se conoce como el algoritmo del avestruz.", ok: true },
+      { t: "Aumentar el quantum de todos los procesos del sistema para que así ninguno se llegue a bloquear ya.", ok: false }
     ],
     explica: `Las políticas son <b>prevenir, evitar, detectar/recuperar</b> y el <b>algoritmo del avestruz</b> (ignorar). Ojo con la trampa clásica: <b>prevenir ≠ evitar</b>. Prevenir ataca las condiciones de Coffman de antemano; evitar analiza en tiempo real si conceder un recurso deja el sistema en estado seguro (banquero).`,
     fuente: "Transcripción Semanas 9-10 · Repaso PDF Tema 5"
@@ -243,10 +243,10 @@ BANCO.add("t6", [
     id: "tr6-01", tipo: "opcion", dificultad: "trampa",
     enunciado: `Sobre el <b>manejo de memoria con hilos (threads)</b> frente a un proceso monolítico, ¿qué afirmación es correcta?`,
     opciones: [
-      { t: "El verdadero beneficio es la agilidad de carga y liberación (cargar hilos de 10 KB vs un bloque de 800 KB, y liberar RAM apenas cada hilo termina); pero sincronizar la memoria compartida es MÁS complejo.", ok: true },
-      { t: "Los hilos simplifican el manejo de memoria porque no la comparten.", ok: false },
-      { t: "Los hilos siempre ejecutan más rápido que cualquier proceso, sin excepción.", ok: false },
-      { t: "Un proceso monolítico libera su RAM instrucción por instrucción.", ok: false }
+      { t: "El beneficio real es la agilidad de carga y liberación, pero sincronizar su memoria compartida es más complejo.", ok: true },
+      { t: "Los hilos simplifican del todo el manejo de la memoria justamente porque entre ellos no comparten nada de ella.", ok: false },
+      { t: "Los hilos siempre se ejecutan más rápido que cualquier proceso monolítico, sin ninguna excepción posible ya.", ok: false },
+      { t: "Un proceso monolítico va liberando su memoria RAM instrucción por instrucción a medida que avanza su ejecución.", ok: false }
     ],
     explica: `Trampa: se suele decir que los hilos «facilitan» la memoria. En realidad, como comparten la dirección de memoria del proceso, <b>sincronizarlos es más complejo</b>. El beneficio real es la <b>agilidad de carga/liberación</b>: se cargan bloques pequeños y cada hilo libera su RAM al terminar; el proceso monolítico no libera nada hasta acabar todo el bloque.`,
     fuente: "Transcripción Semanas 9-10 · Repaso PDF Tema 6"
@@ -255,10 +255,10 @@ BANCO.add("t6", [
     id: "tr6-02", tipo: "opcion", dificultad: "media",
     enunciado: `¿Cuál es la principal <b>desventaja</b> de usar hilos?`,
     opciones: [
-      { t: "La sincronización: si un archivo se divide en hilos y uno falla, el resultado queda corrupto; el programador debe afinar muy bien la lógica.", ok: true },
-      { t: "Que no pueden ejecutarse en paralelo en varios núcleos.", ok: false },
-      { t: "Que consumen más RAM que un proceso monolítico equivalente.", ok: false },
-      { t: "Que no pueden compartir memoria entre sí.", ok: false }
+      { t: "La sincronización: si un archivo se parte en hilos y uno falla, el resultado sale corrupto y hay que afinar la lógica.", ok: true },
+      { t: "Que en realidad no llegan a ejecutarse en paralelo sobre varios núcleos, ni siquiera cuando el hardware lo permite.", ok: false },
+      { t: "Que consumen bastante más memoria RAM que la que gastaría un proceso monolítico del todo equivalente en su tarea.", ok: false },
+      { t: "Que entre ellos no pueden compartir ninguna clase de memoria, así que deben comunicarse siempre por mensajes ya.", ok: false }
     ],
     explica: `La desventaja clave es la <b>sincronización</b>. Ejemplo del profesor: un utilitario descarga un archivo de 4 GB dividido en 3 hilos; si el hilo 3 falla, el archivo queda <b>corrupto</b>. Hay que coordinar bien la unión final de los hilos.`,
     fuente: "Transcripción Semanas 9-10 · Repaso PDF Tema 6"
@@ -267,10 +267,10 @@ BANCO.add("t6", [
     id: "tr6-03", tipo: "opcion", dificultad: "alta",
     enunciado: `Para el planificador, «ser justo» significa…`,
     opciones: [
-      { t: "Equidad: dar a cada quien lo que le corresponde (no igualdad), y contra la inanición usar envejecimiento (aging) subiendo gradualmente la prioridad del proceso relegado.", ok: true },
-      { t: "Igualdad: darle exactamente el mismo tiempo de CPU a todos los procesos.", ok: false },
-      { t: "Ejecutar siempre primero el proceso que llegó último.", ok: false },
-      { t: "Darle todo el CPU al proceso de mayor prioridad hasta que termine, sin excepción.", ok: false }
+      { t: "Equidad, dar a cada quien lo suyo, no igualdad; contra la inanición se usa el envejecimiento o aging del proceso.", ok: true },
+      { t: "Igualdad, dar exactamente el mismo tiempo de CPU a todos los procesos por igual sin mirar su clase ni su prioridad.", ok: false },
+      { t: "Ejecutar siempre primero al proceso que llegó justo al último a la cola, en vez de respetar el orden de llegada real.", ok: false },
+      { t: "Dar todo el CPU al proceso de mayor prioridad hasta que él termine del todo, sin ninguna clase de excepción posible.", ok: false }
     ],
     explica: `Justicia es <b>equidad</b>, no igualdad: «dar a cada quien lo que le corresponda». Si una cola por prioridad deja congelado a un proceso de baja prioridad (<b>inanición</b>), el mecanismo de <b>envejecimiento (aging)</b> le incrementa gradualmente la prioridad hasta que consiga el procesador.`,
     fuente: "Transcripción Semana 9 · Repaso PDF Tema 6"
@@ -279,10 +279,10 @@ BANCO.add("t6", [
     id: "tr6-04", tipo: "opcion", dificultad: "trampa",
     enunciado: `Respecto al <b>porcentaje de uso del CPU</b>: ¿se busca maximizarlo o minimizarlo, y cuál es el argumento correcto?`,
     opciones: [
-      { t: "Maximizarlo, porque el CPU no debe estar ocioso si hay procesos esperando; pero OJO: alto uso de CPU no implica alta productividad (un solo bucle infinito puede saturarlo al 100%).", ok: true },
-      { t: "Maximizarlo, porque más uso de CPU siempre significa más procesos terminados (mayor productividad).", ok: false },
-      { t: "Minimizarlo, para que el procesador consuma menos recursos.", ok: false },
-      { t: "Es indistinto: no afecta al desempeño del sistema.", ok: false }
+      { t: "Maximizarlo, pues el CPU no debe estar ocioso si hay trabajo; pero ojo, un uso alto no implica alta productividad.", ok: true },
+      { t: "Maximizarlo, pues un uso alto del CPU siempre significa que se terminan más procesos, o sea siempre más productividad.", ok: false },
+      { t: "Minimizarlo siempre que se pueda, para que de ese modo el procesador llegue a consumir bastantes menos recursos ya.", ok: false },
+      { t: "Es del todo indistinto, pues el uso del CPU no guarda ninguna relación real con el desempeño final del sistema ya.", ok: false }
     ],
     explica: `La meta es <b>maximizar</b> (la ventanilla del banco debe atender si hay clientes). Trampa en el argumento: NO hay relación directa entre uso de CPU y cantidad de procesos terminados; un único proceso en <b>bucle infinito</b> satura el CPU al 100% sin producir nada. Además, un CPU constantemente por encima del <b>75%</b> es señal de alerta (virus, loop o hardware obsoleto).`,
     fuente: "Transcripción Semanas 9-10 · Repaso PDF Tema 6"
@@ -291,10 +291,10 @@ BANCO.add("t6", [
     id: "tr6-05", tipo: "opcion", dificultad: "media",
     enunciado: `El profesor separa el <b>Planificador de CPU</b> del <b>Despachador</b>. ¿Cómo se corresponden con «política» y «mecanismo»?`,
     opciones: [
-      { t: "El Planificador define la política (el QUÉ: qué proceso pasa a ejecución); el Despachador ejecuta el mecanismo (el CÓMO: el cambio de contexto real).", ok: true },
-      { t: "El Planificador es el mecanismo y el Despachador es la política.", ok: false },
-      { t: "Ambos son mecanismos de bajo nivel idénticos.", ok: false },
-      { t: "El Despachador decide la prioridad y el Planificador guarda los registros.", ok: false }
+      { t: "El planificador define la política, qué proceso pasa a ejecución; el despachador ejecuta el mecanismo, el cambio real.", ok: true },
+      { t: "El planificador es el mecanismo de bajo nivel y el despachador es la política que decide a qué proceso le toca ya.", ok: false },
+      { t: "Los dos son en realidad mecanismos de bajo nivel idénticos que hacen exactamente la misma tarea dentro del núcleo.", ok: false },
+      { t: "El despachador decide la prioridad de cada proceso y el planificador solo guarda y restaura los registros del CPU.", ok: false }
     ],
     explica: `<b>Planificador = política (QUÉ)</b>: decide, según el algoritmo elegido (FCFS, RR…), qué proceso pasa de Listos a Ejecución. <b>Despachador = mecanismo (CÓMO)</b>: realiza el cambio de contexto (guardar/restaurar registros) para entregarle el CPU. Es la misma separación política/mecanismo del Tema 1.`,
     fuente: "Transcripción Semanas 9-10 · Repaso PDF Tema 6"
@@ -317,10 +317,10 @@ BANCO.add("t7", [
     id: "tr7-01", tipo: "multiple", dificultad: "alta",
     enunciado: `¿Por qué la <b>administración de la memoria principal</b> es un problema crítico para el SO? (Marca las dos razones del profesor.)`,
     opciones: [
-      { t: "Es un recurso de poca capacidad que se agota rápidamente (se instala software, nuevas versiones, etc.).", ok: true },
-      { t: "De nada sirve que un proceso tenga el procesador si no tiene espacio en memoria principal: ambos recursos están fuertemente amarrados para ejecutar.", ok: true },
-      { t: "Porque la memoria principal es no volátil y guarda los datos al apagar.", ok: false },
-      { t: "Porque la memoria principal reemplaza por completo al procesador.", ok: false }
+      { t: "Es un recurso de poca capacidad que se agota rápido a medida que se instala más software y más versiones.", ok: true },
+      { t: "De nada sirve el procesador si no hay espacio en memoria: los dos recursos van fuertemente amarrados para ejecutar.", ok: true },
+      { t: "Porque la memoria principal es no volátil y por eso guarda todos los datos del proceso al apagar el equipo ya.", ok: false },
+      { t: "Porque la memoria principal llega a reemplazar por completo al procesador dentro del sistema cuando se satura.", ok: false }
     ],
     explica: `Dos razones: <b>(1)</b> es un recurso <b>escaso</b> que se agota con el tiempo (más software instalado, menor desempeño); <b>(2)</b> un proceso necesita <b>a la vez</b> procesador y espacio en RAM para ejecutarse; tener uno sin el otro no sirve. Por eso el SO debe repartir la RAM de la forma más inteligente posible.`,
     fuente: "Transcripción Semana 12 · Repaso PDF Tema 7"
@@ -329,10 +329,10 @@ BANCO.add("t7", [
     id: "tr7-02", tipo: "opcion", dificultad: "trampa",
     enunciado: `¿Cuál es la definición correcta de <b>fragmentación de memoria</b>?`,
     opciones: [
-      { t: "Espacios LIBRES y habilitados que no pueden utilizarse porque se exige una asignación continua (contigua).", ok: true },
-      { t: "Los pasillos o separaciones entre las unidades de asignación ocupadas.", ok: false },
-      { t: "Cualquier espacio de memoria que esté ocupado por un proceso.", ok: false },
-      { t: "La memoria que quedó dañada o malograda físicamente.", ok: false }
+      { t: "Espacios libres y habilitados que no se pueden usar porque se exige una asignación contigua del bloque entero.", ok: true },
+      { t: "Los pasillos o las separaciones que van quedando justo entre las unidades de asignación que están ocupadas ya.", ok: false },
+      { t: "Cualquier espacio de la memoria que en este preciso momento esté ocupado por algún proceso que se ejecuta ya.", ok: false },
+      { t: "La memoria que quedó dañada o malograda de forma física y que por eso el sistema operativo ya no puede asignar.", ok: false }
     ],
     explica: `Trampa de definición. La fragmentación son <b>espacios libres y habilitados</b> que no se pueden usar por la exigencia de un bloque <b>continuo</b>. Analogía del salón: un salón vacío NO está fragmentado; se fragmenta cuando un grupo de 5 necesita asientos <b>contiguos</b> pero los libres están <b>dispersos</b>. Solo se evalúan los espacios libres, no los ocupados ni los dañados.`,
     fuente: "Transcripción Semanas 11-13 · Repaso PDF Tema 7"
@@ -348,10 +348,10 @@ BANCO.add("t7", [
     id: "tr7-04", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Cuál es una desventaja real de la asignación <b>continua</b> frente a la no continua?`,
     opciones: [
-      { t: "El crecimiento rígido: si el proceso debe crecer y no hay espacio contiguo al lado, hay que mudarlo copiando todo a otro hueco, lo que obliga a cambiar todas sus referencias (direcciones).", ok: true },
-      { t: "Que necesita una tabla de particiones con miles de entradas.", ok: false },
-      { t: "Que hace la ejecución del proceso más lenta.", ok: false },
-      { t: "Que impide usar cualquier tipo de multiprogramación.", ok: false }
+      { t: "El crecimiento rígido: si debe crecer y no hay espacio al lado, hay que mudarlo y recalcular todas sus direcciones.", ok: true },
+      { t: "Que necesita de todos modos una enorme tabla de particiones con miles y miles de entradas, una por cada bloque.", ok: false },
+      { t: "Que hace bastante más lenta la ejecución del proceso, porque saltar entre sus bloques dispersos toma más tiempo.", ok: false },
+      { t: "Que impide del todo usar cualquier clase de multiprogramación, así que solo cabe un proceso a la vez en la RAM.", ok: false }
     ],
     explica: `La continua es <b>simple de gestionar</b> (1 pregunta a la tabla: «¿hay 900 KB seguidos?»), pero su <b>crecimiento es rígido</b>: mudar un proceso implica recalcular todas sus <b>referencias de memoria</b>, un gran esfuerzo. La no continua eleva la multiprogramación pero paga con una tabla de particiones enorme.`,
     fuente: "Transcripción Semanas 11-13 · Repaso PDF Tema 7"
@@ -360,11 +360,11 @@ BANCO.add("t7", [
     id: "tr7-05", tipo: "multiple", dificultad: "alta",
     enunciado: `La técnica <b>no continua</b> es la reina en servidores, pero su tabla de particiones gigante es un problema. ¿Qué estructuras/soluciones de software propone el profesor para mitigarlo?`,
     opciones: [
-      { t: "Índices multinivel (Linux usa hasta 3 niveles).", ok: true },
-      { t: "Tablas hash o tablas de páginas invertidas.", ok: true },
-      { t: "Mapas de bits (bitmap: 0 = libre, 1 = ocupado).", ok: true },
-      { t: "Listas enlazadas.", ok: true },
-      { t: "Eliminar por completo la tabla de particiones.", ok: false }
+      { t: "Índices multinivel, como los hasta tres niveles que llega a usar el sistema Linux.", ok: true },
+      { t: "Tablas hash o bien tablas de páginas invertidas para poder ubicar los marcos ya.", ok: true },
+      { t: "Mapas de bits donde un cero marca la zona libre y un uno marca la zona ocupada.", ok: true },
+      { t: "Listas enlazadas que van encadenando los bloques libres junto con los ocupados.", ok: true },
+      { t: "Eliminar por completo la tabla de particiones para poder ahorrarse toda esa memoria.", ok: false }
     ],
     explica: `«Divide y vencerás»: se usan <b>índices multinivel</b> (Linux hasta 3 niveles), <b>tablas hash / invertidas</b>, <b>mapas de bits</b> (0 libre, 1 ocupado) y <b>listas enlazadas</b>. La estructura de datos elegida determina la agilidad del SO. Lo que no se puede es eliminar la tabla.`,
     fuente: "Transcripción Semana 11 · Repaso PDF Tema 7"
@@ -373,10 +373,10 @@ BANCO.add("t7", [
     id: "tr7-06", tipo: "opcion", dificultad: "alta",
     enunciado: `En un <b>sistema híbrido</b> de asignación de memoria, ¿cómo se decide qué técnica usar por proceso?`,
     opciones: [
-      { t: "Procesos residentes y predecibles (antivirus, servidor de impresión) van en un espacio Continuo; procesos aleatorios que crecen mucho (como Word) van No Continuo.", ok: true },
-      { t: "Todos los procesos van siempre No Continuo, sin excepción.", ok: false },
-      { t: "Se elige al azar para equilibrar la carga.", ok: false },
-      { t: "Los procesos grandes van Continuo y los pequeños No Continuo.", ok: false }
+      { t: "Los residentes y predecibles, como el antivirus, van contiguos; los que crecen mucho, como Word, van no contiguos.", ok: true },
+      { t: "Todos y cada uno de los procesos van siempre en no contiguo, sin ninguna excepción, para darle más agilidad al SO.", ok: false },
+      { t: "Se elige la técnica de cada proceso por completo al azar, para de ese modo equilibrar mejor la carga entre las dos.", ok: false },
+      { t: "Los procesos más grandes van siempre en contiguo y los más pequeños van siempre en no contiguo dentro de la RAM.", ok: false }
     ],
     explica: `Los procesos cuyo comportamiento se conoce y no varía (<b>residentes</b>: antivirus, impresión) reciben un espacio <b>Continuo</b> y estricto; los procesos <b>aleatorios</b> que pueden crecer de 1 a 1000 páginas (Word) usan <b>No Continua</b>. Con la llegada de la NVRAM, la técnica Continua volverá a ganar terreno.`,
     fuente: "Transcripción Semana 11 · Repaso PDF Tema 7"

@@ -5,10 +5,10 @@ BANCO.add("t8", [
     id: "t8-01", tipo: "opcion", dificultad: "alta",
     enunciado: `<b>(Foro 1)</b> ¿Por qué un SO IoT como FreeRTOS (con 2–10 KB de RAM) <b>no puede</b> usar la pila TCP/IP convencional y qué usa en su lugar?`,
     opciones: [
-      { t: "La pila TCP/IP es demasiado pesada para KB de RAM; usa <b>protocolos ligeros</b>: CoAP (sobre UDP), 6LoWPAN, MQTT.", ok: true },
-      { t: "TCP/IP está prohibido en dispositivos IoT por ley.", ok: false },
-      { t: "El SO IoT no necesita red en absoluto.", ok: false },
-      { t: "TCP/IP solo funciona en Windows.", ok: false }
+      { t: "La pila TCP/IP no cabe en pocos KB; usa protocolos ligeros como CoAP, 6LoWPAN y MQTT.", ok: true },
+      { t: "La pila TCP/IP está prohibida por ley en los dispositivos IoT de bajo consumo actuales.", ok: false },
+      { t: "El SO de IoT no necesita ninguna clase de red, así que no usa ningún protocolo ya.", ok: false },
+      { t: "La pila TCP/IP solo llega a funcionar dentro del sistema operativo Windows y no en otros.", ok: false }
     ],
     explica: `Con memoria en <b>KB</b>, la pila TCP/IP no cabe. Se usan protocolos ligeros: <b>CoAP</b> (sobre UDP, evita el costo de conexión de TCP), <b>6LoWPAN</b> (IPv6 sobre radios de baja potencia 802.15.4) y <b>MQTT</b> (publicación/suscripción con broker).`,
     fuente: "Foro 1 · IoT"
@@ -26,10 +26,10 @@ BANCO.add("t8", [
     id: "t8-03", tipo: "opcion", dificultad: "media",
     enunciado: `<b>(Foro 1)</b> ¿Por qué muchos microcontroladores IoT <b>dificultan el aislamiento</b> de procesos en memoria?`,
     opciones: [
-      { t: "Porque carecen de <b>MMU</b> (unidad de gestión de memoria), que es la que aísla y traduce direcciones.", ok: true },
-      { t: "Porque tienen demasiada RAM.", ok: false },
-      { t: "Porque usan exclusivamente TCP/IP.", ok: false },
-      { t: "Porque su CPU es de 64 bits.", ok: false }
+      { t: "Porque carecen de MMU, que es la que aísla y traduce las direcciones de memoria.", ok: true },
+      { t: "Porque disponen de demasiada memoria RAM y por eso mezclan todos los procesos ya.", ok: false },
+      { t: "Porque usan de forma exclusiva la pila TCP/IP convencional para toda su red ya.", ok: false },
+      { t: "Porque su procesador interno es de sesenta y cuatro bits en lugar de treinta y dos.", ok: false }
     ],
     explica: `Sin <b>MMU</b> no hay traducción virtual→física ni protección entre procesos → aislamiento débil. Es una limitación estructural de muchos microcontroladores IoT.`,
     fuente: "Foro 1 · IoT / MMU"
@@ -38,10 +38,10 @@ BANCO.add("t8", [
     id: "t8-04", tipo: "opcion", dificultad: "media",
     enunciado: `<b>(Foro 1)</b> En <b>e-Health</b> (salud conectada), ¿qué combinación garantiza baja latencia para datos vitales?`,
     opciones: [
-      { t: "SO de <b>tiempo real (RTOS)</b> + red con <b>QoS</b> y, en 5G, <b>Network Slicing</b> (segmento con latencia reservada).", ok: true },
-      { t: "Un SO de lotes + red best-effort.", ok: false },
-      { t: "Deshabilitar toda la seguridad para ganar velocidad.", ok: false },
-      { t: "Usar HDD en lugar de SSD en los sensores.", ok: false }
+      { t: "Un SO de tiempo real más una red con QoS y, en 5G, el Network Slicing reservado.", ok: true },
+      { t: "Un SO por lotes más una red best-effort que atiende los paquetes según van llegando.", ok: false },
+      { t: "Deshabilitar por completo toda la seguridad de la red para ganar algo de velocidad ya.", ok: false },
+      { t: "Usar discos HDD en vez de discos SSD dentro de cada uno de los sensores conectados.", ok: false }
     ],
     explica: `Los signos vitales exigen respuesta <b>determinista</b> → <b>RTOS</b>. La red prioriza con <b>QoS</b> y, en 5G, aísla el tráfico con <b>Network Slicing</b> (ancho de banda y latencia reservados).`,
     fuente: "Foro 1 · e-Health"
@@ -58,10 +58,10 @@ BANCO.add("t8", [
     id: "t8-06", tipo: "opcion", dificultad: "alta",
     enunciado: `<b>(Foro 2)</b> ¿Cuál es la estrategia correcta para diagnosticar un servidor Linux lento por un proceso sospechoso?`,
     opciones: [
-      { t: "Ir de lo <b>general</b> (estado del sistema) a lo <b>específico</b> (el proceso) y actuar de <b>menor a mayor impacto</b>.", ok: true },
-      { t: "Ejecutar <code>kill -9</code> a todos los procesos de inmediato.", ok: false },
-      { t: "Reiniciar el servidor antes de diagnosticar.", ok: false },
-      { t: "Vaciar la caché con <code>echo 3 &gt; /proc/sys/vm/drop_caches</code> primero.", ok: false }
+      { t: "Ir de lo general a lo específico y actuar siempre de menor a mayor impacto sobre él.", ok: true },
+      { t: "Ejecutar un kill nueve contra todos los procesos del sistema de una vez y de inmediato.", ok: false },
+      { t: "Reiniciar por completo el servidor entero antes siquiera de empezar a diagnosticar ya.", ok: false },
+      { t: "Vaciar a la fuerza la caché del sistema con drop_caches antes de mirar cualquier cosa.", ok: false }
     ],
     explica: `Primero observar (top/ps), luego medir (uptime/free/iostat), luego detectar errores (dmesg/journalctl) y por último corregir de <b>menor a mayor impacto</b> (renice → SIGTERM → SIGKILL). Matar a ciegas o vaciar la caché a la fuerza puede empeorar todo.`,
     fuente: "Foro 2 · Diagnóstico Linux"
@@ -78,10 +78,10 @@ BANCO.add("t8", [
  1755 S     1.2  nginx`
     },
     opciones: [
-      { t: "El estado <b>D (Uninterruptible Sleep)</b> espera una E/S de disco que el kernel no interrumpe: <b>ignora todas las señales, incluida SIGKILL</b>.", ok: true },
-      { t: "Porque <code>kill -9</code> requiere permisos de root que no tenemos.", ok: false },
-      { t: "Porque el proceso es un zombie y ya está muerto.", ok: false },
-      { t: "Porque el PID es incorrecto.", ok: false }
+      { t: "El estado D es un sleep no interrumpible por E/S de disco: ignora hasta el SIGKILL.", ok: true },
+      { t: "El comando kill nueve necesita permisos de root que en esta sesión no llegamos a tener.", ok: false },
+      { t: "El proceso ya es un zombie que terminó, así que matarlo otra vez no cambia nada más ya.", ok: false },
+      { t: "El número de PID que estamos usando dentro del comando kill es incorrecto o ya no existe.", ok: false }
     ],
     explica: `En estado <b>D</b> el proceso espera E/S de disco y el kernel <b>no lo interrumpe</b>: ignora incluso SIGKILL. Insistir es inútil; la causa raíz es el <b>disco saturado</b>. Solución: destrabar la E/S (<code>ionice</code>), esperar, o en último extremo reiniciar. Revisa <b>STAT</b> en <code>ps</code> antes de matar.`,
     fuente: "Foro 2 · Estado D"
@@ -100,10 +100,10 @@ BANCO.add("t8", [
     id: "t8-09", tipo: "opcion", dificultad: "media",
     enunciado: `<b>(Foro 2 · cayó como teórica)</b> ¿Qué comando usas para <b>verificar la disponibilidad de RAM</b> y cómo lo interpretas?`,
     opciones: [
-      { t: "<code>free -h</code>: muestra total/usada/libre de RAM y swap; si la RAM libre es baja y el swap crece, hay presión de memoria.", ok: true },
-      { t: "<code>ls -l /ram</code>.", ok: false },
-      { t: "<code>ping localhost</code>.", ok: false },
-      { t: "<code>chmod 777 /mem</code>.", ok: false }
+      { t: "<code>free -h</code>: muestra la RAM y el swap; si baja la libre y sube el swap, hay presión.", ok: true },
+      { t: "<code>ls -l /ram</code>: lista el contenido del directorio ram para revisar la memoria libre.", ok: false },
+      { t: "<code>ping localhost</code>: envía paquetes a la máquina local para medir la RAM libre ya.", ok: false },
+      { t: "<code>chmod 777 /mem</code>: cambia los permisos del archivo mem para liberar la RAM usada.", ok: false }
     ],
     explica: `<code>free -h</code> (<i>human-readable</i>) es la forma directa. Alternativas: <code>cat /proc/meminfo</code>, <code>vmstat</code>, <code>top</code>. Swap creciente = disco usado como memoria = lentitud.`,
     fuente: "Foro 2 · verificar RAM (teórica)"
@@ -119,10 +119,10 @@ BANCO.add("t8", [
     id: "t8-11", tipo: "opcion", dificultad: "media",
     enunciado: `<b>(Foro 2)</b> Si el proceso es <b>legítimo</b> pero consume demasiada CPU y quieres bajarle prioridad <b>sin matarlo</b>, usas…`,
     opciones: [
-      { t: "<code>renice +10 -p &lt;PID&gt;</code> (baja su prioridad de CPU).", ok: true },
-      { t: "<code>kill -9 &lt;PID&gt;</code>.", ok: false },
-      { t: "<code>rm -rf &lt;PID&gt;</code>.", ok: false },
-      { t: "<code>shutdown now</code>.", ok: false }
+      { t: "<code>renice +10 -p PID</code>: baja su prioridad de CPU sin llegar a detener el proceso.", ok: true },
+      { t: "<code>kill -9 PID</code>: envía la señal SIGKILL y termina el proceso de golpe al instante.", ok: false },
+      { t: "<code>rm -rf PID</code>: borra de raíz y sin confirmación los archivos de ese proceso ya.", ok: false },
+      { t: "<code>shutdown now</code>: apaga por completo el servidor entero de inmediato y sin avisar.", ok: false }
     ],
     explica: `<code>renice</code> reduce la prioridad sin detener el proceso (le cede CPU a los demás). Ojo: solo surte efecto si <b>hay competencia</b> por el CPU. Para limitar E/S: <code>ionice</code>; para limitar CPU estricto: <code>cpulimit -l 30 -p &lt;PID&gt;</code>.`,
     fuente: "Foro 2 · Acción correctiva"
@@ -131,10 +131,10 @@ BANCO.add("t8", [
     id: "t8-12", tipo: "opcion", dificultad: "media",
     enunciado: `<b>(Foro 2)</b> ¿Cómo verificas si el <b>OOM Killer</b> ya terminó procesos por falta de memoria?`,
     opciones: [
-      { t: "<code>dmesg | grep -i oom</code> (o <code>journalctl -k | grep -i oom</code>).", ok: true },
-      { t: "<code>free -m --oom</code>.", ok: false },
-      { t: "<code>top -oom</code>.", ok: false },
-      { t: "<code>cat /oom</code>.", ok: false }
+      { t: "<code>dmesg | grep -i oom</code>: muestra en el log del kernel si el OOM Killer ya actuó.", ok: true },
+      { t: "<code>free -m --oom</code>: mostraría la memoria con una opción oom que en realidad no existe.", ok: false },
+      { t: "<code>top -oom</code>: abriría el monitor top con una opción oom que en realidad no existe.", ok: false },
+      { t: "<code>cat /oom</code>: leería un archivo oom en la raíz que en realidad no existe en Linux.", ok: false }
     ],
     explica: `El <b>OOM Killer</b> deja rastro en el log del kernel; <code>dmesg | grep -i oom</code> muestra mensajes como «Out of memory: Kill process…». Si aparece, la situación de memoria ya fue crítica.`,
     fuente: "Foro 2 · Detección de errores"
@@ -144,10 +144,10 @@ BANCO.add("t8", [
     id: "t8-13", tipo: "opcion", dificultad: "alta",
     enunciado: `<b>(Foro 3)</b> ¿Qué es el <b>Hyperthreading</b> y cómo funciona?`,
     opciones: [
-      { t: "Implementación de Intel de <b>SMT</b>: un núcleo físico duplica solo los registros de estado y se presenta como <b>2 procesadores lógicos</b>, compartiendo unidades de ejecución y caché; aprovecha ciclos ociosos de un hilo para avanzar el otro.", ok: true },
-      { t: "Agregar físicamente el doble de núcleos al procesador.", ok: false },
-      { t: "Aumentar la frecuencia del reloj del CPU al doble.", ok: false },
-      { t: "Una técnica de compresión de memoria RAM.", ok: false }
+      { t: "Es el SMT de Intel: un núcleo duplica sus registros y se ve como dos procesadores lógicos.", ok: true },
+      { t: "Es agregar físicamente al procesador el doble de núcleos reales para duplicar su potencia.", ok: false },
+      { t: "Es aumentar la frecuencia del reloj del procesador al doble para que ejecute más rápido ya.", ok: false },
+      { t: "Es una técnica de compresión de la memoria RAM para que quepan más procesos a la vez ya.", ok: false }
     ],
     explica: `HT = <b>SMT (Simultaneous Multithreading)</b>: duplica registros/estado (no las unidades de ejecución), presenta 2 hilos lógicos por núcleo y usa los <b>ciclos ociosos</b> (cuando un hilo espera memoria) para avanzar el otro. No equivale a más núcleos físicos.`,
     fuente: "Foro 3 · Hyperthreading"
@@ -166,10 +166,10 @@ BANCO.add("t8", [
     id: "t8-15", tipo: "opcion", dificultad: "alta",
     enunciado: `<b>(Foro 3)</b> ¿Por qué OpenBSD y entornos de alta seguridad <b>deshabilitan</b> el hyperthreading pese a su ganancia de rendimiento?`,
     opciones: [
-      { t: "Porque los 2 hilos lógicos comparten caché y puertos de ejecución → habilitan <b>ataques de canal lateral</b> (PortSmash, Spectre) que fugan datos del otro hilo.", ok: true },
-      { t: "Porque el HT consume demasiada energía.", ok: false },
-      { t: "Porque el HT reduce el número de núcleos físicos.", ok: false },
-      { t: "Porque el HT solo funciona con Windows.", ok: false }
+      { t: "Porque los dos hilos comparten caché y puertos y abren ataques de canal lateral.", ok: true },
+      { t: "Porque el hyperthreading llega a consumir demasiada energía y calienta mucho el CPU.", ok: false },
+      { t: "Porque el hyperthreading reduce el número de núcleos físicos reales del procesador ya.", ok: false },
+      { t: "Porque el hyperthreading solo llega a funcionar sobre el sistema operativo Windows ya.", ok: false }
     ],
     explica: `Al compartir físicamente recursos, un proceso malicioso puede <b>medir contención</b> para inferir qué hace el otro hilo del mismo núcleo → fuga de datos sin acceso privilegiado. En sistemas con datos sensibles, el riesgo supera la ganancia de throughput.`,
     fuente: "Foro 3 · Seguridad HT"
@@ -195,10 +195,10 @@ BANCO.add("t8", [
     id: "t8-18", tipo: "opcion", dificultad: "alta",
     enunciado: `<b>(Foro 3)</b> Al hacer <b>autoscaling de vCPUs</b> en el Sistema de Matrícula, ¿qué métrica evita degradar el rendimiento por sobreasignación?`,
     opciones: [
-      { t: "El <b>CPU Ready Time</b> (tiempo que una vCPU espera en cola por un núcleo físico); si supera ~5%, hay que dejar de añadir vCPUs.", ok: true },
-      { t: "La temperatura del gabinete del servidor.", ok: false },
-      { t: "El número de pestañas abiertas en el navegador.", ok: false },
-      { t: "El tamaño del disco duro.", ok: false }
+      { t: "El CPU Ready Time: la espera de una vCPU por un núcleo; sobre un 5% no añadas más.", ok: true },
+      { t: "La temperatura del gabinete del servidor medida por los sensores internos del equipo.", ok: false },
+      { t: "El número de pestañas que el usuario mantiene abiertas dentro de su navegador web ya.", ok: false },
+      { t: "El tamaño total del disco duro instalado dentro del servidor donde corren las máquinas.", ok: false }
     ],
     explica: `Escalar solo por %CPU es engañoso: si creas más vCPUs que núcleos físicos, el hipervisor gasta ciclos <b>intercambiando</b> hilos (thrashing de CPU). El <b>CPU Ready Time</b> mide la espera real por un núcleo; sobre ~5% el rendimiento cae. Ratio recomendado vCPU:pCPU ≈ 3:1 a 5:1.`,
     fuente: "Foro 3 · Réplicas (Ready Time / overcommit)"
@@ -224,10 +224,10 @@ BANCO.add("t8", [
     id: "t8-21", tipo: "opcion", dificultad: "media",
     enunciado: `<b>(Foro 3)</b> La ventaja de rendimiento típica del hyperthreading en cargas multitarea es de aproximadamente…`,
     opciones: [
-      { t: "15–30% de throughput adicional (no escala linealmente como núcleos reales).", ok: true },
-      { t: "100% (duplica el rendimiento como si fueran 2 núcleos físicos).", ok: false },
-      { t: "0% (nunca aporta nada).", ok: false },
-      { t: "300% en cualquier carga.", ok: false }
+      { t: "Un 15 a 30% de throughput extra, pues no escala como si fueran núcleos reales.", ok: true },
+      { t: "Un 100% de rendimiento extra, pues duplica la potencia como dos núcleos físicos reales.", ok: false },
+      { t: "Un 0% de rendimiento extra, pues en realidad no llega a aportar nada útil en ninguna carga.", ok: false },
+      { t: "Un 300% de rendimiento extra que se llega a lograr en cualquier tipo de carga del CPU ya.", ok: false }
     ],
     explica: `HT aporta ~<b>15–30%</b> aprovechando ciclos ociosos, pero <b>no</b> duplica el rendimiento: comparte las unidades de ejecución reales, por eso no escala como núcleos físicos.`,
     fuente: "Foro 3 · HT rendimiento"
@@ -243,10 +243,10 @@ BANCO.add("t8", [
     id: "t8-23", tipo: "opcion", dificultad: "alta",
     enunciado: `<b>(Foro 2)</b> En un servidor lento, ¿por qué NO conviene ejecutar <code>strace -p &lt;PID&gt;</code> directamente ni vaciar la caché con <code>echo 3 &gt; /proc/sys/vm/drop_caches</code>?`,
     opciones: [
-      { t: "<code>strace</code> directo añade sobrecarga (mejor <code>strace -c</code>), y vaciar la caché fuerza releer todo desde disco → empeora la E/S en un sistema ya saturado.", ok: true },
-      { t: "Porque ambos comandos borran archivos del usuario.", ok: false },
-      { t: "Porque requieren reiniciar el sistema.", ok: false },
-      { t: "Porque solo funcionan en Windows.", ok: false }
+      { t: "El <code>strace -p</code> añade sobrecarga y vaciar la caché fuerza releer del disco lento.", ok: true },
+      { t: "Los dos comandos borran de forma directa los archivos personales del usuario del equipo.", ok: false },
+      { t: "Los dos comandos exigen que se reinicie el sistema entero antes de poder ejecutarse ya.", ok: false },
+      { t: "Los dos comandos solo llegan a funcionar dentro del sistema operativo Windows y no Linux.", ok: false }
     ],
     explica: `<code>strace -p</code> interrumpe el proceso en cada syscall → mucha sobrecarga (usa <code>strace -c</code> para resumen). Vaciar la caché elimina el <b>page cache</b> útil y obliga a releer del disco → un pico de E/S que puede colgar un servidor ya saturado. La caché no es «el problema»; es un mecanismo de aceleración.`,
     fuente: "Foro 2 · Réplicas avanzadas"

@@ -4,10 +4,10 @@ BANCO.add("t1", [
     id: "t1-01", tipo: "opcion", dificultad: "media",
     enunciado: `¿Qué tienen en común una laptop, un smartwatch, un auto Tesla y una bombilla inteligente, que justifica estudiarlos juntos en este curso?`,
     opciones: [
-      { t: "Todos ejecutan un <b>sistema operativo</b> que gestiona su hardware y ofrece servicios.", ok: true },
-      { t: "Todos usan la misma arquitectura de procesador (x86).", ok: false },
-      { t: "Todos se conectan obligatoriamente a Internet.", ok: false },
-      { t: "Todos tienen pantalla y teclado.", ok: false }
+      { t: "Todos ejecutan un sistema operativo que gestiona su hardware y da servicios.", ok: true },
+      { t: "Todos usan la misma arquitectura de procesador x86 en su hardware interno.", ok: false },
+      { t: "Todos se conectan de forma obligatoria a Internet mediante su hardware.", ok: false },
+      { t: "Todos integran una pantalla y un teclado físicos dentro de su hardware.", ok: false }
     ],
     explica: `El hilo conductor es que <b>todos tienen un SO</b> (de escritorio, embebido o de tiempo real). La <b>Ley de Bell</b> describe cómo cada ~10 años aparece una nueva clase de dispositivos, cada una con su propio SO.`,
     fuente: "C1 · Introducción"
@@ -16,10 +16,10 @@ BANCO.add("t1", [
     id: "t1-02", tipo: "multiple", dificultad: "alta",
     enunciado: `Un SO desempeña <b>tres roles simultáneos</b>. Selecciona las afirmaciones que describen correctamente uno de esos roles.`,
     opciones: [
-      { t: "<b>Ilusionista:</b> da a cada proceso la ilusión de tener su propia CPU y su propia memoria.", ok: true },
-      { t: "<b>Referí:</b> gestiona y asigna recursos, aísla los procesos y protege el SO.", ok: true },
-      { t: "<b>Pegamento (glue):</b> provee servicios comunes (E/S, UI, bibliotecas) a las aplicaciones.", ok: true },
-      { t: "<b>Compilador:</b> traduce el código fuente de los programas a lenguaje máquina.", ok: false }
+      { t: "Ilusionista: da a cada proceso la ilusión de tener su CPU y su memoria.", ok: true },
+      { t: "Referí: gestiona y asigna recursos, aísla procesos y protege al propio SO.", ok: true },
+      { t: "Pegamento: provee servicios comunes de E/S, interfaz y bibliotecas a las apps.", ok: true },
+      { t: "Compilador: traduce el código fuente de los programas a lenguaje de máquina.", ok: false }
     ],
     explica: `Los tres roles son <b>ilusionista</b>, <b>referí</b> y <b>pegamento</b>, y se ejercen a la vez. Compilar no es rol del SO (lo hace el compilador, una herramienta aparte).`,
     fuente: "C1 · Roles del SO"
@@ -42,10 +42,10 @@ BANCO.add("t1", [
     id: "t1-04", tipo: "opcion", dificultad: "trampa",
     enunciado: `En la separación <b>política / mecanismo</b>, la frase «me detengo cuando veo la luz <b>roja</b> del semáforo» corresponde a…`,
     opciones: [
-      { t: "Una <b>política</b> (la regla de decisión: el QUÉ).", ok: true },
-      { t: "Un <b>mecanismo</b> (el método de bajo nivel: el CÓMO).", ok: false },
-      { t: "Ambas cosas a la vez, son sinónimos.", ok: false },
-      { t: "Ninguna: es un concepto de hardware, no del SO.", ok: false }
+      { t: "Una política, porque es la regla de decisión, es decir el qué se hace.", ok: true },
+      { t: "Un mecanismo, porque es el método de bajo nivel, es decir el cómo se hace.", ok: false },
+      { t: "Las dos a la vez, porque política y mecanismo son en realidad sinónimos.", ok: false },
+      { t: "Ninguna, porque es un asunto del hardware y no del sistema operativo.", ok: false }
     ],
     explica: `«Detenerme ante la luz roja» es la <b>regla</b> (política, el QUÉ). El <b>mecanismo</b> sería «el pedal de freno» (el CÓMO). Es la analogía exacta del profesor.`,
     fuente: "C1 · Políticas vs Mecanismos"
@@ -76,10 +76,10 @@ BANCO.add("t1", [
 Proceso usuario continúa`
     },
     opciones: [
-      { t: "El <b>TRAP</b> disparado por la <i>system call</i>, que cambia el mode bit a 0 (kernel) y al retornar lo restaura a 1.", ok: true },
-      { t: "Una interrupción de hardware generada por el teclado.", ok: false },
-      { t: "El proceso simplemente cambia el mode bit a 0 por sí mismo cuando lo necesita.", ok: false },
-      { t: "El compilador inserta las instrucciones privilegiadas en el binario.", ok: false }
+      { t: "El TRAP de la system call, que pone el mode bit en 0 y al volver lo restaura.", ok: true },
+      { t: "Una interrupción de hardware que el teclado genera y pone el mode bit en 0.", ok: false },
+      { t: "El propio proceso, que pone el mode bit en 0 por su cuenta cuando lo necesita.", ok: false },
+      { t: "El compilador, que inserta las instrucciones privilegiadas dentro del binario.", ok: false }
     ],
     explica: `La única puerta usuario→kernel es la <b>system call</b>, que provoca un <b>TRAP</b> (interrupción software). El proceso NO puede cambiar el mode bit por su cuenta: si pudiera, no habría seguridad.`,
     fuente: "C1 · System calls / TRAP"
@@ -88,11 +88,11 @@ Proceso usuario continúa`
     id: "t1-07", tipo: "multiple", dificultad: "media",
     enunciado: `Señala los <b>criterios de evaluación de un SO</b> vistos en el curso.`,
     opciones: [
-      { t: "Performance (bajo overhead, equidad, tiempo de respuesta, throughput).", ok: true },
-      { t: "Seguridad (minimizar vulnerabilidad a ataques).", ok: true },
-      { t: "Portabilidad (la abstracción no cambia aunque cambie el hardware).", ok: true },
-      { t: "Fiabilidad y disponibilidad.", ok: true },
-      { t: "Cantidad de líneas de código del kernel.", ok: false }
+      { t: "Performance: bajo overhead, equidad, tiempo de respuesta y throughput.", ok: true },
+      { t: "Seguridad: reducir al mínimo la vulnerabilidad frente a los ataques.", ok: true },
+      { t: "Portabilidad: la abstracción no cambia aunque cambie el hardware debajo.", ok: true },
+      { t: "Fiabilidad y disponibilidad del sistema a lo largo del tiempo de uso.", ok: true },
+      { t: "Cantidad de líneas de código que tiene el kernel del sistema operativo.", ok: false }
     ],
     explica: `Los criterios son <b>performance, seguridad, portabilidad, fiabilidad y disponibilidad</b>. El tamaño del código no es un criterio de calidad en sí.`,
     fuente: "C1 · Criterios de evaluación"
@@ -101,10 +101,10 @@ Proceso usuario continúa`
     id: "t1-08", tipo: "opcion", dificultad: "media",
     enunciado: `Según la máquina de <b>Von Neumann</b>, ¿cuáles son los tres buses que conectan CPU, memoria y E/S?`,
     opciones: [
-      { t: "Bus de <b>datos</b>, bus de <b>direcciones</b> y bus de <b>control</b>.", ok: true },
-      { t: "Bus de entrada, bus de salida y bus de reloj.", ok: false },
-      { t: "Bus PCI, bus USB y bus SATA.", ok: false },
-      { t: "Bus de la ALU, bus de la CU y bus de la RAM.", ok: false }
+      { t: "Bus de datos, bus de direcciones y bus de control entre CPU, RAM y E/S.", ok: true },
+      { t: "Bus de entrada, bus de salida y bus de reloj entre la CPU, RAM y E/S.", ok: false },
+      { t: "Bus PCI, bus USB y bus SATA que conectan la CPU, la RAM y la E/S.", ok: false },
+      { t: "Bus de la ALU, bus de la CU y bus de la RAM que unen CPU, RAM y E/S.", ok: false }
     ],
     explica: `La arquitectura de Von Neumann conecta CPU (ALU + Unidad de Control), RAM y E/S mediante los buses de <b>datos, direcciones y control</b>.`,
     fuente: "C1 · Von Neumann"
@@ -120,10 +120,10 @@ Proceso usuario continúa`
     id: "t1-10", tipo: "opcion", dificultad: "alta",
     enunciado: `El SO que <b>introdujo el uso del quantum</b> para repartir el procesador entre procesos se conoce como sistema de…`,
     opciones: [
-      { t: "<b>Tiempo compartido</b> (time-sharing).", ok: true },
-      { t: "Tiempo real (real-time).", ok: false },
-      { t: "Lotes (batch).", ok: false },
-      { t: "Monoprogramado.", ok: false }
+      { t: "Tiempo compartido, que reparte el CPU dando un quantum a cada proceso.", ok: true },
+      { t: "Tiempo real, que reparte el CPU dando un plazo estricto a cada proceso.", ok: false },
+      { t: "Por lotes, que reparte el CPU agrupando los procesos en tandas grandes.", ok: false },
+      { t: "Monoprogramado, que da todo el CPU a un único proceso hasta que termina.", ok: false }
     ],
     explica: `El <b>tiempo compartido</b> reparte el CPU asignando un <b>quantum</b> a cada proceso y conmutando entre ellos, dando la ilusión de simultaneidad.`,
     fuente: "Examen 2013 P.I-2 · C1"
@@ -143,10 +143,10 @@ Proceso usuario continúa`
     id: "t1-12", tipo: "opcion", dificultad: "alta",
     enunciado: `Un proceso ejecuta una instrucción que produce una <b>división entre 0</b>. ¿Qué ocurre?`,
     opciones: [
-      { t: "Se genera una <b>interrupción software (excepción/trap)</b> y el SO finaliza el proceso.", ok: true },
-      { t: "El CPU ignora la operación y continúa con la siguiente instrucción.", ok: false },
-      { t: "Se reinicia todo el sistema operativo.", ok: false },
-      { t: "Se genera una interrupción de hardware del teclado.", ok: false }
+      { t: "Se genera una excepción (trap) y el sistema operativo finaliza el proceso.", ok: true },
+      { t: "Se genera una interrupción de hardware del teclado y el proceso continúa.", ok: false },
+      { t: "El CPU ignora la operación y sigue con la instrucción siguiente del proceso.", ok: false },
+      { t: "Se reinicia por completo el sistema operativo y se pierden todos los datos.", ok: false }
     ],
     explica: `La división por cero es una <b>excepción (interrupción software / síncrona)</b> generada por el propio proceso. El SO la <b>atrapa</b> y termina el proceso. Es distinta de una interrupción de hardware (asíncrona, externa).`,
     fuente: "Examen 2013 P.I-1 · C1"
@@ -172,10 +172,10 @@ Proceso usuario continúa`
     id: "t1-15", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Por qué el núcleo (kernel) <b>limita los derechos</b> del código de usuario?`,
     opciones: [
-      { t: "Para mantener la funcionalidad, <b>preservar el control</b> y preservar el desempeño del sistema.", ok: true },
-      { t: "Para reducir el consumo eléctrico del CPU.", ok: false },
-      { t: "Porque el hardware no permite ejecutar más de un proceso.", ok: false },
-      { t: "Para ahorrar espacio en disco.", ok: false }
+      { t: "Para mantener la funcionalidad, preservar el control y el buen desempeño.", ok: true },
+      { t: "Para reducir el consumo eléctrico del CPU y alargar la vida de la batería.", ok: false },
+      { t: "Porque el hardware no admite ejecutar más de un proceso al mismo tiempo.", ok: false },
+      { t: "Para ahorrar espacio en el disco duro y guardar más archivos del usuario.", ok: false }
     ],
     explica: `El kernel restringe al usuario para <b>mantener la funcionalidad, preservar el control y el desempeño</b>: evita que un programa monopolice el CPU, dañe el HW o lea memoria ajena.`,
     fuente: "C1 · Modo kernel"
@@ -191,10 +191,10 @@ Proceso usuario continúa`
     id: "t1-17", tipo: "opcion", dificultad: "media",
     enunciado: `La <b>Ley de Bell</b> afirma que…`,
     opciones: [
-      { t: "Aparece una <b>nueva clase de computadoras</b> (con su SO) aproximadamente cada 10 años.", ok: true },
-      { t: "La velocidad del CPU se duplica cada 18 meses.", ok: false },
-      { t: "El costo de la memoria se reduce a la mitad cada año.", ok: false },
-      { t: "El número de usuarios de un SO crece exponencialmente.", ok: false }
+      { t: "Surge una nueva clase de computadoras, con su SO, casi cada diez años.", ok: true },
+      { t: "La velocidad del CPU se duplica más o menos cada dieciocho meses de avance.", ok: false },
+      { t: "El costo de la memoria se reduce a la mitad más o menos cada año que pasa.", ok: false },
+      { t: "El número de usuarios de un SO crece de forma exponencial con los años.", ok: false }
     ],
     explica: `Ley de <b>Bell</b>: cada ~10 años surge una nueva clase de dispositivos (mainframe → mini → PC → móvil → IoT…), cada una con su SO. (No confundir con la <b>Ley de Moore</b>, que trata del número de transistores/rendimiento del CPU.)`,
     fuente: "C1 · Ley de Bell"
@@ -211,10 +211,10 @@ Proceso usuario continúa`
     id: "t1-19", tipo: "opcion", dificultad: "alta",
     enunciado: `Un SO como <b>ilusionista</b> hace creer a cada proceso que tiene la máquina para él solo. Si este rol <b>fallara</b>, ¿qué consecuencia directa habría?`,
     opciones: [
-      { t: "Los programas tendrían que conocer el <b>hardware exacto</b>, perdiéndose la portabilidad.", ok: true },
-      { t: "Se duplicaría la velocidad de ejecución.", ok: false },
-      { t: "El disco se llenaría de procesos zombie.", ok: false },
-      { t: "Todos los procesos entrarían simultáneamente a la sección crítica.", ok: false }
+      { t: "Los programas tendrían que conocer el hardware exacto y no serían portables.", ok: true },
+      { t: "La velocidad de ejecución de cada proceso se duplicaría de forma automática.", ok: false },
+      { t: "El disco duro se llenaría poco a poco de procesos zombie sin recogerse nunca.", ok: false },
+      { t: "Todos los procesos entrarían a la vez a la misma sección crítica compartida.", ok: false }
     ],
     explica: `El ilusionista <b>abstrae el hardware</b>. Sin esa abstracción, cada programa tendría que programarse para el HW específico → se pierde la <b>portabilidad</b>. (La entrada simultánea a la sección crítica es un problema de sincronización, no de este rol.)`,
     fuente: "C1 · What-if roles"
@@ -230,10 +230,10 @@ Proceso usuario continúa`
     id: "t1-21", tipo: "opcion", dificultad: "media",
     enunciado: `La analogía base del curso compara al SO con un <b>sistema de bancos</b>. ¿Qué idea central transmite esa analogía?`,
     opciones: [
-      { t: "Atiende a muchos clientes/procesos, con recursos limitados, sin corromper los datos de nadie.", ok: true },
-      { t: "El SO cobra dinero por cada operación que ejecuta.", ok: false },
-      { t: "Los procesos deben hacer fila física para usar el CPU.", ok: false },
-      { t: "El SO guarda los archivos en una bóveda cifrada.", ok: false }
+      { t: "Atiende a muchos procesos con recursos limitados sin corromper sus datos.", ok: true },
+      { t: "Cobra una comisión en dinero por cada operación que ejecuta el usuario.", ok: false },
+      { t: "Obliga a los procesos a hacer una fila física para poder usar el CPU.", ok: false },
+      { t: "Guarda todos los archivos del usuario dentro de una bóveda bien cifrada.", ok: false }
     ],
     explica: `Como un banco, el SO <b>gestiona recursos limitados</b> para <b>muchos clientes (procesos)</b> a la vez, manteniendo la <b>integridad</b> de los datos (nadie ve ni corrompe la cuenta de otro). Refuerza los roles de referí e ilusionista.`,
     fuente: "C1 · Analogía del banco"

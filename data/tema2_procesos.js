@@ -4,10 +4,10 @@ BANCO.add("t2", [
     id: "t2-01", tipo: "opcion", dificultad: "media",
     enunciado: `¿Cuál de las siguientes afirmaciones describe mejor a un <b>hilo (thread)</b> en un sistema operativo?`,
     opciones: [
-      { t: "Es la <b>unidad más pequeña de procesamiento</b> que puede ejecutar instrucciones dentro de un proceso.", ok: true },
-      { t: "Es un programa independiente que se ejecuta sin compartir recursos con otros procesos.", ok: false },
-      { t: "Es una técnica para almacenar datos temporalmente en la memoria secundaria.", ok: false },
-      { t: "Es un dispositivo físico encargado de gestionar las interrupciones del sistema.", ok: false }
+      { t: "Es la unidad más pequeña de ejecución que corre instrucciones dentro de un proceso.", ok: true },
+      { t: "Es un programa autónomo que se ejecuta sin compartir recursos con otros procesos.", ok: false },
+      { t: "Es una técnica que sirve para guardar datos temporales en la memoria secundaria.", ok: false },
+      { t: "Es un dispositivo físico que se encarga de gestionar las interrupciones del CPU.", ok: false }
     ],
     explica: `Un <b>hilo</b> es la unidad mínima de ejecución <b>dentro</b> de un proceso; comparte con los demás hilos el espacio de direcciones y los recursos del proceso.`,
     fuente: "Examen 2025 P.I-1 · C2"
@@ -16,10 +16,10 @@ BANCO.add("t2", [
     id: "t2-02", tipo: "opcion", dificultad: "trampa",
     enunciado: `Sobre la relación entre <b>programa</b>, <b>proceso</b> e <b>hilos</b>, ¿qué afirmación es correcta?`,
     opciones: [
-      { t: "Un <b>proceso</b> puede incluir <b>varios hilos</b>.", ok: true },
-      { t: "Un hilo puede incluir varios procesos.", ok: false },
-      { t: "Un programa puede incluir varios procesos que se ejecutan solos.", ok: false },
-      { t: "Un hilo puede incluir varios programas.", ok: false }
+      { t: "Un proceso puede incluir varios hilos que comparten su espacio de memoria.", ok: true },
+      { t: "Un hilo puede incluir varios procesos que comparten su espacio de memoria.", ok: false },
+      { t: "Un programa puede incluir varios procesos que se ejecutan siempre a solas.", ok: false },
+      { t: "Un hilo puede incluir varios programas que comparten su espacio de memoria.", ok: false }
     ],
     explica: `La relación correcta es <b>proceso → varios hilos</b> (nunca al revés). Un hilo no contiene procesos ni programas.`,
     fuente: "Examen 2013 P.I-4 · C2"
@@ -28,11 +28,11 @@ BANCO.add("t2", [
     id: "t2-03", tipo: "multiple", dificultad: "media",
     enunciado: `Un <b>proceso</b> (instancia de un programa en ejecución) necesita ciertos recursos para existir. Marca los que corresponden.`,
     opciones: [
-      { t: "CPU para ejecutar instrucciones.", ok: true },
-      { t: "Memoria (espacio de direcciones): Code, Data, Heap y Stack.", ok: true },
-      { t: "Registros: contador de programa (PC), puntero de pila, registros generales.", ok: true },
-      { t: "Información de E/S: archivos abiertos, dispositivos.", ok: true },
-      { t: "Un compilador residente en memoria durante toda su ejecución.", ok: false }
+      { t: "CPU para poder ejecutar cada una de las instrucciones del proceso.", ok: true },
+      { t: "Memoria como espacio de direcciones: code, data, heap y stack.", ok: true },
+      { t: "Registros: contador de programa, puntero de pila y de propósito general.", ok: true },
+      { t: "Información de E/S: los archivos abiertos y los dispositivos en uso.", ok: true },
+      { t: "Un compilador residente en memoria durante toda la ejecución del proceso.", ok: false }
     ],
     explica: `Un proceso necesita <b>CPU, memoria (code/data/heap/stack), registros e info de E/S</b>. No necesita el compilador cargado: la compilación ocurrió antes, en disco.`,
     fuente: "C2 · Qué es un proceso"
@@ -76,10 +76,10 @@ struct proc {
     id: "t2-06", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Qué opción describe mejor el <b>procesamiento concurrente</b>?`,
     opciones: [
-      { t: "La capacidad del sistema para manejar varios procesos que <b>se superponen en el tiempo</b>, aunque no se ejecuten simultáneamente.", ok: true },
-      { t: "La ejecución de múltiples procesos <b>al mismo tiempo en procesadores diferentes</b>.", ok: false },
-      { t: "La ejecución secuencial de tareas en un único hilo de control.", ok: false },
-      { t: "La ejecución exclusiva de un solo proceso para evitar conflictos de recursos.", ok: false }
+      { t: "Manejar varios procesos que se superponen en el tiempo aunque no corran a la vez.", ok: true },
+      { t: "Ejecutar varios procesos exactamente a la vez sobre procesadores diferentes.", ok: false },
+      { t: "Ejecutar varias tareas de forma secuencial dentro de un único hilo de control.", ok: false },
+      { t: "Ejecutar un solo proceso de forma exclusiva para evitar todo conflicto de recursos.", ok: false }
     ],
     explica: `Concurrente = tareas que <b>progresan intercalándose</b> en el tiempo (pueden ser en 1 solo core). La opción «al mismo tiempo en procesadores diferentes» describe el <b>paralelismo</b>, que es un caso particular de concurrencia.`,
     fuente: "Examen 2025 P.I-6 · C2"
@@ -103,10 +103,10 @@ struct proc {
 <tr><td>Bloqueado → Listos</td><td>~100 000</td></tr></table>`
     },
     opciones: [
-      { t: "Es un proceso con <b>mucha E/S</b> (I/O-bound): ejecuta ráfagas cortas y se bloquea seguido esperando E/S.", ok: true },
-      { t: "Es un proceso orientado a <b>operaciones aritméticas y lógicas</b> (CPU-bound).", ok: false },
-      { t: "Es una tarea propia del sistema operativo.", ok: false },
-      { t: "No se puede afirmar ningún comportamiento.", ok: false }
+      { t: "Es un proceso con mucha E/S: hace ráfagas cortas y se bloquea seguido a esperar.", ok: true },
+      { t: "Es un proceso con muchas operaciones aritméticas y lógicas, es decir CPU-bound.", ok: false },
+      { t: "Es una tarea interna del sistema operativo que casi nunca cede su procesador.", ok: false },
+      { t: "No se puede afirmar ningún comportamiento a partir de esas transiciones dadas.", ok: false }
     ],
     explica: `Bloquearse tantas veces indica que <b>constantemente pide E/S</b> → es <b>I/O-bound</b>. Un proceso CPU-bound casi no se bloquea (usa el CPU en ráfagas largas). El planificador debería <b>priorizarlo</b> cuando está listo, pues libera el CPU rápido.`,
     fuente: "Examen 2025 P.I-3 · C2"
@@ -133,10 +133,10 @@ struct proc {
     id: "t2-11", tipo: "opcion", dificultad: "media",
     enunciado: `La <b>multiplexación en el ESPACIO</b> en el CPU se logra principalmente mediante…`,
     opciones: [
-      { t: "Disponer de <b>múltiples núcleos (cores)</b> o procesadores que atienden procesos al mismo tiempo.", ok: true },
-      { t: "Conmutación de contexto que da 10 ms a cada proceso por turnos.", ok: false },
-      { t: "Guardar procesos inactivos en disco (swapping).", ok: false },
-      { t: "Aumentar la frecuencia del reloj del CPU.", ok: false }
+      { t: "Disponer de varios núcleos o procesadores que atienden procesos a la vez.", ok: true },
+      { t: "Conmutar el contexto para dar diez milisegundos a cada proceso por turnos.", ok: false },
+      { t: "Guardar en el disco los procesos inactivos mediante la técnica de swapping.", ok: false },
+      { t: "Elevar la frecuencia del reloj del CPU para procesar más rápido cada tarea.", ok: false }
     ],
     explica: `Multiplexar en el <b>espacio</b> = repartir el recurso físico en pedazos usados <b>a la vez</b> (varios cores). Multiplexar en el <b>tiempo</b> = turnarse el mismo recurso (conmutación de contexto en CPU; swapping en RAM).`,
     fuente: "C2 · Multiplexación"
@@ -145,10 +145,10 @@ struct proc {
     id: "t2-12", tipo: "opcion", dificultad: "media",
     enunciado: `¿Qué es la <b>multiplexación en el TIEMPO</b> aplicada a la memoria RAM?`,
     opciones: [
-      { t: "El <b>swapping / memoria virtual</b>: si falta RAM, se guarda un proceso inactivo en disco y se libera su RAM.", ok: true },
-      { t: "Dividir la RAM en secciones fijas, una por proceso, usadas simultáneamente.", ok: false },
-      { t: "Instalar más módulos de memoria física.", ok: false },
-      { t: "Cifrar el contenido de la RAM.", ok: false }
+      { t: "El swapping o memoria virtual: se manda un proceso al disco y se libera su RAM.", ok: true },
+      { t: "Dividir la RAM en secciones fijas, una por proceso, usadas todas a la vez.", ok: false },
+      { t: "Instalar más módulos de memoria física para ampliar la RAM disponible ya.", ok: false },
+      { t: "Cifrar el contenido completo de la RAM para proteger los datos del usuario.", ok: false }
     ],
     explica: `En RAM, multiplexar en el <b>tiempo</b> = <b>swapping</b>: los procesos se turnan la memoria física (uno va a disco para que otro use la RAM). Dividir la RAM en secciones simultáneas es multiplexar en el <b>espacio</b>.`,
     fuente: "C2 · Multiplexación"
@@ -157,10 +157,10 @@ struct proc {
     id: "t2-13", tipo: "opcion", dificultad: "media",
     enunciado: `¿Cuál de estas es una operación de <b>administración de procesos</b> que puede realizar el SO?`,
     opciones: [
-      { t: "Proporcionar mecanismos de <b>sincronización y comunicación</b> entre procesos y para el manejo de interbloqueos.", ok: true },
-      { t: "Compilar el código fuente de los programas.", ok: false },
-      { t: "Diseñar la interfaz gráfica de cada aplicación.", ok: false },
-      { t: "Fabricar los núcleos del procesador.", ok: false }
+      { t: "Proveer sincronización y comunicación entre procesos y manejo de interbloqueos.", ok: true },
+      { t: "Compilar el código fuente de los programas antes de ponerlos a ejecutarse ya.", ok: false },
+      { t: "Diseñar la interfaz gráfica de cada una de las aplicaciones del usuario final.", ok: false },
+      { t: "Fabricar los núcleos del procesador donde se ejecutarán luego los procesos.", ok: false }
     ],
     explica: `En administración de procesos el SO puede: crear/terminar procesos, suspender/reanudar, y proveer <b>sincronización, comunicación y manejo de interbloqueos</b>.`,
     fuente: "C2 · Administración de procesos"
@@ -176,10 +176,10 @@ struct proc {
     id: "t2-15", tipo: "opcion", dificultad: "alta",
     enunciado: `El <b>PCB</b> (Process Control Block) de Linux se implementa en la estructura…`,
     opciones: [
-      { t: "<code>task_struct</code> (definida en <code>&lt;linux/sched.h&gt;</code>).", ok: true },
-      { t: "<code>file_struct</code>.", ok: false },
-      { t: "<code>page_table</code>.", ok: false },
-      { t: "<code>inode</code>.", ok: false }
+      { t: "<code>task_struct</code>, la estructura definida dentro del archivo linux/sched.h del kernel.", ok: true },
+      { t: "<code>file_struct</code>, la estructura que describe la tabla de archivos abiertos del proceso.", ok: false },
+      { t: "<code>page_table</code>, la estructura que guarda el mapeo de páginas de memoria del proceso.", ok: false },
+      { t: "<code>inode</code>, la estructura que describe un archivo dentro del sistema de archivos ya.", ok: false }
     ],
     explica: `En Linux el PCB es <code>task_struct</code>; en Xv6 es <code>struct proc</code>. El conjunto de todos los PCB forma la <b>tabla de procesos</b>.`,
     fuente: "C2 · PCB"
@@ -196,10 +196,10 @@ struct proc {
     id: "t2-17", tipo: "opcion", dificultad: "alta",
     enunciado: `Si el <b>PCB</b> de un proceso se <b>corrompe</b>, la consecuencia más probable es…`,
     opciones: [
-      { t: "El SO pierde la información del proceso: no puede reanudarlo ni terminarlo bien (posible <i>kernel panic</i>).", ok: true },
-      { t: "El proceso simplemente se ejecuta más rápido.", ok: false },
-      { t: "Se libera automáticamente toda la memoria del sistema.", ok: false },
-      { t: "No pasa nada: el PCB es solo informativo.", ok: false }
+      { t: "El SO pierde el estado del proceso: no puede reanudarlo ni terminarlo bien.", ok: true },
+      { t: "El proceso pasa a ejecutarse mucho más rápido al soltar parte de su estado.", ok: false },
+      { t: "El SO libera de forma automática toda la memoria del sistema al detectarlo.", ok: false },
+      { t: "No ocurre nada, porque el PCB es solo un dato informativo sin mayor efecto.", ok: false }
     ],
     explica: `El PCB es la <b>representación del proceso en el SO</b>. Si se corrompe, se pierde el estado/contexto y el SO no puede gestionarlo correctamente → inconsistencia grave o kernel panic.`,
     fuente: "C2 · What-if"
@@ -223,10 +223,10 @@ struct proc {
     id: "t2-20", tipo: "opcion", dificultad: "media",
     enunciado: `Durante un <b>cambio de contexto</b>, ¿qué hace el SO?`,
     opciones: [
-      { t: "<b>Guarda</b> el estado (registros, PC) del proceso saliente en su PCB y <b>carga</b> el del proceso entrante.", ok: true },
-      { t: "Elimina de la RAM al proceso saliente permanentemente.", ok: false },
-      { t: "Recompila el código del proceso entrante.", ok: false },
-      { t: "Duplica el proceso saliente para conservar una copia.", ok: false }
+      { t: "Guarda el estado del proceso saliente en su PCB y carga el del proceso entrante.", ok: true },
+      { t: "Elimina de la RAM al proceso saliente de forma permanente para liberar espacio.", ok: false },
+      { t: "Recompila el código del proceso entrante antes de entregarle el uso del CPU.", ok: false },
+      { t: "Duplica el proceso saliente para conservar una copia exacta de su estado ya.", ok: false }
     ],
     explica: `El cambio de contexto = <b>guardar</b> el contexto del proceso que sale y <b>restaurar</b> el del que entra, usando sus PCB. Tiene un costo (overhead) que hay que considerar en la planificación.`,
     fuente: "C2 · Cambio de contexto"

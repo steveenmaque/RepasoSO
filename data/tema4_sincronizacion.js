@@ -4,10 +4,10 @@ BANCO.add("t4", [
     id: "t4-01", tipo: "opcion", dificultad: "media",
     enunciado: `¿Cuál es el <b>principal objetivo</b> de la sincronización de procesos en un SO?`,
     opciones: [
-      { t: "<b>Evitar condiciones de carrera</b> y garantizar el acceso ordenado a los recursos compartidos.", ok: true },
-      { t: "Permitir que varios procesos accedan simultáneamente a los mismos recursos sin restricciones.", ok: false },
-      { t: "Aumentar la velocidad del procesador mediante ejecución paralela.", ok: false },
-      { t: "Reducir el tamaño de la memoria usada por los procesos concurrentes.", ok: false }
+      { t: "Evitar condiciones de carrera y ordenar el acceso a los recursos compartidos.", ok: true },
+      { t: "Permitir que muchos procesos accedan a la vez a un recurso sin ningún control.", ok: false },
+      { t: "Aumentar la velocidad del procesador mediante la ejecución en paralelo de todo.", ok: false },
+      { t: "Reducir el tamaño de memoria que usan los procesos concurrentes del sistema.", ok: false }
     ],
     explica: `Sincronizar = coordinar el acceso concurrente a datos compartidos para <b>evitar race conditions</b> y garantizar consistencia. NO es dar acceso libre (eso causa el problema).`,
     fuente: "Examen 2025 P.I-2 · C3"
@@ -27,10 +27,10 @@ t5: Retiro    escribe -> Saldo = 800
 t6: Deposito  escribe -> Saldo = 1500   <- se perdio el retiro`
     },
     opciones: [
-      { t: "Una <b>condición de carrera (race condition)</b>; el saldo correcto sería <b>1300</b>.", ok: true },
-      { t: "Un deadlock; el saldo correcto sería 800.", ok: false },
-      { t: "Fragmentación de memoria; el saldo correcto sería 1500.", ok: false },
-      { t: "Inanición; el saldo correcto sería 1000.", ok: false }
+      { t: "Una condición de carrera (race condition); el saldo correcto sería de 1300.", ok: true },
+      { t: "Un abrazo mortal entre los dos procesos; el saldo correcto sería de 800.", ok: false },
+      { t: "Una fragmentación de la memoria RAM; el saldo correcto sería de 1500.", ok: false },
+      { t: "Una inanición del proceso de retiro; el saldo correcto sería de 1000.", ok: false }
     ],
     explica: `Es una <b>race condition</b>: ambos leen 1000 antes de que el otro escriba. El correcto es 1000 + 500 − 200 = <b>1300</b>; el resultado erróneo (1500) «pierde» el retiro. Se soluciona haciendo <b>atómico</b> el bloque leer-modificar-escribir.`,
     fuente: "C3 · Ejemplo bancario"
@@ -47,10 +47,10 @@ t6: Deposito  escribe -> Saldo = 1500   <- se perdio el retiro`
     id: "t4-04", tipo: "opcion", dificultad: "media",
     enunciado: `Una <b>sección crítica</b> es…`,
     opciones: [
-      { t: "La porción de código en la que se accede a un <b>recurso compartido</b>.", ok: true },
-      { t: "El código que se ejecuta al arrancar el sistema.", ok: false },
-      { t: "La parte del kernel que gestiona interrupciones.", ok: false },
-      { t: "El bloque de memoria donde vive el proceso.", ok: false }
+      { t: "La parte del código donde el proceso accede a un recurso que es compartido.", ok: true },
+      { t: "La parte del código que se ejecuta al arrancar el sistema operativo entero.", ok: false },
+      { t: "La parte del kernel que se encarga de gestionar y atender las interrupciones.", ok: false },
+      { t: "La parte de la memoria RAM donde vive cargado el proceso mientras se ejecuta.", ok: false }
     ],
     explica: `Sección crítica = código que <b>accede a un recurso compartido</b>. Debe protegerse con protocolos de entrada/salida (ej. P/V) para lograr exclusión mutua.`,
     fuente: "C3 · Sección crítica"
@@ -59,11 +59,11 @@ t6: Deposito  escribe -> Saldo = 1500   <- se perdio el retiro`
     id: "t4-05", tipo: "multiple", dificultad: "alta",
     enunciado: `¿Cuáles son <b>condiciones obligatorias</b> que debe cumplir una solución al problema de la sección crítica? (Examen 2013 P.II-4.)`,
     opciones: [
-      { t: "<b>Exclusión mutua:</b> si un proceso está en su sección crítica, ningún otro entra a la suya.", ok: true },
-      { t: "<b>No bloqueo externo:</b> un proceso fuera de su sección crítica no puede bloquear a otros.", ok: true },
-      { t: "<b>Espera acotada:</b> ningún proceso espera un tiempo arbitrariamente grande (evita inanición).", ok: true },
-      { t: "<b>Sin suposición de velocidad:</b> no se asume la rapidez relativa de los procesos.", ok: true },
-      { t: "<b>Prioridad fija:</b> siempre entra primero el proceso de mayor prioridad.", ok: false }
+      { t: "Exclusión mutua: si un proceso está en su sección crítica, ningún otro entra.", ok: true },
+      { t: "No bloqueo externo: un proceso fuera de su sección crítica no bloquea a otros.", ok: true },
+      { t: "Espera acotada: ningún proceso aguarda un tiempo arbitrariamente grande ya.", ok: true },
+      { t: "Sin suponer velocidad: no se asume la rapidez relativa entre los procesos.", ok: true },
+      { t: "Prioridad fija: siempre entra primero el proceso que tenga mayor prioridad.", ok: false }
     ],
     explica: `Las 4 condiciones son: exclusión mutua, no bloqueo externo, espera acotada y sin suposición de velocidad. La «prioridad fija» NO es una condición (incluso puede causar inanición).`,
     fuente: "Examen 2013 P.II-4 · C3"
@@ -82,10 +82,10 @@ t6: Deposito  escribe -> Saldo = 1500   <- se perdio el retiro`
      (a la cola de espera)`
     },
     opciones: [
-      { t: "<b>Bloquea</b> al proceso y lo coloca en la cola de espera del semáforo.", ok: true },
-      { t: "Incrementa S a 1 y continúa.", ok: false },
-      { t: "Termina el proceso inmediatamente.", ok: false },
-      { t: "Ignora la operación y sigue como si nada.", ok: false }
+      { t: "Bloquea al proceso y lo coloca en la cola de espera del propio semáforo S.", ok: true },
+      { t: "Incrementa el valor de S hasta uno y deja que el proceso siga su ejecución.", ok: false },
+      { t: "Termina el proceso de inmediato y libera todos los recursos que tenía él.", ok: false },
+      { t: "Ignora por completo la operación y deja que el proceso siga como si nada ya.", ok: false }
     ],
     explica: `Con <code>S = 0</code> no hay recurso disponible, así que <code>P(S)</code> <b>bloquea</b> al proceso (cola de espera). Cuando otro haga <code>V(S)</code>, lo despertará.`,
     fuente: "C3 · Semáforos"
@@ -94,10 +94,10 @@ t6: Deposito  escribe -> Saldo = 1500   <- se perdio el retiro`
     id: "t4-07", tipo: "opcion", dificultad: "media",
     enunciado: `Para lograr <b>exclusión mutua</b> (solo un proceso en la sección crítica), ¿qué tipo de semáforo y valor inicial usarías?`,
     opciones: [
-      { t: "Semáforo <b>binario</b> inicializado en <b>1</b>.", ok: true },
-      { t: "Semáforo contador inicializado en N.", ok: false },
-      { t: "Semáforo sincronizador inicializado en 0.", ok: false },
-      { t: "Semáforo binario inicializado en 0.", ok: false }
+      { t: "Un semáforo binario que se inicializa con el valor uno para el mutex ya.", ok: true },
+      { t: "Un semáforo contador que se inicializa con el valor N igual a los recursos.", ok: false },
+      { t: "Un semáforo sincronizador que se inicializa con el valor cero para el orden.", ok: false },
+      { t: "Un semáforo binario que se inicializa con el valor cero para la exclusión.", ok: false }
     ],
     explica: `Exclusión mutua → <b>binario = 1</b>: el primero hace <code>P</code> (1→0, entra), los demás se bloquean hasta que él haga <code>V</code>. Si lo inicializas en 0, ¡nadie entraría nunca!`,
     fuente: "C3 · Tipos de semáforo"
@@ -115,10 +115,10 @@ Proceso i:
    V(cinta)        // devuelve la cinta`
     },
     opciones: [
-      { t: "P4 hace <code>P(cinta)</code> con cinta=0 → se <b>bloquea</b>; cuando alguno haga <code>V(cinta)</code>, se le otorga la cinta a P4.", ok: true },
-      { t: "P4 obtiene una cinta de inmediato porque el semáforo la crea.", ok: false },
-      { t: "El sistema entra en deadlock permanente.", ok: false },
-      { t: "P4 expulsa a uno de los tres procesos.", ok: false }
+      { t: "P4 hace P(cinta) con cinta en cero y se bloquea; con un V se le da la cinta.", ok: true },
+      { t: "P4 obtiene una cinta al instante porque el semáforo crea una nueva para él.", ok: false },
+      { t: "El sistema entero cae en un deadlock permanente del que ya no puede salir.", ok: false },
+      { t: "P4 expulsa a uno de los tres procesos que ya estaban usando su propia cinta.", ok: false }
     ],
     explica: `Con un <b>semáforo contador</b>, las 3 cintas bajan el valor a 0. P4 se <b>bloquea</b> en <code>P(cinta)</code>. Al liberar una (<code>V</code>), como P4 espera, se le otorga.`,
     fuente: "C3 · Semáforo contador"
@@ -159,10 +159,10 @@ P1:                 P2:
   V(sync)             S2`
     },
     opciones: [
-      { t: "Un semáforo <b>sincronizador/señalización</b> inicializado en <b>0</b>.", ok: true },
-      { t: "Un semáforo binario inicializado en 1.", ok: false },
-      { t: "Un semáforo contador inicializado en 2.", ok: false },
-      { t: "No se puede forzar el orden con semáforos.", ok: false }
+      { t: "Un semáforo sincronizador o de señal inicializado con el valor cero para el orden.", ok: true },
+      { t: "Un semáforo binario de exclusión mutua inicializado con el valor uno para la SC.", ok: false },
+      { t: "Un semáforo contador de recursos inicializado con el valor dos para dos procesos.", ok: false },
+      { t: "No se puede forzar de ningún modo el orden entre instrucciones usando semáforos.", ok: false }
     ],
     explica: `El semáforo <b>sincronizador</b> (inicia en 0) fuerza el <b>orden</b>: P2 se bloquea en <code>P(sync)</code> hasta que P1 haga <code>V(sync)</code> tras <code>S1</code>. Así <code>S2</code> siempre corre después de <code>S1</code>.`,
     fuente: "C3 · Semáforo sincronizador"
@@ -178,10 +178,10 @@ P1:                 P2:
     id: "t4-13", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Qué ocurre si por un bug se ejecuta <code>V(S)</code> <b>sin</b> un <code>P(S)</code> previo, sobre un mutex de exclusión mutua?`,
     opciones: [
-      { t: "El semáforo crece de más → entran <b>más procesos de los permitidos</b> a la sección crítica → se rompe la exclusión mutua.", ok: true },
-      { t: "No pasa nada, <code>V</code> sin <code>P</code> es inofensivo.", ok: false },
-      { t: "El proceso que hace <code>V</code> se bloquea.", ok: false },
-      { t: "Se reinicia el semáforo a su valor original.", ok: false }
+      { t: "El semáforo crece de más y entran más procesos de los debidos a la sección.", ok: true },
+      { t: "No ocurre nada malo, porque un V sin un P previo es del todo inofensivo ya.", ok: false },
+      { t: "El proceso que ejecuta ese V queda bloqueado en la cola de espera del semáforo.", ok: false },
+      { t: "El semáforo se reinicia solo a su valor original y nadie más entra a la sección.", ok: false }
     ],
     explica: `Un <code>V</code> de más incrementa el semáforo por encima de lo debido: dos procesos podrían ver S&gt;0 y ambos entrar → <b>se rompe la exclusión mutua</b> (race condition).`,
     fuente: "C3 · What-if"
@@ -197,10 +197,10 @@ P1:                 P2:
     id: "t4-15", tipo: "opcion", dificultad: "media",
     enunciado: `Las primitivas de sincronización (locks, semáforos, monitores, Test&Set) se construyen finalmente sobre…`,
     opciones: [
-      { t: "<b>Operaciones atómicas</b> (indivisibles), a menudo con apoyo de hardware.", ok: true },
-      { t: "Bucles de espera activa infinitos.", ok: false },
-      { t: "El sistema de archivos.", ok: false },
-      { t: "La tabla de páginas.", ok: false }
+      { t: "Operaciones atómicas indivisibles, casi siempre con apoyo del propio hardware.", ok: true },
+      { t: "Bucles de espera activa infinitos que consumen el CPU hasta que se libera ya.", ok: false },
+      { t: "El sistema de archivos, que guarda en disco el estado de cada primitiva usada.", ok: false },
+      { t: "La tabla de páginas, que traduce las direcciones lógicas de cada primitiva ya.", ok: false }
     ],
     explica: `Toda la sincronización descansa en <b>operaciones atómicas</b> (Test&Set, Compare&Swap, deshabilitar interrupciones…). Sin atomicidad, las primitivas mismas tendrían race conditions.`,
     fuente: "C3 · Capas de primitivas"
@@ -232,10 +232,10 @@ Proceso_Reservar(asiento):
     id: "t4-18", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Se puede lograr exclusión mutua <b>solo con software</b> (sin instrucciones atómicas de hardware)?`,
     opciones: [
-      { t: "<b>Depende:</b> existen algoritmos puros (Peterson, Dekker) para pocos procesos, pero en CPUs modernas necesitan <b>barreras de memoria</b> por el reordenamiento y la caché.", ok: true },
-      { t: "Sí, siempre y sin ninguna condición.", ok: false },
-      { t: "No, es matemáticamente imposible en cualquier caso.", ok: false },
-      { t: "Solo con más de 100 procesos.", ok: false }
+      { t: "Depende: Peterson y Dekker sirven para pocos procesos, pero hoy exigen barreras.", ok: true },
+      { t: "Sí, siempre y sin condición alguna, en cualquier procesador y con cualquier carga.", ok: false },
+      { t: "No, resulta del todo imposible en términos matemáticos bajo cualquier circunstancia.", ok: false },
+      { t: "Solo funciona cuando hay más de cien procesos compitiendo por la sección crítica.", ok: false }
     ],
     explica: `<b>Depende.</b> Peterson/Dekker lo logran en teoría, pero el reordenamiento de instrucciones y las cachés de los procesadores modernos exigen <b>barreras de memoria</b> (apoyo de HW/compilador) para que funcionen bien.`,
     fuente: "C3 · Sí/No/Depende"
@@ -252,10 +252,10 @@ Proceso_Reservar(asiento):
    [ seccion restante ]`
     },
     opciones: [
-      { t: "Pedir permiso para entrar, p. ej. <code>P(mutex)</code>.", ok: true },
-      { t: "Liberar el recurso con <code>V(mutex)</code>.", ok: false },
-      { t: "Terminar el proceso.", ok: false },
-      { t: "Guardar el PCB en disco.", ok: false }
+      { t: "Pedir permiso para entrar a la sección crítica, por ejemplo con P(mutex) ya.", ok: true },
+      { t: "Liberar el recurso al salir de la sección crítica, por ejemplo con V(mutex).", ok: false },
+      { t: "Terminar el proceso por completo apenas sale de su sección crítica del todo.", ok: false },
+      { t: "Guardar el PCB del proceso en el disco antes de entrar a la sección crítica.", ok: false }
     ],
     explica: `El protocolo de <b>entrada</b> pide permiso (<code>P(mutex)</code>); el de <b>salida</b> libera (<code>V(mutex)</code>). Entre ambos está la sección crítica.`,
     fuente: "C3 · Estructura de la SC"
@@ -271,10 +271,10 @@ Proceso_Reservar(asiento):
     id: "t4-21", tipo: "opcion", dificultad: "media",
     enunciado: `El ejemplo clásico de «los dos hermanos que compran leche» (ambos ven «no hay leche» y ambos compran) ilustra…`,
     opciones: [
-      { t: "Una <b>condición de carrera</b> por leer un estado desactualizado antes de que el otro lo actualice.", ok: true },
-      { t: "Un deadlock por espera circular.", ok: false },
-      { t: "Inanición del segundo hermano.", ok: false },
-      { t: "Fragmentación de la memoria.", ok: false }
+      { t: "Una condición de carrera por leer un estado viejo antes de que el otro lo cambie.", ok: true },
+      { t: "Un abrazo mortal por espera circular entre los dos hermanos del mismo ejemplo.", ok: false },
+      { t: "Una inanición del segundo hermano, que nunca llega a comprar la leche que falta.", ok: false },
+      { t: "Una fragmentación de la memoria por comprar dos cartones de leche a la vez ya.", ok: false }
     ],
     explica: `Ambos leen «no hay leche» (estado compartido desactualizado) y actúan → <b>compran doble</b>. Es una <b>race condition</b>: falta sincronizar la verificación con la acción.`,
     fuente: "C3 · Ejemplo de la leche"

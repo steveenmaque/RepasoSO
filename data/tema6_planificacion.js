@@ -19,10 +19,10 @@ BANCO.add("t6", [
     id: "t6-02", tipo: "opcion", dificultad: "trampa",
     enunciado: `¿Cuál es la <b>diferencia esencial</b> entre SJF y SRTF?`,
     opciones: [
-      { t: "SJF es <b>no apropiativo</b> y SRTF es <b>apropiativo</b> (SRTF expulsa al actual si llega uno más corto).", ok: true },
-      { t: "SJF usa quantum y SRTF no.", ok: false },
-      { t: "SJF es para memoria y SRTF para CPU.", ok: false },
-      { t: "No hay diferencia, son el mismo algoritmo.", ok: false }
+      { t: "SJF es no apropiativo y SRTF es apropiativo: expulsa al actual si llega uno menor.", ok: true },
+      { t: "SJF usa un quantum fijo por turno y SRTF trabaja del todo sin ningún quantum ya.", ok: false },
+      { t: "SJF sirve para la memoria RAM y SRTF sirve solo para planificar el uso del CPU.", ok: false },
+      { t: "SJF y SRTF no tienen ninguna diferencia real: son en verdad el mismo algoritmo.", ok: false }
     ],
     explica: `Ambos se basan en el tiempo de ejecución; la diferencia es la <b>apropiación</b>: SJF no interrumpe, SRTF sí (es la versión apropiativa de SJF).`,
     fuente: "C6 · SJF vs SRTF"
@@ -46,10 +46,10 @@ BANCO.add("t6", [
 <div class="blk" style="flex:3">P3 · 27–30</div></div>`
     },
     opciones: [
-      { t: "(0 + 24 + 27) / 3 = <b>17</b>", ok: true },
-      { t: "(24 + 27 + 30) / 3 = 27", ok: false },
-      { t: "(0 + 3 + 6) / 3 = 3", ok: false },
-      { t: "30 / 3 = 10", ok: false }
+      { t: "El promedio de las esperas 0, 24 y 27, dividido entre tres, da un total de 17.", ok: true },
+      { t: "El promedio de los finales 24, 27 y 30, dividido entre tres, da un total de 27.", ok: false },
+      { t: "El promedio de los valores 0, 3 y 6, dividido entre tres, da un total de solo 3.", ok: false },
+      { t: "El total de treinta unidades, dividido entre los tres procesos, da un total de 10.", ok: false }
     ],
     explica: `Tiempo de espera = instante en que empieza cada proceso: P1=0, P2=24, P3=27 → promedio = <b>17</b>. (Lo de 27 es el <b>turnaround</b> promedio.) Nota el <b>efecto convoy</b>: los cortos esperan al largo.`,
     fuente: "C6 · FCFS"
@@ -58,10 +58,10 @@ BANCO.add("t6", [
     id: "t6-05", tipo: "opcion", dificultad: "media",
     enunciado: `El <b>efecto convoy</b> consiste en…`,
     opciones: [
-      { t: "Procesos cortos que se atascan detrás de un proceso <b>largo</b> que llegó primero (típico de FCFS).", ok: true },
-      { t: "Muchos procesos entrando a la sección crítica a la vez.", ok: false },
-      { t: "Un proceso que nunca recibe el CPU (inanición).", ok: false },
-      { t: "El intercambio excesivo de páginas entre RAM y disco.", ok: false }
+      { t: "Procesos cortos que se atascan detrás de un proceso largo que llegó primero ya.", ok: true },
+      { t: "Muchos procesos que entran a la vez a la misma sección crítica y la corrompen.", ok: false },
+      { t: "Un proceso que nunca llega a recibir el procesador y sufre de pura inanición ya.", ok: false },
+      { t: "El intercambio excesivo de páginas entre la memoria RAM y el disco duro lento.", ok: false }
     ],
     explica: `Efecto convoy = un trabajo largo adelante hace esperar a todos los cortos → tiempo medio de espera enorme. FCFS y SJF (por ser no apropiativos) lo sufren; RR y SRTF lo impiden.`,
     fuente: "C6 · FCFS / SJF"
@@ -84,10 +84,10 @@ BANCO.add("t6", [
     id: "t6-08", tipo: "opcion", dificultad: "media",
     enunciado: `En planificación <b>apropiativa</b> vs <b>no apropiativa</b>, ¿qué caracteriza a la apropiativa?`,
     opciones: [
-      { t: "El SO <b>puede arrebatar</b> el CPU a un proceso (útil en tiempo compartido); su costo es el cambio de contexto.", ok: true },
-      { t: "El CPU nunca se le quita a un proceso una vez asignado.", ok: false },
-      { t: "Solo funciona con un único proceso a la vez.", ok: false },
-      { t: "Elimina la necesidad del despachador.", ok: false }
+      { t: "El SO puede arrebatar el CPU a un proceso; su costo es el cambio de contexto.", ok: true },
+      { t: "El CPU no se le quita nunca a un proceso una vez que ya le fue asignado a él.", ok: false },
+      { t: "Solo puede funcionar con un único proceso a la vez dentro de todo el sistema.", ok: false },
+      { t: "Elimina por completo la necesidad de que exista el despachador en el sistema.", ok: false }
     ],
     explica: `<b>Apropiativa</b> = el SO puede expulsar (preempt) al proceso. Ideal para tiempo compartido y buenos tiempos de respuesta, pero cada expulsión cuesta un <b>context switch</b>. SJF es no apropiativo; SRTF y RR son apropiativos.`,
     fuente: "C6 · Apropiativa vs no apropiativa"
@@ -114,10 +114,10 @@ BANCO.add("t6", [
 1000  2101   -        0.00      530.00     app_c`
     },
     opciones: [
-      { t: "Son cambios de contexto <b>NO voluntarios</b> (el SO les arrebata el CPU): hay <b>demasiados procesos compitiendo</b> o el <b>quantum es muy corto</b>.", ok: true },
-      { t: "Son cambios voluntarios por esperar E/S; el disco está lento.", ok: false },
-      { t: "Indican fragmentación de memoria.", ok: false },
-      { t: "Indican que los procesos están en deadlock.", ok: false }
+      { t: "Son cambios no voluntarios: hay demasiados procesos o el quantum es muy corto.", ok: true },
+      { t: "Son cambios voluntarios por esperar E/S y se deben a que el disco está muy lento.", ok: false },
+      { t: "Indican una fuerte fragmentación de la memoria por asignar bloques no contiguos.", ok: false },
+      { t: "Indican que varios de esos procesos ya cayeron juntos en un deadlock permanente.", ok: false }
     ],
     explica: `<b>nvcswch</b> = cambios de contexto <b>involuntarios</b> (el SO expulsa al proceso, ej. por fin de quantum). Muy alto → competencia por CPU o quantum corto. Soluciones: <code>renice</code>, colas de prioridad, o aumentar el quantum. (Los <b>voluntarios</b> son <code>cswch</code>, típicos de I/O-bound.)`,
     fuente: "Examen 2022/2024 · C6"
@@ -126,10 +126,10 @@ BANCO.add("t6", [
     id: "t6-11", tipo: "opcion", dificultad: "alta",
     enunciado: `Un proceso muestra <b>cswch/s</b> (voluntarios) muy alto. ¿Cuál es el diagnóstico y solución más probable?`,
     opciones: [
-      { t: "Está <b>esperando mucho por E/S</b> (I/O-bound): cede el CPU voluntariamente. Solución: SSD, E/S asíncrona, agrupar operaciones.", ok: true },
-      { t: "El quantum es demasiado corto. Solución: reducir aún más el quantum.", ok: false },
-      { t: "Hay demasiados procesos compitiendo por el CPU.", ok: false },
-      { t: "El proceso está en un bucle infinito de cálculo.", ok: false }
+      { t: "Espera mucho por E/S y cede el CPU; se ayuda con SSD y con E/S asíncrona ya.", ok: true },
+      { t: "El quantum es demasiado corto y la solución es reducir todavía más el quantum.", ok: false },
+      { t: "Hay demasiados procesos compitiendo a la vez por el uso del mismo procesador.", ok: false },
+      { t: "El proceso está atrapado en un bucle infinito de puro cálculo que satura el CPU.", ok: false }
     ],
     explica: `<b>cswch</b> (voluntarios) alto → el proceso <b>cede</b> el CPU seguido para esperar disco/red (I/O-bound). Solución: acelerar la E/S (SSD, E/S asíncrona). Un bucle de cálculo daría <b>nvcswch</b> alto, no cswch.`,
     fuente: "Examen 2022/2024 · C6"
@@ -138,10 +138,10 @@ BANCO.add("t6", [
     id: "t6-12", tipo: "opcion", dificultad: "media",
     enunciado: `Con Round-Robin y quantum = 20, para P1=53, P2=8, P3=68, P4=24, ¿qué ventaja principal aporta RR frente a FCFS?`,
     opciones: [
-      { t: "Buen <b>tiempo de respuesta</b> acotado y <b>no sufre efecto convoy</b> (cada proceso solo ejecuta un quantum por turno).", ok: true },
-      { t: "Minimiza siempre el tiempo de finalización promedio.", ok: false },
-      { t: "Elimina por completo el cambio de contexto.", ok: false },
-      { t: "Garantiza conocer la duración de cada proceso.", ok: false }
+      { t: "Da un tiempo de respuesta acotado y no sufre el efecto convoy como sí lo hace FCFS.", ok: true },
+      { t: "Minimiza siempre el tiempo de finalización promedio de todos los procesos del sistema.", ok: false },
+      { t: "Elimina por completo el cambio de contexto entre los procesos que se van turnando.", ok: false },
+      { t: "Garantiza conocer de antemano la duración exacta de cada uno de los procesos ya.", ok: false }
     ],
     explica: `RR da <b>respuesta acotada</b> (cada proceso recibe pronto un turno) y evita el convoy. Su costo: hay que sumar el <b>cambio de contexto</b> y puede alargar los trabajos largos.`,
     fuente: "C6 · Round Robin"
@@ -157,10 +157,10 @@ BANCO.add("t6", [
     id: "t6-14", tipo: "opcion", dificultad: "media",
     enunciado: `¿Cuál de estos <b>NO</b> es un mecanismo del <b>despachador (dispatcher)</b>?`,
     opciones: [
-      { t: "<b>Inicializar el quantum</b> con un valor mayor a cero.", ok: true },
-      { t: "Asignar el procesador al proceso que está primero en la cola de listos.", ok: false },
-      { t: "Interrumpir un proceso cuando el quantum llega a cero.", ok: false },
-      { t: "Mantener el procesador activo mientras haya procesos en la cola de listos.", ok: false }
+      { t: "Inicializar el valor del quantum con un número mayor que cero antes de arrancar.", ok: true },
+      { t: "Asignar el procesador al proceso que está primero en la cola de listos del SO.", ok: false },
+      { t: "Interrumpir a un proceso en ejecución justo cuando su quantum llega a valer cero.", ok: false },
+      { t: "Mantener activo el procesador mientras siga habiendo procesos en la cola de listos.", ok: false }
     ],
     explica: `Fijar el valor del quantum es <b>política</b> del planificador, no un <b>mecanismo</b> del despachador. El despachador ejecuta: asignar CPU, interrumpir por fin de quantum y mantener el CPU ocupado.`,
     fuente: "Examen 2013 P.I-6 · C6"
@@ -169,10 +169,10 @@ BANCO.add("t6", [
     id: "t6-15", tipo: "opcion", dificultad: "media",
     enunciado: `El <b>planificador de corto plazo (CPU scheduler)</b> recibe ese nombre porque…`,
     opciones: [
-      { t: "Maneja la transición <b>Listo → Ejecución</b> muy frecuentemente y debe ser muy <b>rápido</b> (decisiones a corto plazo).", ok: true },
-      { t: "Planifica trabajos que duran pocos segundos únicamente.", ok: false },
-      { t: "Decide qué procesos entran a memoria desde el disco.", ok: false },
-      { t: "Solo se ejecuta al arrancar el sistema.", ok: false }
+      { t: "Maneja la transición de listo a ejecución muy seguido y debe ser bien rápido.", ok: true },
+      { t: "Planifica solamente aquellos trabajos que llegan a durar unos pocos segundos.", ok: false },
+      { t: "Decide qué procesos entran a la memoria RAM desde el disco duro por swapping.", ok: false },
+      { t: "Solo se ejecuta una vez, justo en el momento de arrancar el sistema operativo.", ok: false }
     ],
     explica: `«Corto plazo» = decide con mucha frecuencia y debe ser veloz (baja latencia). El de <b>largo plazo</b> controla la admisión (qué procesos entran al sistema); el de <b>mediano plazo</b> hace swapping.`,
     fuente: "Examen 2013 P.I-8 · C6"
@@ -187,10 +187,10 @@ BANCO.add("t6", [
 (a,c,e = espera ; b,d,f = ejecucion)`
     },
     opciones: [
-      { t: "<b>a + b + c + d + e + f</b> (todo, desde que se lanza hasta que termina).", ok: true },
-      { t: "Solo a (la primera espera).", ok: false },
-      { t: "Solo b + d + f (la ejecución).", ok: false },
-      { t: "a + c + e (solo las esperas).", ok: false }
+      { t: "La suma de todos los tramos a, b, c, d, e y f, del lanzamiento hasta el fin.", ok: true },
+      { t: "Solamente el primer tramo a, que es la primera espera antes de la ejecución.", ok: false },
+      { t: "Solamente los tramos b, d y f, que son los tramos de ejecución del proceso.", ok: false },
+      { t: "Solamente los tramos a, c y e, que son los tramos de espera del proceso ya.", ok: false }
     ],
     explica: `<b>Retorno = espera + ejecución (+ bloqueado)</b> = todos los tramos. Tiempo de <b>respuesta</b> = a (primera espera hasta la primera ejecución); tiempo de <b>espera</b> = a + c + e; tiempo de <b>ejecución</b> = b + d + f.`,
     fuente: "C6 · Métricas"
@@ -218,10 +218,10 @@ BANCO.add("t6", [
    ^ aging: sube el que espera mucho`
     },
     opciones: [
-      { t: "Empiezan asumiendo que el proceso es corto (alta prioridad) y lo <b>degradan si consume mucho CPU</b>; con <b>aging</b> suben a los que esperan mucho.", ok: true },
-      { t: "Le preguntan al usuario cuánto durará su proceso.", ok: false },
-      { t: "Ejecutan siempre en orden de llegada estricto.", ok: false },
-      { t: "Asignan prioridad de forma puramente aleatoria.", ok: false }
+      { t: "Asumen que es corto y lo degradan si gasta mucho CPU; con aging suben al que espera.", ok: true },
+      { t: "Le preguntan al usuario cuánto va a durar su proceso y así lo ordenan por duración.", ok: false },
+      { t: "Ejecutan siempre en un estricto orden de llegada sin fijarse en el comportamiento.", ok: false },
+      { t: "Asignan la prioridad de cada proceso de forma puramente aleatoria en cada turno.", ok: false }
     ],
     explica: `Miden el <b>comportamiento real</b>: quien consume mucho CPU <b>baja</b> de cola (menos prioridad/quantum), quien espera mucho <b>sube</b> por <b>aging</b>. Así logran algo <i>parecido</i> a SJF sin depender de lo que declare el usuario.`,
     fuente: "C6 · Colas multinivel realimentadas"
@@ -230,10 +230,10 @@ BANCO.add("t6", [
     id: "t6-19", tipo: "opcion", dificultad: "media",
     enunciado: `La <b>inanición (starvation)</b> con prioridades estáticas se combate con…`,
     opciones: [
-      { t: "<b>Envejecimiento (aging)</b>: subir la prioridad de un proceso según el tiempo que lleva esperando.", ok: true },
-      { t: "Reducir la RAM disponible.", ok: false },
-      { t: "Deshabilitar el despachador.", ok: false },
-      { t: "Bajar la prioridad de los que esperan.", ok: false }
+      { t: "El envejecimiento o aging: sube la prioridad según lo que el proceso lleva esperando.", ok: true },
+      { t: "Reducir la memoria RAM disponible para que compitan menos procesos por el CPU ya.", ok: false },
+      { t: "Deshabilitar por completo el despachador para que ninguno tome ventaja sobre otro.", ok: false },
+      { t: "Bajar la prioridad de aquellos procesos que ya llevan mucho tiempo esperando turno.", ok: false }
     ],
     explica: `El <b>aging</b> incrementa gradualmente la prioridad del que espera, garantizando que tarde o temprano ejecute. Sin aging, un proceso de baja prioridad puede esperar para siempre.`,
     fuente: "C6 · Prioridades / aging"
@@ -249,10 +249,10 @@ BANCO.add("t6", [
     id: "t6-21", tipo: "opcion", dificultad: "media",
     enunciado: `La planificación por <b>lotería</b> se caracteriza por…`,
     opciones: [
-      { t: "Asignar «billetes» a los procesos y elegir uno al <b>azar</b>; los importantes reciben más billetes.", ok: true },
-      { t: "Ejecutar siempre el proceso más corto conocido.", ok: false },
-      { t: "Dar el CPU por estricto orden de llegada.", ok: false },
-      { t: "Nunca interrumpir un proceso en ejecución.", ok: false }
+      { t: "Reparte billetes entre los procesos y sortea uno al azar; los importantes reciben más.", ok: true },
+      { t: "Ejecuta siempre primero el proceso más corto cuya duración ya se conoce de antemano.", ok: false },
+      { t: "Reparte el uso del procesador por un estricto orden de llegada de cada proceso ya.", ok: false },
+      { t: "No interrumpe jamás a un proceso que ya se encuentra en ejecución sobre el CPU ya.", ok: false }
     ],
     explica: `Lotería = <b>aleatoria</b>: cada proceso tiene billetes; se sortea uno. Más billetes = más probabilidad. Procesos cooperantes pueden cederse billetes (un cliente al servidor).`,
     fuente: "C6 · Lotería"
@@ -270,10 +270,10 @@ BANCO.add("t6", [
     id: "t6-23", tipo: "opcion", dificultad: "media",
     enunciado: `<b>Caso:</b> un servidor web recibe miles de peticiones simultáneas y los usuarios necesitan respuesta rápida. ¿Qué algoritmo conviene y qué cuidado con el quantum?`,
     opciones: [
-      { t: "<b>Round-Robin</b> con quantum adecuado: da respuesta acotada y no sufre convoy; cuidar que no sea muy chico (overhead) ni muy grande (degenera en FCFS).", ok: true },
-      { t: "FCFS, porque es el más justo por orden de llegada.", ok: false },
-      { t: "SJF, porque conocemos exactamente cuánto durará cada petición.", ok: false },
-      { t: "Un solo proceso a la vez para evitar conflictos.", ok: false }
+      { t: "Round-Robin con buen quantum: da respuesta acotada; cuidar que no sea chico ni grande.", ok: true },
+      { t: "FCFS, porque es el más justo al atender por estricto orden de llegada de cada uno.", ok: false },
+      { t: "SJF, porque conocemos de antemano y con exactitud cuánto va a durar cada petición.", ok: false },
+      { t: "Un solo proceso a la vez sobre el CPU para evitar todo conflicto entre peticiones.", ok: false }
     ],
     explica: `Para interactividad masiva, <b>RR</b> garantiza tiempo de respuesta acotado. El quantum es la palanca: muy chico = mucho context switch; muy grande = se vuelve FCFS.`,
     fuente: "C6 · Caso (servidor web)"

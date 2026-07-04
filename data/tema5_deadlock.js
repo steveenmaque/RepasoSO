@@ -4,10 +4,10 @@ BANCO.add("t5", [
     id: "t5-01", tipo: "opcion", dificultad: "media",
     enunciado: `¿Cuándo se produce un <b>abrazo mortal (deadlock)</b>?`,
     opciones: [
-      { t: "Cuando <b>dos o más procesos esperan indefinidamente</b> recursos que están retenidos por otros procesos.", ok: true },
-      { t: "Cuando un proceso entra en un bucle infinito sin liberar el procesador.", ok: false },
-      { t: "Cuando un proceso es terminado abruptamente por el SO.", ok: false },
-      { t: "Cuando un proceso libera todos sus recursos antes de finalizar.", ok: false }
+      { t: "Cuando dos o más procesos esperan sin fin recursos que otros procesos retienen.", ok: true },
+      { t: "Cuando un proceso entra en un bucle infinito y nunca libera el procesador ya.", ok: false },
+      { t: "Cuando el sistema operativo termina de forma abrupta un proceso cualquiera ya.", ok: false },
+      { t: "Cuando un proceso libera todos sus recursos justo antes de que él finalice ya.", ok: false }
     ],
     explica: `Deadlock = conjunto de procesos (al menos 2) donde <b>cada uno espera un evento/recurso que solo otro del conjunto puede liberar</b>. El bucle infinito sin liberar CPU es otro problema (starvation/monopolio), no deadlock.`,
     fuente: "Examen 2025 P.I-4 · C4"
@@ -16,11 +16,11 @@ BANCO.add("t5", [
     id: "t5-02", tipo: "multiple", dificultad: "alta",
     enunciado: `Marca las <b>4 condiciones de Coffman</b> que deben cumplirse <b>simultáneamente</b> para que haya deadlock.`,
     opciones: [
-      { t: "<b>Exclusión mutua</b> (al menos un recurso no compartible).", ok: true },
-      { t: "<b>Retención y espera</b> (hold &amp; wait): retiene un recurso mientras espera otro.", ok: true },
-      { t: "<b>Sin apropiación</b> (no preemption): el recurso solo se libera voluntariamente.", ok: true },
-      { t: "<b>Espera circular</b>: cadena P1→P2→…→Pn→P1.", ok: true },
-      { t: "<b>Inanición</b> de al menos un proceso de baja prioridad.", ok: false }
+      { t: "Exclusión mutua: al menos un recurso del sistema no es compartible entre todos.", ok: true },
+      { t: "Retención y espera: retiene un recurso mientras se queda esperando por otro más.", ok: true },
+      { t: "Sin apropiación: el recurso solo se libera de forma voluntaria por su dueño ya.", ok: true },
+      { t: "Espera circular: se forma la cadena P1 pide a P2, P2 a P3 y Pn de vuelta a P1.", ok: true },
+      { t: "Inanición: al menos un proceso de baja prioridad nunca llega a ejecutarse ya.", ok: false }
     ],
     explica: `Las 4 condiciones son exclusión mutua, hold&wait, sin apropiación y espera circular. Deben darse <b>las 4 a la vez</b>: si falta una, no hay deadlock. La inanición es un problema distinto.`,
     fuente: "C4 · Condiciones de Coffman"
@@ -39,10 +39,10 @@ BANCO.add("t5", [
     id: "t5-04", tipo: "opcion", dificultad: "trampa",
     enunciado: `De las 4 condiciones de Coffman, ¿cuál <b>NO se puede negar</b> para prevenir el deadlock?`,
     opciones: [
-      { t: "La <b>exclusión mutua</b> (algunos recursos son intrínsecamente no compartibles).", ok: true },
-      { t: "La retención y espera (hold &amp; wait).", ok: false },
-      { t: "La ausencia de apropiación.", ok: false },
-      { t: "La espera circular.", ok: false }
+      { t: "La exclusión mutua, porque algunos recursos no son compartibles por natura.", ok: true },
+      { t: "La retención y espera, porque el proceso podría pedir todo junto al empezar.", ok: false },
+      { t: "La ausencia de apropiación, porque el SO podría quitar el recurso a la fuerza.", ok: false },
+      { t: "La espera circular, porque bastaría con pedir los recursos en orden creciente.", ok: false }
     ],
     explica: `Solo se pueden negar <b>3</b>. La <b>exclusión mutua no</b>: si la anulas, todos entrarían a la sección crítica a la vez (datos corruptos). Recursos como una impresora son no compartibles por naturaleza.`,
     fuente: "Respuesta clave del profesor · C4"
@@ -69,10 +69,10 @@ BANCO.add("t5", [
 <tr><td>P3</td><td>5</td><td>8</td><td>3</td></tr></table>`
     },
     opciones: [
-      { t: "<b>P2 → P1 → P3</b>", ok: true },
-      { t: "P3 → P2 → P1", ok: false },
-      { t: "P1 → P3 → P2", ok: false },
-      { t: "No existe ninguna secuencia segura.", ok: false }
+      { t: "La secuencia P2, luego P1 y por último P3 es una secuencia segura válida.", ok: true },
+      { t: "La secuencia P3, luego P2 y por último P1 es una secuencia segura válida.", ok: false },
+      { t: "La secuencia P1, luego P3 y por último P2 es una secuencia segura válida.", ok: false },
+      { t: "No existe ninguna secuencia segura posible con las dos unidades libres ya.", ok: false }
     ],
     explica: `Con 2 libres, solo <b>P2</b> (faltante 2) puede terminar → libera 6, quedan 8. Ahora <b>P1</b> (faltante 3) termina → libera 4, quedan 12. Luego <b>P3</b> (faltante 3) termina. Secuencia segura: <b>P2 → P1 → P3</b>.`,
     fuente: "C4 · Algoritmo del Banquero"
@@ -81,10 +81,10 @@ BANCO.add("t5", [
     id: "t5-07", tipo: "opcion", dificultad: "alta",
     enunciado: `Estado con <b>1 unidad disponible</b>: P1 tiene 8/10 (faltan 2), P2 tiene 2/5 (faltan 3), P3 tiene 1/3 (faltan 2). ¿El estado es seguro?`,
     opciones: [
-      { t: "No: ningún proceso alcanza su faltante mínimo con solo 1 libre → <b>estado inseguro</b> (deadlock inminente).", ok: true },
-      { t: "Sí, la secuencia segura es P1 → P2 → P3.", ok: false },
-      { t: "Sí, cualquier orden funciona.", ok: false },
-      { t: "No se puede determinar sin más datos.", ok: false }
+      { t: "No: con una sola unidad libre nadie alcanza su faltante, el estado es inseguro.", ok: true },
+      { t: "Sí: con una sola unidad libre la secuencia segura sería P1, luego P2 y P3 ya.", ok: false },
+      { t: "Sí: con una sola unidad libre cualquier orden de los procesos funciona bien ya.", ok: false },
+      { t: "No se puede saber si es seguro sin conocer más datos sobre esos tres procesos.", ok: false }
     ],
     explica: `Con solo <b>1</b> disponible, nadie llega a su faltante (2, 3, 2). No se puede completar a nadie para liberar más → <b>inseguro</b>. Ojo: inseguro no es deadlock aún, pero puede desembocar en él.`,
     fuente: "C4 · Estado inseguro"
@@ -115,10 +115,10 @@ BANCO.add("t5", [
 </svg>`
     },
     opciones: [
-      { t: "Sí: construye un <b>grafo de asignación de recursos (modelo de Holt)</b> y <b>busca ciclos</b>.", ok: true },
-      { t: "No: una vez ocurrido el deadlock es indetectable.", ok: false },
-      { t: "Sí, pero solo reiniciando toda la máquina.", ok: false },
-      { t: "Sí, midiendo la temperatura del CPU.", ok: false }
+      { t: "Sí: arma un grafo de asignación de recursos (modelo de Holt) y busca ciclos.", ok: true },
+      { t: "No: una vez que ocurre el deadlock ya resulta imposible llegar a detectarlo.", ok: false },
+      { t: "Sí, pero solo si se reinicia por completo la máquina para revisar el estado.", ok: false },
+      { t: "Sí, midiendo la temperatura del CPU cuando varios procesos quedan detenidos.", ok: false }
     ],
     explica: `<b>Sí.</b> Con el <b>grafo de Holt</b> (procesos y recursos como nodos; aristas «asignado a» / «solicita»): si hay un <b>ciclo</b> (con recursos de instancia única) → hay deadlock. Luego se recupera matando procesos o apropiando recursos.`,
     fuente: "Examen 2013 P.II-5 · C4"
@@ -127,10 +127,10 @@ BANCO.add("t5", [
     id: "t5-10", tipo: "opcion", dificultad: "media",
     enunciado: `El enfoque llamado «algoritmo del <b>avestruz</b>» consiste en…`,
     opciones: [
-      { t: "<b>Ignorar</b> el deadlock por asumirlo tan raro que no vale la pena prevenirlo; si ocurre, se reinicia.", ok: true },
-      { t: "Detectar el ciclo y matar procesos automáticamente.", ok: false },
-      { t: "Usar el Algoritmo del Banquero en cada petición.", ok: false },
-      { t: "Negar la exclusión mutua de todos los recursos.", ok: false }
+      { t: "Ignorar el deadlock por creerlo tan raro que no vale prevenirlo; si pasa, reinicia.", ok: true },
+      { t: "Detectar el ciclo con un grafo y matar procesos de forma automática al hallarlo.", ok: false },
+      { t: "Usar el algoritmo del banquero en cada petición para no entrar en estado inseguro.", ok: false },
+      { t: "Negar la exclusión mutua de todos los recursos para que nunca se forme un ciclo.", ok: false }
     ],
     explica: `El <b>avestruz</b> = «meter la cabeza en la tierra»: ignorar el problema. Lo usan la mayoría de SO comerciales (Windows, Linux) en casos cotidianos, porque el deadlock es raro y prevenirlo cuesta rendimiento.`,
     fuente: "C4 · Enfoques"
@@ -139,10 +139,10 @@ BANCO.add("t5", [
     id: "t5-11", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Cuál es la <b>ventaja</b> de negar la condición de <b>espera circular</b> mediante un <b>ordenamiento lineal (Havender)</b> de los recursos?`,
     opciones: [
-      { t: "Impide formar el ciclo P1→P2→…→P1, porque cada proceso solo puede pedir recursos de número mayor al que ya tiene.", ok: true },
-      { t: "Permite que todos los procesos entren a la sección crítica a la vez.", ok: false },
-      { t: "Elimina la necesidad de exclusión mutua.", ok: false },
-      { t: "Duplica la memoria disponible.", ok: false }
+      { t: "Impide cerrar el ciclo, pues cada proceso solo pide recursos de número mayor.", ok: true },
+      { t: "Permite que todos los procesos entren a la vez a la misma sección crítica ya.", ok: false },
+      { t: "Elimina por completo la necesidad de exclusión mutua sobre cualquier recurso.", ok: false },
+      { t: "Duplica la memoria disponible del sistema para que sobren recursos a repartir.", ok: false }
     ],
     explica: `Numerar los recursos y exigir pedirlos en orden <b>creciente</b> impide que se cierre un ciclo → sin espera circular no hay deadlock. Es una técnica de <b>prevención</b>.`,
     fuente: "C4 · Prevención (Havender)"
@@ -151,10 +151,10 @@ BANCO.add("t5", [
     id: "t5-12", tipo: "opcion", dificultad: "media",
     enunciado: `Los deadlocks se producen «en general» con recursos <b>no apropiables</b>. ¿Por qué?`,
     opciones: [
-      { t: "Porque el SO <b>no puede quitárselos</b> al proceso sin causar daño; deben liberarse voluntariamente (ej. impresora).", ok: true },
-      { t: "Porque son recursos que se comparten libremente.", ok: false },
-      { t: "Porque siempre hay infinitas copias disponibles.", ok: false },
-      { t: "Porque el CPU los gestiona por hardware.", ok: false }
+      { t: "Porque el SO no se los puede quitar sin dañar el trabajo; se liberan a voluntad.", ok: true },
+      { t: "Porque son recursos que se comparten con libertad entre todos los procesos ya.", ok: false },
+      { t: "Porque siempre hay infinitas copias disponibles de ese recurso para repartir ya.", ok: false },
+      { t: "Porque el CPU se encarga de gestionarlos por hardware sin ayuda del sistema ya.", ok: false }
     ],
     explica: `Un recurso <b>no apropiable</b> (impresora, cinta) no se puede arrebatar sin dañar el trabajo → favorece hold&wait y la espera circular. La RAM, en cambio, es <b>apropiable</b> (se puede quitar vía swapping).`,
     fuente: "C4 · Apropiable vs no apropiable"
@@ -178,10 +178,10 @@ BANCO.add("t5", [
     id: "t5-15", tipo: "opcion", dificultad: "alta",
     enunciado: `<b>Transferencia bancaria:</b> el proceso A bloquea la cuenta 1 y pide la 2; el proceso B bloquea la 2 y pide la 1. ¿Cómo prevenir el deadlock?`,
     opciones: [
-      { t: "Bloquear siempre las cuentas en <b>orden de número de cuenta</b> (primero la menor), sin importar la dirección de la transferencia.", ok: true },
-      { t: "Hacer las transferencias más rápido para que no coincidan.", ok: false },
-      { t: "Permitir que ambos procesos entren a la sección crítica a la vez.", ok: false },
-      { t: "Aumentar el saldo de ambas cuentas.", ok: false }
+      { t: "Bloquear siempre las cuentas por orden de número, la menor primero, sin excepción.", ok: true },
+      { t: "Hacer las transferencias mucho más rápido para que las dos nunca coincidan ya.", ok: false },
+      { t: "Permitir que los dos procesos entren a la vez a la misma sección crítica ya.", ok: false },
+      { t: "Aumentar el saldo de las dos cuentas para que sobren recursos que repartir ya.", ok: false }
     ],
     explica: `Es deadlock por <b>lock ordering cruzado</b>. Prevención: <b>orden fijo de bloqueo</b> (siempre la cuenta de menor número primero) → no se forma ciclo → se niega la espera circular. Hacerlo «más rápido» no elimina el intercalado malo.`,
     fuente: "C4 · Caso (transferencia)"
@@ -197,10 +197,10 @@ BANCO.add("t5", [
     id: "t5-17", tipo: "opcion", dificultad: "media",
     enunciado: `En el enfoque de <b>detección y recuperación</b>, una vez detectado el ciclo, ¿qué acción es válida para recuperar?`,
     opciones: [
-      { t: "Matar uno de los procesos del ciclo o <b>apropiar (quitar)</b> un recurso a uno de ellos.", ok: true },
-      { t: "Aumentar la frecuencia del CPU.", ok: false },
-      { t: "Convertir todos los recursos en compartibles.", ok: false },
-      { t: "Reducir el quantum del planificador.", ok: false }
+      { t: "Matar uno de los procesos del ciclo o quitarle un recurso a uno de ellos.", ok: true },
+      { t: "Aumentar la frecuencia del reloj del CPU para que el ciclo se resuelva solo.", ok: false },
+      { t: "Convertir todos los recursos en compartibles para romper la exclusión mutua.", ok: false },
+      { t: "Reducir el quantum del planificador para que el ciclo se deshaga por sí solo.", ok: false }
     ],
     explica: `Recuperación: <b>terminar</b> uno o más procesos del ciclo, o <b>apropiar</b> recursos (quitárselos y dárselos a otro). Se rompe el ciclo aunque se pierda algo de trabajo.`,
     fuente: "C4 · Detección y recuperación"
@@ -218,10 +218,10 @@ Maximo[n][m]   // Necesidad maxima declarada
 Faltante[n][m] // = ???`
     },
     opciones: [
-      { t: "<b>Máximo − Posesión</b>: lo que aún le puede llegar a pedir cada proceso.", ok: true },
-      { t: "Existentes − Disponibles.", ok: false },
-      { t: "Posesión + Disponibles.", ok: false },
-      { t: "Máximo + Posesión.", ok: false }
+      { t: "Máximo menos posesión: lo que aún le puede llegar a pedir cada proceso al SO.", ok: true },
+      { t: "Existentes menos disponibles: lo que ya está repartido entre todos los procesos.", ok: false },
+      { t: "Posesión más disponibles: lo que un proceso tiene sumado a lo que queda libre.", ok: false },
+      { t: "Máximo más posesión: lo que un proceso pidió sumado a lo que ya tiene en mano.", ok: false }
     ],
     explica: `<b>Faltante = Máximo − Posesión</b>. Un proceso puede terminar si su <code>Faltante ≤ Disponibles</code>; al terminar libera su Posesión (<code>D := D + P</code>).`,
     fuente: "C4 · Banquero (estructuras)"
@@ -237,10 +237,10 @@ Faltante[n][m] // = ???`
     id: "t5-20", tipo: "opcion", dificultad: "alta",
     enunciado: `¿Por qué muchos SO comerciales (como Linux) prefieren <b>ignorar</b> el deadlock en vez de usar el Banquero en cada petición?`,
     opciones: [
-      { t: "Porque el Banquero tiene <b>overhead alto</b> y el deadlock es raro; prevenirlo/evitarlo penaliza el rendimiento general.", ok: true },
-      { t: "Porque el Banquero es ilegal en software libre.", ok: false },
-      { t: "Porque Linux no tiene procesos concurrentes.", ok: false },
-      { t: "Porque el Banquero requiere hardware especial inexistente.", ok: false }
+      { t: "Porque el banquero tiene overhead alto y el deadlock es raro: penaliza rendir.", ok: true },
+      { t: "Porque el algoritmo del banquero es ilegal dentro del software libre como Linux.", ok: false },
+      { t: "Porque Linux no maneja procesos concurrentes y por eso no puede haber deadlock.", ok: false },
+      { t: "Porque el banquero exige un hardware especial que hoy en día no existe todavía.", ok: false }
     ],
     explica: `Evaluar el estado seguro en cada petición cuesta <b>tiempo</b> y exige conocer las necesidades máximas. Como el deadlock es infrecuente, muchos SO apuestan al <b>avestruz</b> (ignorar) por rendimiento.`,
     fuente: "C4 · What-if / avestruz"

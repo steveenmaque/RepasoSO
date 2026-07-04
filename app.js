@@ -60,8 +60,9 @@
   function textoCorrectas(q) {
     if (q.tipo === "vf") return q.vf ? "Verdadero" : "Falso";
     if (q.opciones) {
+      // Sin negritas: el texto de la respuesta se muestra siempre en formato plano.
       return q.opciones.filter(function (o) { return o.ok; })
-        .map(function (o) { return "«" + o.t + "»"; }).join("  ·  ");
+        .map(function (o) { return "«" + sinResaltado(o.t) + "»"; }).join("  ·  ");
     }
     return "";
   }
@@ -385,19 +386,22 @@
 
   function respuestaUsuario(q, e) {
     if (q.tipo === "vf") return e.seleccion === true ? "Verdadero" : e.seleccion === false ? "Falso" : "(sin responder)";
-    if (q.tipo === "multiple") return e.sel.length ? e.sel.map(function (i) { return "«" + e.ops[i].t + "»"; }).join("  ·  ") : "(sin responder)";
-    if (q.tipo === "opcion") return e.seleccion !== null ? "«" + e.ops[e.seleccion].t + "»" : "(sin responder)";
+    // Sin negritas: la respuesta marcada por el alumno se muestra en formato plano.
+    if (q.tipo === "multiple") return e.sel.length ? e.sel.map(function (i) { return "«" + sinResaltado(e.ops[i].t) + "»"; }).join("  ·  ") : "(sin responder)";
+    if (q.tipo === "opcion") return e.seleccion !== null ? "«" + sinResaltado(e.ops[e.seleccion].t) + "»" : "(sin responder)";
     return "";
   }
 
   function renderFeedbackExamen(q, e) {
     var out = "";
     if (q.tipo === "abierta") {
-      out += '<div class="modelo"><h4>Respuesta modelo</h4>' + respuestaModelo(q) + "</div>";
+      // La respuesta modelo también va sin negritas (igual que en la práctica).
+      out += '<div class="modelo"><h4>Respuesta modelo</h4>' + sinResaltado(respuestaModelo(q)) + "</div>";
     } else {
+      // Solo "Correcto./Incorrecto." queda resaltado como estado; la respuesta va en plano.
       out += '<div class="feedback"><b>' + (e.correcta ? "Correcto." : "Incorrecto.") + "</b> " +
-        "Tu respuesta: " + respuestaUsuario(q, e) + ". Respuesta correcta: <b>" + textoCorrectas(q) + "</b>." +
-        (q.explica ? "<div style='margin-top:6px'>" + q.explica + "</div>" : "") + "</div>";
+        "Tu respuesta: " + respuestaUsuario(q, e) + ". Respuesta correcta: " + textoCorrectas(q) + "." +
+        (q.explica ? "<div style='margin-top:6px'>" + sinResaltado(q.explica) + "</div>" : "") + "</div>";
     }
     if (q.fuente) out += '<div class="fuente">Fuente: ' + esc(q.fuente) + "</div>";
     return out;

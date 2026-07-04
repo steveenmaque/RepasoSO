@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simulador de Examen — Sistemas Operativos | UNMSM</title>
-  <link rel="stylesheet" href="estilo.css">
+  <link rel="stylesheet" href="estilo.css?v=2">
 </head>
 <body>
   <header>
@@ -18,30 +18,32 @@
     <p>Reglas del profesor: responde <b>concreto + justificación técnica</b> (sin ella, la nota es nula) · calidad &gt; cantidad · declara tus <b>supuestos</b> de forma explícita.</p>
   </footer>
 
-  <!-- Motor de datos: primero define el banco, luego lo llenan los archivos por tema -->
-  <script src="data/temas.js"></script>
-  <script src="data/tema1_introduccion.js"></script>
-  <script src="data/tema2_procesos.js"></script>
-  <script src="data/tema3_estados.js"></script>
-  <script src="data/tema4_sincronizacion.js"></script>
-  <script src="data/tema5_deadlock.js"></script>
-  <script src="data/tema6_planificacion.js"></script>
-  <script src="data/tema7_memoria.js"></script>
-  <script src="data/tema8_foros.js"></script>
+  <!-- Motor de datos: primero define el banco, luego lo llenan los archivos por tema.
+       ?v=N fuerza al navegador a recargar y no servir versiones viejas en caché.
+       Sube el número si cambias los archivos y no ves reflejados los cambios. -->
+  <script src="data/temas.js?v=2"></script>
+  <script src="data/tema1_introduccion.js?v=2"></script>
+  <script src="data/tema2_procesos.js?v=2"></script>
+  <script src="data/tema3_estados.js?v=2"></script>
+  <script src="data/tema4_sincronizacion.js?v=2"></script>
+  <script src="data/tema5_deadlock.js?v=2"></script>
+  <script src="data/tema6_planificacion.js?v=2"></script>
+  <script src="data/tema7_memoria.js?v=2"></script>
+  <script src="data/tema8_foros.js?v=2"></script>
   <!-- Repaso extra: transcripciones de clase (Semanas 5-13) enfocadas al PDF de repaso -->
-  <script src="data/repaso_transcripciones.js"></script>
+  <script src="data/repaso_transcripciones.js?v=2"></script>
   <!-- Banco "tipo examen difícil": opciones del mismo largo, con imágenes y de las transcripciones -->
-  <script src="data/examen_general.js"></script>
+  <script src="data/examen_general.js?v=2"></script>
   <!-- Material de estudio por tema (teoría + diagramas) -->
-  <script src="data/material1_introduccion.js"></script>
-  <script src="data/material2_procesos.js"></script>
-  <script src="data/material3_estados.js"></script>
-  <script src="data/material4_sincronizacion.js"></script>
-  <script src="data/material5_deadlock.js"></script>
-  <script src="data/material6_planificacion.js"></script>
-  <script src="data/material7_memoria.js"></script>
-  <script src="data/material8_foros.js"></script>
+  <script src="data/material1_introduccion.js?v=2"></script>
+  <script src="data/material2_procesos.js?v=2"></script>
+  <script src="data/material3_estados.js?v=2"></script>
+  <script src="data/material4_sincronizacion.js?v=2"></script>
+  <script src="data/material5_deadlock.js?v=2"></script>
+  <script src="data/material6_planificacion.js?v=2"></script>
+  <script src="data/material7_memoria.js?v=2"></script>
+  <script src="data/material8_foros.js?v=2"></script>
   <!-- Lógica de la aplicación (al final, cuando el banco ya está cargado) -->
-  <script src="app.js"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>
