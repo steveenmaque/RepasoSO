@@ -87,7 +87,10 @@
   function estadoDe(q) {
     if (!session.estado[q.id]) {
       var e = { seleccion: null, sel: [], contestada: false, correcta: null, texto: "", modeloVisto: false, altVisto: false, pistaVisto: false };
-      if (q.opciones) e.ops = q.opciones.slice(); // sin barajar el orden de opciones (más limpio)
+      // En el EXAMEN se BARAJA el orden de las opciones para que la respuesta
+      // correcta NO caiga siempre en la misma posición (antes salía siempre primera).
+      // En la práctica se conserva el orden original (allí solo son de referencia).
+      if (q.opciones) e.ops = session.modo === "examen" ? shuffle(q.opciones) : q.opciones.slice();
       session.estado[q.id] = e;
     }
     return session.estado[q.id];
@@ -372,7 +375,9 @@
       var input = multi
         ? '<input type="checkbox" ' + (marcada ? "checked" : "") + " " + (bloqueado ? "disabled" : "") + ' onclick="App.selMulti(' + i + ')">'
         : '<input type="radio" name="op" ' + (marcada ? "checked" : "") + " " + (bloqueado ? "disabled" : "") + ' onclick="App.selOp(' + i + ')">';
-      out += '<label class="' + (marcada ? "marcada" : "") + '">' + input + " " + o.t + "</label>";
+      // En el examen las opciones NO llevan resaltado: ninguna letra en negrita
+      // ni con color, para que ninguna alternativa se delate por su formato.
+      out += '<label class="' + (marcada ? "marcada" : "") + '">' + input + " " + sinResaltado(o.t) + "</label>";
     });
     out += "</div>";
     return out;
